@@ -1,0 +1,121 @@
+<div class="index-content-header">
+</div>
+
+<div class="index-content-body">
+    <div class="col-xs-3 background-dark">
+        <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+
+            <table class="table-rounded control-table">
+                <colgroup>
+                    <col style="width: 100%">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <td>
+                            <label class="control-label">Date :</label>
+                            <input type="date" id="date" class="form-control" ng-model="model.date" ng-change='ui.dateChange()' 
+                                   ng-disabled="ui.mode !== 'NEW'" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table-rounded control-table">
+                <colgroup>
+                    <col style="width: 100%">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <td>
+                            <label class="control-label">Date Type :</label>
+                            <label class="label" style="background-color: #cccccc" ng-show="model.calenderData.status==='Working_Day'">_</label>
+                            <label class="label" style="background-color: yellow" ng-show="model.calenderData.status==='Poya_Day'">_</label>
+                            <label class="label" style="background-color: wheat" ng-show="model.calenderData.status==='HoliDay'">_</label>
+                            <label class="label" style="background-color: #32cd32" ng-show="model.calenderData.status==='Paid_HoliDay'">_</label>
+                            <label class="label" style="background-color: red" ng-show="model.calenderData.status==='Sunday'">_</label>
+                            <label class="label" style="background-color: orange" ng-show="model.calenderData.status==='Saturday'">_</label>
+                            <input type="text" class="form-control" ng-model="model.calenderData.status"  
+                                   ng-disabled="true" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-xs-9 background-light">
+        <table>
+            <col style="width: 20%">
+            <col style="width: 20%">
+            <col style="width: 20%">
+            <col style="width: 20%">
+            <col style="width: 20%">
+            <col style="width: 5%">
+            <col style="width: 10%">
+            <thead class="background-dark"> 
+                <tr>
+
+                </tr>
+            </thead>
+        </table>
+        <table class="table-rounded">
+            <col style="width: 10%">
+            <col style="width: 10%">
+            <col style="width: 15%">
+            <col style="width: 12%">
+            <col style="width: 10%">
+            <col style="width: 12%">
+            <col style="width: 10%">
+            <col style="width: 10%">
+            <col style="width: 11%">
+            <thead class="background-dark"> 
+                <tr>
+                    <th>EID</th>
+                    <th>EPF NO</th>
+                    <th>Employee</th>
+                    <th>Type</th>
+                    <th>In Time</th>
+                    <th>Out Time</th>
+                    <th>F.P Type</th>
+                    <th>Status</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+        </table>
+        <div class="smart-scroll-y" style="height: calc(100vh - 220px);">
+            <table class="table-rounded table-hover">
+                <col style="width: 10%">
+                <col style="width: 10%">
+                <col style="width: 15%">
+                <col style="width: 12%">
+                <col style="width: 10%">
+                <col style="width: 12%">
+                <col style="width: 10%">
+                <col style="width: 10%">
+                <col style="width: 11%">
+                <tbody>
+                    <tr ng-repeat='data in model.dataList'>
+                        <td>{{data[0]}}</td>
+                        <td>{{data[2]}}</td>
+                        <td>{{data[1]}}</td>
+                        <td>{{data[3]}}</td>
+                        <td>{{data[4]|date:'hh:mm:ss'}}</td>
+                        <td>- - - </td>
+                        <td>
+                            <label class=" label label-default" ng-show="'AUTO'===data[7]">{{data[7]}}</label>
+                            <label class="label label-primary" ng-show="'MANUAL'===data[7]">{{data[7]}}</label>
+                        </td>
+                        <td ng-show='data[5]===data[6]'><label class="label label-success">{{data[5]}}</label></td>
+                        <td ng-show='data[5]!==data[6]'><label class="label label-warning">{{data[5]}}</label></td>
+                        <td class="text-right" style="padding-left: 5px;">
+                            &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="fab-container">
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
+</div>

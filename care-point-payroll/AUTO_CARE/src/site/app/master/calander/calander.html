@@ -1,0 +1,112 @@
+<div>
+    <div class="col-lg-4">
+        <div  class="background-light" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+            <table class="table-rounded control-table square-table">
+                <col style="width: 30%"/>
+                <col style="width: 55%"/>
+                <col style="width: 15%"/>
+                <tbody>
+                    <tr>
+                        <td><label class="control-label">Year </label></td>
+                        <td><input class="form-control" ng-model="year"  ></td>
+                        <td><a class="btn btn-lg btn-primary" ng-click="ui.setSundayAndSaturday()"><span class="glyphicon glyphicon-plus"></span></a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table-rounded">
+                <col style="width: 35%"/>
+                <col style="width: 65%"/>
+
+                <tbody>                
+                <label style="margin-top: 20px" class="control-label"><pre>Selected date is: <em>{{dt| date:'fullDate' }}</em></pre></label>
+                <tr>
+                    <td><label class="control-label">Date</label></td>
+                    <td><input type="date" class="form-control"  ng-model="dt"  ></td>
+                </tr>
+                <tr>
+                    <td><label class="control-label">Event Name</label></td>   
+                    <td>
+                        <select class="form-control" ng-model="model.event.name">
+                            <option>Working_Day</option>
+                            <option>Poya_Day</option>
+                            <option>HoliDay</option>
+                            <option>Paid_HoliDay</option>
+                            <option>Sunday</option>
+                            <option>Saturday</option>
+                        </select>
+                    </td>
+                </tr>     
+                </tbody>
+            </table>
+            <button class="btn btn-primary" style="padding-top: 3px;padding-bottom: 14px;" ng-click="ui.addToList()"> Add to list &nbsp;<span class="glyphicon glyphicon-plus"></span></button>
+            <br>
+            <table class="table-rounded">
+                <col style="width: 10%"/>
+                <col style="width: 40%"/>
+                <col style="width: 10%"/>
+                <col style="width: 40%"/>
+                <tbody>
+                    <tr>
+                        <td><label class="label" style="background-color: #cccccc">_</label></td>
+                        <td>Working_Day</td>
+                        <td><label class="label" style="background-color: yellow">_</label></td>
+                        <td>Poya_Day</td>
+                    </tr>
+                    <tr>
+                        <td><label class="label" style="background-color: wheat">_</label></td>
+                        <td>HoliDay</td>
+                        <td><label class="label" style="background-color: #32cd32">_</label></td>
+                        <td>Paid_HoliDay</td>
+                    </tr>
+                    <tr>
+                        <td><label class="label" style="background-color: red">_</label></td>
+                        <td>Sunday</td>
+                        <td><label class="label" style="background-color: orange">_</label></td>
+                        <td>Saturday</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <table class="table-rounded">
+                <col style="width: 20%">
+                <col style="width: 40%">
+                <col style="width: 40%">
+                <thead class="background-dark"> 
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Event Name</th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="smart-scroll-y" style="height: calc(100vh);">
+                <table class="table-rounded table-hover">
+                    <col style="width: 20%">
+                    <col style="width: 40%">
+                    <col style="width: 40%">
+                    <tbody>
+                        <tr ng-repeat="data in model.saveData.savelist| orderBy:date">
+                            <td class="label" style="background-color: #cccccc" ng-show="data.status=='Working_Day'">{{$index+1}}</td>
+                            <td class="label" style="background-color: yellow" ng-show="data.status=='Poya_Day'">{{$index+1}}</td>
+                            <td class="label" style="background-color: wheat" ng-show="data.status=='HoliDay'">{{$index+1}}</td>
+                            <td class="label" style="background-color: #32cd32" ng-show="data.status=='Paid_HoliDay'">{{$index+1}}</td>
+                            <td class="label" style="background-color: red" ng-show="data.status=='Sunday'">{{$index+1}}</td>
+                            <td class="label" style="background-color: orange" ng-show="data.status=='Saturday'">{{$index+1}}</td>
+                            <td>{{data.date| date}}</td>
+                            <td>{{data.status}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div> 
+    </div>
+    <div class="col-lg-8">
+        <div style="display:inline-block; margin-top: 20px; min-height:290px;">
+            <div uib-datepicker ng-model="dt" class="well well-lgl" datepicker-options="options"></div>
+        </div>
+    </div>
+</div>
+<div class="fab-container">
+    <!--<a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>-->
+    <a class="fab fab-lg fab-primary" ng-click="ui.saveDetail();"><i class="glyphicon glyphicon-ok"></i></a>
+</div>
