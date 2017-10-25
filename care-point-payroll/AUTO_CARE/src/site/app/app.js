@@ -5,6 +5,7 @@
         "ngCookies",
         "ui.bootstrap",
         //master
+        "leaveCategoryModule",
         "clientModule",
         "vehicleModule",
         "app",
@@ -49,9 +50,13 @@
                         })
 
                         //registration
-                        .when("/master/create-account", {
-                            templateUrl: "app/master/create-account/create-account.html",
-                            controller: "createAccountController"
+                        .when("/master/leave-setup", {
+                            templateUrl: "app/master/leave/leave-setup/leave-setup.html"
+//                            controller: "createAccountController"
+                        })
+                        .when("/master/leave-category", {
+                            templateUrl: "app/master/leave/leave-category/leave-category.html",
+                            controller: "leaveCategoryController"
                         })
                         .when("/master/calander", {
                             templateUrl: "app/master/calander/calander.html",
