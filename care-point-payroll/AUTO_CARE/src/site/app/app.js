@@ -6,6 +6,7 @@
         "ui.bootstrap",
         //master
         "leaveCategoryModule",
+        "leaveSetupModule",
         "clientModule",
         "vehicleModule",
         "app",
@@ -51,8 +52,8 @@
 
                         //registration
                         .when("/master/leave-setup", {
-                            templateUrl: "app/master/leave/leave-setup/leave-setup.html"
-//                            controller: "createAccountController"
+                            templateUrl: "app/master/leave/leave-setup/leave-setup.html",
+                            controller: "leaveSetupController"
                         })
                         .when("/master/leave-category", {
                             templateUrl: "app/master/leave/leave-category/leave-category.html",
@@ -75,6 +76,10 @@
                         .when("/transaction/attendance", {
                             templateUrl: "app/service/attendance/attendance.html",
                             controller: "attendanceController"
+                        })
+                        .when("/transaction/leave-request", {
+                            templateUrl: "app/service/leave/leave-request/leave-request.html"
+//                            controller: "attendanceController"
                         })
                         
                         

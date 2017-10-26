@@ -12,13 +12,20 @@
                     <tr>
                         <td>
                             <label class="control-label">Year :</label>
-                            <input type="date" id="year" class="form-control" ng-model="model.leave.year" ng-disabled="ui.mode !== 'NEW'" />
+                            <select name="yearpicker" id="year" class="form-control" ng-model="model.leave.year" ng-disabled="ui.mode !== 'NEW'">
+                                <option value=''></option>
+                                <option ng-repeat="year in yearList | limitTo:5">{{year}}</option>
+                            </select>
+                            <!--<input type="date" id="year" class="form-control" ng-model="model.leave.year" ng-disabled="ui.mode !== 'NEW'" />-->
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <label class="control-label">Emp Type :</label>
-                            <input type="text" id="date" class="form-control" ng-model="model.leave.type" ng-disabled="ui.mode !== 'NEW'" />
+                            <select class="form-control" ng-model="model.leave.type"  ng-disabled="ui.mode !== 'NEW'">
+                                <option value=''></option>
+                                <option ng-repeat="type in model.empTypeList">{{type}}</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>
@@ -58,7 +65,7 @@
             <col style="width: 15%">
             <col style="width: 15%">
             <col style="width: 15%">
-            <col style="width: 10%">
+            <!--<col style="width: 10%">-->
             <thead class="background-dark"> 
                 <tr>
                     <th>Year</th>
@@ -67,7 +74,7 @@
                     <th>Casual</th>
                     <th>Half Day</th>
                     <th>Short Leave</th>
-                    <th>&nbsp;</th>
+                    <!--<th>&nbsp;</th>-->
                 </tr>
             </thead>
         </table>
@@ -79,19 +86,18 @@
                 <col style="width: 15%">
                 <col style="width: 15%">
                 <col style="width: 15%">
-                <col style="width: 10%">
+                <!--<col style="width: 10%">-->
                 <tbody>
                     <tr ng-repeat="category in model.categoryList">
-                        <td>{{category.year| date:'yyyy'}}</td>
+                        <td>{{category.year}}</td>
                         <td>{{category.type}}</td>
                         <td>{{category.annual}}</td>
                         <td>{{category.casual}}</td>
                         <td>{{category.halfDay}}</td>
                         <td>{{category.shortLeave}}</td>
-                        <td>
-                            <a class="btn btn-primary" ng-click="ui.edit(client, $index)"><span class="glyphicon glyphicon-edit"></span></a>
-                            <a class="btn btn-danger" ng-click="http.deleteClient(client.indexNo, $index)"><span class="glyphicon glyphicon-trash"></span></a>
-                        </td>
+<!--                        <td>
+                            <a class="btn btn-primary" ng-click="ui.edit(category, $index)"><span class="glyphicon glyphicon-edit"></span></a>
+                        </td>-->
                     </tr>
                 </tbody>
             </table>
@@ -100,6 +106,7 @@
 </div>
 <div class="fab-container">
     <!--<a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>-->
-    <a class="fab fab-lg fab-primary" ng-hide="ui.mode === 'NEW'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
-    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
+    <a class="fab fab-lg fab-primary" ng-hide="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'EDIT'" ng-click="ui.update();"><i class="glyphicon glyphicon-ok"></i></a>
 </div>

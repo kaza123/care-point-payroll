@@ -1,15 +1,16 @@
 (function () {
     //module
-    angular.module("leaveCategoryModule", ['ui.bootstrap', 'ui-notification']);
+    angular.module("leaveSetupModule", ['ui.bootstrap', 'ui-notification']);
 
     //http factory
-    angular.module("leaveCategoryModule")
-            .factory("leaveCategoryFactory", function ($http, systemConfig) {
+    angular.module("leaveSetupModule")
+            .factory("leaveSetupFactory", function ($http, systemConfig) {
                 var factory = {};
 
-                //load category
-                factory.loadLeaveCategoryFactory = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/leave/leave-category";
+                //load leave setup
+
+                factory.findByYearLeaveSetupFactory = function (year, callback) {
+                    var url = systemConfig.apiUrl + "/api/leave/leave-setup-year/" + year;
 
                     $http.get(url)
                             .success(function (data, status, headers) {
@@ -20,9 +21,8 @@
                             });
                 };
 
-                //load employee type
-                factory.loadEmpTypeFactory = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/leave/employee-types";
+                factory.findByYearAndEpfLeaveSetupFactory = function (year, epfNo, callback) {
+                    var url = systemConfig.apiUrl + "/api/leave/leave-setup-year-epf/" + year + "/" + epfNo;
 
                     $http.get(url)
                             .success(function (data, status, headers) {
@@ -34,8 +34,8 @@
                 };
 
                 //save
-                factory.saveLeaveCategoryFactory = function (leave, callback, errorCallback) {
-                    var url = systemConfig.apiUrl + "/api/leave/save-leave-category";
+                factory.updateLeaveSetupFactory = function (leave, callback, errorCallback) {
+                    var url = systemConfig.apiUrl + "/api/leave/leave-setup-update";
 
                     $http.post(url, leave)
                             .success(function (data, status, headers) {
@@ -48,27 +48,14 @@
                             });
                 };
 
-                //delete
-                factory.deleteLeaveCategoryFactory = function (indexNo, callback, errorCallback) {
-                    var url = systemConfig.apiUrl + "/api/leave/delete-leave" + indexNo;
-                    $http.delete(url)
-                            .success(function (data, status, headers) {
-                                callback(data);
-                            })
-                            .error(function (data, status, headers) {
-                                if (errorCallback) {
-                                    errorCallback(data);
-                                }
-                            });
-                };
 
                 return factory;
             });
 
 
     //controller
-    angular.module("leaveCategoryModule")
-            .controller("leaveCategoryController", function ($scope, ConfirmPane, $filter, leaveCategoryFactory, Notification, $timeout) {
+    angular.module("leaveSetupModule")
+            .controller("leaveSetupController", function ($scope, $filter, leaveSetupFactory, Notification, $timeout) {
                 //data models 
                 $scope.model = {};
                 $scope.model.leave = {};
@@ -86,8 +73,9 @@
                 //reset model
                 $scope.model.reset = function () {
                     $scope.model.leave = {
-                        "indexNo": null,
-                        "type": null,
+                        "empIndex": null,
+                        "year": null,
+                        "EpfNo": null,
                         "annual": null,
                         "casual": null,
                         "halfDay": null,
@@ -97,7 +85,7 @@
 
                 //------------------ validation functions ------------------------------
                 $scope.validateInput = function () {
-                    if ($scope.model.leave.year && $scope.model.leave.type && $scope.model.leave.annual
+                    if ($scope.model.leave.year && $scope.model.leave.annual
                             && $scope.model.leave.casual && $scope.model.leave.halfDay && $scope.model.leave.shortLeave) {
                         return true;
                     } else {
@@ -107,37 +95,48 @@
 
 
                 //<-----------------http funtiion------------------->
-                $scope.http.saveLeaveCategory = function () {
-                    ConfirmPane.primaryConfirm("DO YOU WANT TO SAVE !")
-                            .confirm(function () {
-                                var detail = $scope.model.leave;
-                                var detailJSON = JSON.stringify(detail);
-                                leaveCategoryFactory.saveLeaveCategoryFactory(
-                                        detailJSON,
-                                        function (data) {
-                                            if (data) {
-                                                $scope.model.categoryList.push(data);
-                                                Notification.success(data.indexNo + " - " + "Leave setup save successfully");
-                                                $scope.model.reset();
-                                            } else {
-                                                Notification.error("Leave setup already exists");
-                                                $scope.model.reset();
-                                            }
-                                        },
-                                        function (data) {
-                                            Notification.error(data.message);
-                                        }
-                                );
-                            });
+                $scope.http.saveLeaveSetup = function () {
+                    var detail = $scope.model.leave;
 
+                    var detailJSON = JSON.stringify(detail);
+                    leaveSetupFactory.updateLeaveSetupFactory(
+                            detailJSON,
+                            function (data) {
+                                Notification.success("Leave Setup Save Successfully");
+                                $scope.model.reset();
+                            },
+                            function (data) {
+                                Notification.error(data.message);
+                            }
+                    );
                 };
 
+
+                $scope.http.selectYear = function (year) {
+                    leaveSetupFactory.findByYearLeaveSetupFactory(year
+                            , function (data) {
+                                $scope.model.leaveList = data;
+                            });
+                };
+
+                $scope.http.selectEpfNo = function (keyEvent, epfNo) {
+                    if ($scope.model.leave.year) {
+                        if (keyEvent.which === 13)
+                            leaveSetupFactory.findByYearAndEpfLeaveSetupFactory($scope.model.leave.year, epfNo
+                                    , function (data) {
+                                        $scope.model.leaveList = data;
+                                    });
+                    } else {
+                        Notification.error("please select year");
+                    }
+                };
 
                 //<-----------------ui funtiion--------------------->
                 //save function
                 $scope.ui.save = function () {
                     if ($scope.validateInput()) {
-                        $scope.http.saveLeaveCategory();
+                        $scope.ui.mode = "IDEAL";
+                        $scope.http.saveLeaveSetup();
                     } else {
                         Notification.error("Please input detail");
                     }
@@ -158,11 +157,15 @@
                 };
 
                 //edit funtion
-                $scope.ui.edit = function (category, index) {
-                    $scope.ui.mode = "EDIT";
-                    $scope.model.leave = category;
-                    $scope.model.categoryList.splice(index, 1);
-
+                $scope.ui.edit = function (leave, index) {
+                    $scope.model.leave.year = leave[0];
+                    $scope.model.leave.EpfNo = leave[1];
+                    $scope.model.leave.annual = leave[3];
+                    $scope.model.leave.casual = leave[4];
+                    $scope.model.leave.halfDay = leave[5];
+                    $scope.model.leave.shortLeave = leave[6];
+                    $scope.model.leave.empIndex = leave[7];
+                    $scope.model.leaveList.splice(index, 1);
                     $scope.ui.focus();
                 };
 
@@ -170,16 +173,6 @@
                 $scope.ui.init = function () {
                     //set ideal mode
                     $scope.ui.mode = "IDEAL";
-
-                    //all category
-                    leaveCategoryFactory.loadLeaveCategoryFactory(function (data) {
-                        $scope.model.categoryList = data;
-                    });
-
-                    //all employee types
-                    leaveCategoryFactory.loadEmpTypeFactory(function (data) {
-                        $scope.model.empTypeList = data;
-                    });
 
                     //set values to date picker
                     for (var j = new Date().getFullYear(); j > 2010; j--)
