@@ -5,14 +5,19 @@
  */
 package com.mac.care_point.transaction.leave_request;
 
+import com.mac.care_point.master.employee.EmployeeRepository;
+import com.mac.care_point.master.employee.model.Employee;
 import com.mac.care_point.transaction.leave_request.model.LeaveRequestMix;
+import com.mac.care_point.transaction.leave_request.model.TLeave;
 import com.mac.care_point.transaction.leave_request.model.TLeaveDetails;
 import com.mac.care_point.transaction.leave_request.model.TLeaveRequest;
+import com.mac.care_point.zutil.SecurityUtil;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,16 +36,31 @@ public class LeaveRequestService {
     @Autowired
     private LeaveRequestRepository leaveRequestRepository;
 
+    @Autowired
+    private LeavesRepository leavesRepository;
+    
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
     public List<TLeaveDetails> findAll() {
         return leaveRequestDetailRepository.findAll();
     }
 
     @Transactional
-    public TLeaveDetails saveLeave(LeaveRequestMix leaveRequestMix) throws ParseException {
+    public int saveLeave(LeaveRequestMix leaveRequestMix) throws ParseException {
+        //save leave
+        TLeave leave = new TLeave();
+        leave.setBranch(SecurityUtil.getCurrentUser().getBranch());
+        leave.setEmployee(leaveRequestMix.getEmployee());
+        leave.setReason(leaveRequestMix.getReason());
+        leave.setApprove(Boolean.FALSE);
+        leave.setView(null);
+        TLeave tleave = leavesRepository.save(leave);
+
         List<TLeaveRequest> leaveRequests = leaveRequestMix.getLeaveRequest();
-        TLeaveDetails savedetail = new TLeaveDetails();
         for (TLeaveRequest leaveRequest : leaveRequests) {
             //save leave request
+            leaveRequest.setLeave(tleave);
             TLeaveRequest saveLeaveRequest = leaveRequestRepository.save(leaveRequest);
 
             //parse date to simple date format
@@ -55,7 +75,6 @@ public class LeaveRequestService {
                     TLeaveDetails leaveDetails = new TLeaveDetails();
                     leaveDetails.setDate(sdf.format(fromDate));
                     leaveDetails.setLeaveType(leaveRequest.getLeaveType());
-                    leaveDetails.setRealLeave(false);
                     leaveDetails.setTLeaveRequest(saveLeaveRequest);
                     leaveRequestDetailRepository.save(leaveDetails);
                     fromDate.setDate(fromDate.getDate() + 1);
@@ -65,11 +84,15 @@ public class LeaveRequestService {
             TLeaveDetails leaveDetails = new TLeaveDetails();
             leaveDetails.setDate(sdf.format(toDate));
             leaveDetails.setLeaveType(leaveRequest.getLeaveType());
-            leaveDetails.setRealLeave(false);
             leaveDetails.setTLeaveRequest(saveLeaveRequest);
-            savedetail = leaveRequestDetailRepository.save(leaveDetails);
+            leaveRequestDetailRepository.save(leaveDetails);
         }
-        return savedetail;
+        return 1;
+    }
+
+    public Employee findEmployeeByEpfNo(String epfNo) {
+        return null;
+//        return employeeRepository.findByEpfNoAndBranch(epfNo,SecurityUtil.getCurrentUser().getBranch());
     }
 
 }
