@@ -7,11 +7,12 @@
         //master
         "leaveCategoryModule",
         "leaveSetupModule",
+        "leaveRequestModule",
         "clientModule",
         "vehicleModule",
         "app",
         "vehicleEntranceModule",
-        
+
         //transaction
         "fingerPrintModule",
         "attendanceModule"
@@ -78,11 +79,15 @@
                             controller: "attendanceController"
                         })
                         .when("/transaction/leave-request", {
-                            templateUrl: "app/service/leave/leave-request/leave-request.html"
+                            templateUrl: "app/service/leave/leave-request/leave-request.html",
+                            controller: "leaveRequestController"
+                        })
+                        .when("/transaction/leave-approve", {
+                            templateUrl: "app/service/leave/leave-approve/leave-approve.html"
 //                            controller: "attendanceController"
                         })
-                        
-                        
+
+
                         //otherwise
                         .otherwise({
                             redirectTo: "/"
