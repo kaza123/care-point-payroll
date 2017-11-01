@@ -43,8 +43,8 @@
                 <input type="date" id="year" class="form-control" ng-model="leaveTemp.toDate" ng-disabled="ui.mode !== 'NEW' || ui.leaveMode === 'half_day'" />
             </div>
             <div class="col-xs-6" style="margin-top: 10px;">
-                <label>Reson :</label>
-                <input type="text" id="date" class="form-control" ng-model="leaveTemp.reson" ng-disabled="ui.mode !== 'NEW'" />
+                <label>Reason :</label>
+                <input type="text" id="date" class="form-control" ng-model="model.leave.reason" ng-disabled="ui.mode !== 'NEW'" />
             </div>
             <div class="col-xs-6" style="margin-top: 35px;">
                 <a class="btn btn-sm btn-primary" ng-click="ui.add(leaveTemp)"><span class="glyphicon glyphicon-plus"></span></a>
@@ -83,7 +83,7 @@
                         <td>{{request.fromDate| date}}</td>
                         <td>{{request.toDate| date}}</td>
                         <td>{{request.leaveType}}</td>
-                        <td>{{request.reson}}</td>
+                        <td>{{model.leave.reason}}</td>
                         <td>
                             <a class="btn btn-danger" ng-click="ui.edit(category, $index)"><span class="glyphicon glyphicon-remove"></span></a>
                         </td>

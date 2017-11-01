@@ -21,7 +21,7 @@
                             });
                 };
 
-                factory.findByYearAndEpfLeaveSetupFactory = function (year, epfNo, callback) {
+                factory.findEmployeeByEpfNoFactory = function (year, epfNo, callback) {
                     var url = systemConfig.apiUrl + "/api/leave/leave-setup-year-epf/" + year + "/" + epfNo;
 
                     $http.get(url)
@@ -59,15 +59,28 @@
                 //data models 
                 $scope.model = {};
                 $scope.model.leave = {
-                    leaveRequest: []
+                    employee: 10,
+                    branch: null,
+                    reason: null,
+                    approve: null,
+                    view: null,
+                    leaveRequest: [
+//                        {
+//                            indexNo : null,
+//                            leave: null,
+//                            fromDate: null,
+//                            toDate: null,
+//                            approve: null,
+//                            realApprove: null,
+//                            leaveType: null
+//                        }
+                    ]
                 };
                 $scope.leaveTemp = {
-                    indexNo: null,
-                    employee: null,
+                    leave: null,
                     fromDate: null,
                     toDate: null,
                     approve: null,
-                    reson: null,
                     leaveType: null
                 };
                 //ui models
@@ -124,11 +137,12 @@
 
 
                 $scope.http.selectEpfNo = function (keyEvent, epfNo) {
-                    if ($scope.model.leave.year) {
+                    if ($scope.model.epfNo) {
                         if (keyEvent.which === 13)
-                            leaveRequestFactory.findByYearAndEpfLeaveSetupFactory($scope.model.leave.year, epfNo
+                            leaveRequestFactory.findEmployeeByEpfNoFactory(epfNo
                                     , function (data) {
-                                        $scope.model.leaveList = data;
+                                        console.log(data)
+//                                        $scope.model.leaveList = data;
                                     });
                     } else {
                         Notification.error("please select year");
@@ -138,7 +152,6 @@
                 //<-----------------ui funtiion--------------------->
                 //save function
                 $scope.ui.save = function () {
-                    console.log("1")
 //                    if ($scope.validateInput()) {
 //                        $scope.ui.mode = "IDEAL";
                     $scope.http.saveLeaveRequest();
@@ -167,8 +180,7 @@
                     if (leaveTemp.toDate === null || angular.isUndefined(leaveTemp.toDate)) {
                         leaveTemp.toDate = leaveTemp.fromDate;
                     }
-                    leaveTemp.employee=10;
-                    leaveTemp.approve=0;
+                    leaveTemp.approve = 0;
                     $scope.model.leave.leaveRequest.push(leaveTemp);
                     $scope.leaveTemp = {};
                 };

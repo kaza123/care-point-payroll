@@ -6,32 +6,57 @@
 package com.mac.care_point.transaction.leave_request.model;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author Nidura Prageeth
  */
-public class LeaveRequestMix implements Serializable {
+@Entity
+@Table(name = "t_leave")
+public class TLeave implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "index_no")
+    private Integer indexNo;
+
+    @Column(name = "employee")
     private int employee;
-    private int branch;
-    private String reason;
-    private Boolean approve;
-    private Boolean view;
-    private List<TLeaveRequest> leaveRequest;
 
-    public LeaveRequestMix() {
+    @Column(name = "branch")
+    private int branch;
+
+    @Column(name = "reason")
+    private String reason;
+
+    @Column(name = "approve")
+    private Boolean approve;
+
+    @Column(name = "view")
+    private Boolean view;
+
+//    @OneToMany(cascade = CascadeType.ALL,mappedBy = "leave",fetch =FetchType.EAGER)
+//    private List<TLeaveRequest> leaveRequest;
+
+    public TLeave() {
     }
 
-    public LeaveRequestMix(int employee, int branch, String reason, Boolean approve, Boolean view, List<TLeaveRequest> leaveRequest) {
-        this.employee = employee;
-        this.branch = branch;
-        this.reason = reason;
-        this.approve = approve;
-        this.view = view;
-        this.leaveRequest = leaveRequest;
+    public Integer getIndexNo() {
+        return indexNo;
+    }
+
+    public void setIndexNo(Integer indexNo) {
+        this.indexNo = indexNo;
     }
 
     public int getEmployee() {
@@ -72,22 +97,9 @@ public class LeaveRequestMix implements Serializable {
 
     public void setView(Boolean view) {
         this.view = view;
-    }
-
-    public List<TLeaveRequest> getLeaveRequest() {
-        return leaveRequest;
-    }
-
-    public void setLeaveRequest(List<TLeaveRequest> leaveRequest) {
-        this.leaveRequest = leaveRequest;
-    }
-
-    @Override
-    public String toString() {
-        return "LeaveRequestMix{" + "employee=" + employee + ", branch=" + branch + ", reason=" + reason + ", approve=" + approve + ", view=" + view + ", leaveRequest=" + leaveRequest + '}';
-    }
-
+    }   
     
     
     
+
 }
