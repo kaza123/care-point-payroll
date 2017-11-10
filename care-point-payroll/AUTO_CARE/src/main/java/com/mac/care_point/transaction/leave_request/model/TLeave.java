@@ -5,7 +5,9 @@
  */
 package com.mac.care_point.transaction.leave_request.model;
 
+import com.mac.care_point.master.employee.model.Employee;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,6 +16,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -30,8 +34,9 @@ public class TLeave implements Serializable {
     @Column(name = "index_no")
     private Integer indexNo;
 
-    @Column(name = "employee")
-    private int employee;
+    @JoinColumn(name = "employee")
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    private Employee employee;
 
     @Column(name = "branch")
     private int branch;
@@ -41,9 +46,9 @@ public class TLeave implements Serializable {
 
     @Column(name = "approve")
     private Boolean approve;
-
-    @Column(name = "view")
-    private Boolean view;
+    
+    @Column(name = "date")
+    private Date date;
 
 //    @OneToMany(cascade = CascadeType.ALL,mappedBy = "leave",fetch =FetchType.EAGER)
 //    private List<TLeaveRequest> leaveRequest;
@@ -59,13 +64,6 @@ public class TLeave implements Serializable {
         this.indexNo = indexNo;
     }
 
-    public int getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(int employee) {
-        this.employee = employee;
-    }
 
     public int getBranch() {
         return branch;
@@ -91,13 +89,21 @@ public class TLeave implements Serializable {
         this.approve = approve;
     }
 
-    public Boolean getView() {
-        return view;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setView(Boolean view) {
-        this.view = view;
-    }   
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
     
     
     

@@ -5,6 +5,7 @@
  */
 package com.mac.care_point.transaction.leave_request.model;
 
+import com.mac.care_point.master.employee.model.Employee;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -25,22 +26,6 @@ public class LeaveRequestMix implements Serializable {
     public LeaveRequestMix() {
     }
 
-    public LeaveRequestMix(int employee, int branch, String reason, Boolean approve, Boolean view, List<TLeaveRequest> leaveRequest) {
-        this.employee = employee;
-        this.branch = branch;
-        this.reason = reason;
-        this.approve = approve;
-        this.view = view;
-        this.leaveRequest = leaveRequest;
-    }
-
-    public int getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(int employee) {
-        this.employee = employee;
-    }
 
     public int getBranch() {
         return branch;
@@ -82,12 +67,14 @@ public class LeaveRequestMix implements Serializable {
         this.leaveRequest = leaveRequest;
     }
 
-    @Override
-    public String toString() {
-        return "LeaveRequestMix{" + "employee=" + employee + ", branch=" + branch + ", reason=" + reason + ", approve=" + approve + ", view=" + view + ", leaveRequest=" + leaveRequest + '}';
+    public int getEmployee() {
+        return employee;
     }
 
-    
+    public void setEmployee(int employee) {
+        this.employee = employee;
+    }
+
     
     
 }

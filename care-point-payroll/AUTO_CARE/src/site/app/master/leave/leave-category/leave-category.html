@@ -14,7 +14,7 @@
                             <label class="control-label">Year :</label>
                             <select name="yearpicker" id="year" class="form-control" ng-model="model.leave.year" ng-disabled="ui.mode !== 'NEW'">
                                 <option value=''></option>
-                                <option ng-repeat="year in yearList | limitTo:5">{{year}}</option>
+                                <option ng-repeat="year in yearList| limitTo:5">{{year}}</option>
                             </select>
                             <!--<input type="date" id="year" class="form-control" ng-model="model.leave.year" ng-disabled="ui.mode !== 'NEW'" />-->
                         </td>
@@ -42,14 +42,8 @@
                     </tr>
                     <tr>
                         <td>
-                            <label class="control-label">Half Day :</label>
-                            <input type="text" id="date" class="form-control" ng-model="model.leave.halfDay" ng-disabled="ui.mode !== 'NEW'" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="control-label">Short Leave :</label>
-                            <input type="text" id="date" class="form-control" ng-model="model.leave.shortLeave" ng-disabled="ui.mode !== 'NEW'" />
+                            <label class="control-label">Medical :</label>
+                            <input type="text" id="date" class="form-control" ng-model="model.leave.medical" ng-disabled="ui.mode !== 'NEW'" />
                         </td>
                     </tr>
 
@@ -64,7 +58,6 @@
             <col style="width: 15%">
             <col style="width: 15%">
             <col style="width: 15%">
-            <col style="width: 15%">
             <!--<col style="width: 10%">-->
             <thead class="background-dark"> 
                 <tr>
@@ -72,15 +65,13 @@
                     <th>Emp type</th>
                     <th>Annual</th>
                     <th>Casual</th>
-                    <th>Half Day</th>
-                    <th>Short Leave</th>
+                    <th>Medical</th>
                     <!--<th>&nbsp;</th>-->
                 </tr>
             </thead>
         </table>
         <div class="smart-scroll-y" style="height: calc(100vh - 220px);">
             <table class="table-rounded table-hover">
-                <col style="width: 15%">
                 <col style="width: 15%">
                 <col style="width: 15%">
                 <col style="width: 15%">
@@ -93,11 +84,10 @@
                         <td>{{category.type}}</td>
                         <td>{{category.annual}}</td>
                         <td>{{category.casual}}</td>
-                        <td>{{category.halfDay}}</td>
-                        <td>{{category.shortLeave}}</td>
-<!--                        <td>
-                            <a class="btn btn-primary" ng-click="ui.edit(category, $index)"><span class="glyphicon glyphicon-edit"></span></a>
-                        </td>-->
+                        <td>{{category.medical}}</td>
+                        <!--                        <td>
+                                                    <a class="btn btn-primary" ng-click="ui.edit(category, $index)"><span class="glyphicon glyphicon-edit"></span></a>
+                                                </td>-->
                     </tr>
                 </tbody>
             </table>

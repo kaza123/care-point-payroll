@@ -11,8 +11,12 @@ import com.mac.care_point.master.leave.model.MLeaveCategory;
 import com.mac.care_point.master.leave.model.MLeaveSetup;
 import com.mac.care_point.master.leave.model.SetupMix;
 import com.mac.care_point.zutil.SecurityUtil;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -45,7 +49,7 @@ public class LeaveService {
 
     @Transactional
     public MLeaveCategory saveLeaveCategory(MLeaveCategory leaveCategory) {
-        MLeaveCategory category = leaveRepository.findByYearAndTypeAndBranch(leaveCategory.getYear(), leaveCategory.getType(),SecurityUtil.getCurrentUser().getBranch());
+        MLeaveCategory category = leaveRepository.findByYearAndTypeAndBranch(leaveCategory.getYear(), leaveCategory.getType(), SecurityUtil.getCurrentUser().getBranch());
         if (category == null) {
             List<Employee> employees = employeeRepository.findByTypeAndBranch(leaveCategory.getType(), SecurityUtil.getCurrentUser().getBranch());
             for (Employee employee : employees) {
@@ -55,8 +59,7 @@ public class LeaveService {
                 leaveSetup.setYear(leaveCategory.getYear());
                 leaveSetup.setAnnual(leaveCategory.getAnnual());
                 leaveSetup.setCasual(leaveCategory.getCasual());
-                leaveSetup.setHalfDay(leaveCategory.getHalfDay());
-                leaveSetup.setShortLeave(leaveCategory.getShortLeave());
+                leaveSetup.setMedical(leaveCategory.getMedical());
                 leaveSetupRepository.save(leaveSetup);
             }
             leaveCategory.setBranch(SecurityUtil.getCurrentUser().getBranch());
@@ -68,11 +71,11 @@ public class LeaveService {
 
     //leave setup funtions
     public List<Object> findAllLeaveSetupByYear(String year) {
-        return leaveSetupRepository.findAllLeaveSetupByYear(year,SecurityUtil.getCurrentUser().getBranch());
+        return leaveSetupRepository.findAllLeaveSetupByYear(year, SecurityUtil.getCurrentUser().getBranch());
     }
 
     public List<Object> findAllLeaveSetupByYearAndEpfNo(String year, String epfNo) {
-        return leaveSetupRepository.findAllLeaveSetupByYearAndEpfNo(year, epfNo,SecurityUtil.getCurrentUser().getBranch());
+        return leaveSetupRepository.findAllLeaveSetupByYearAndEpfNo(year, epfNo, SecurityUtil.getCurrentUser().getBranch());
     }
 
     public int updateEmployeeLeaveSetup(SetupMix setupMix) {
@@ -81,11 +84,27 @@ public class LeaveService {
 
         leaveSetup.setAnnual(setupMix.getAnnual());
         leaveSetup.setCasual(setupMix.getCasual());
-        leaveSetup.setHalfDay(setupMix.getHalfDay());
-        leaveSetup.setShortLeave(setupMix.getShortLeave());
+        leaveSetup.setMedical(setupMix.getMedical());
 
         leaveSetupRepository.save(leaveSetup);
         return 1;
+    }
+
+    // Leave Approve funtions
+    
+    public MLeaveSetup findEmployeeLeave(int empIndex, String year) {
+        Employee employee = employeeRepository.findOne(empIndex);
+        //parse date to simple date format
+        
+        SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+        String year1 = null;
+        try {
+            year1 = yearFormat.format(yearFormat.parse(year));
+        } catch (ParseException ex) {
+            Logger.getLogger(LeaveService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return leaveSetupRepository.findByYearAndEmployee(year1, employee);
     }
 
 }

@@ -73,11 +73,14 @@ public class Employee implements Serializable {
 
     @Column(name = "bay")
     private Integer bay;
+   
+    @Column(name = "epf_no")
+    private Integer epfNo;
 
     public Employee() {
     }
 
-    public Employee(Integer indexNo, String name, String addressLine1, String addressLine2, String addressLine3, String mobile, int branch, String type, String rol, String image, Integer bay) {
+    public Employee(Integer indexNo, String name, String addressLine1, String addressLine2, String addressLine3, String mobile, int branch, String type, String rol, String image, Integer bay, Integer epfNo) {
         this.indexNo = indexNo;
         this.name = name;
         this.addressLine1 = addressLine1;
@@ -89,6 +92,7 @@ public class Employee implements Serializable {
         this.rol = rol;
         this.image = image;
         this.bay = bay;
+        this.epfNo = epfNo;
     }
 
     public Integer getIndexNo() {
@@ -179,4 +183,14 @@ public class Employee implements Serializable {
         this.bay = bay;
     }
 
+    public Integer getEpfNo() {
+        return epfNo;
+    }
+
+    public void setEpfNo(Integer epfNo) {
+        this.epfNo = epfNo;
+    }
+
+   
+    
 }

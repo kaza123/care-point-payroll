@@ -20,8 +20,8 @@ import org.springframework.data.repository.query.Param;
 public interface LeaveSetupRepository extends JpaRepository<MLeaveSetup, Integer> {
 
     @Query(value = "SELECT  m_leave_setup.year,m_employee.epf_no, m_employee.name,\n"
-            + "m_leave_setup.annual,m_leave_setup.casual,m_leave_setup.half_day,\n"
-            + "m_leave_setup.short_leave,m_employee.index_no as empIndex\n"
+            + "m_leave_setup.annual,m_leave_setup.casual,m_leave_setup.medical,\n"
+            + "m_employee.index_no as empIndex\n"
             + "FROM\n"
             + "m_leave_setup\n"
             + "INNER JOIN\n"
@@ -30,8 +30,8 @@ public interface LeaveSetupRepository extends JpaRepository<MLeaveSetup, Integer
     public List<Object> findAllLeaveSetupByYear(@Param("year") String year, @Param("branch") int branch);
 
     @Query(value = "SELECT  m_leave_setup.year,m_employee.epf_no, m_employee.name,\n"
-            + "m_leave_setup.annual,m_leave_setup.casual,m_leave_setup.half_day,\n"
-            + "m_leave_setup.short_leave,m_employee.index_no as empIndex\n"
+            + "m_leave_setup.annual,m_leave_setup.casual,m_leave_setup.medical,\n"
+            + "m_employee.index_no as empIndex\n"
             + "FROM\n"
             + "m_leave_setup\n"
             + "INNER JOIN\n"

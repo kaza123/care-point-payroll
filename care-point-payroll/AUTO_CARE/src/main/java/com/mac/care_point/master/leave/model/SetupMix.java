@@ -15,27 +15,9 @@ public class SetupMix {
     private String year;
     private int annual;
     private int casual;
-    private int halfDay;
-    private int shortLeave;
+    private int medical;
 
     public SetupMix() {
-    }
-
-    public SetupMix(int empIndex, String year, int annual, int casual, int halfDay, int shortLeave) {
-        this.empIndex = empIndex;
-        this.year = year;
-        this.annual = annual;
-        this.casual = casual;
-        this.halfDay = halfDay;
-        this.shortLeave = shortLeave;
-    }
-
-    public int getShortLeave() {
-        return shortLeave;
-    }
-
-    public void setShortLeave(int shortLeave) {
-        this.shortLeave = shortLeave;
     }
 
     public int getEmpIndex() {
@@ -70,18 +52,14 @@ public class SetupMix {
         this.casual = casual;
     }
 
-    public int getHalfDay() {
-        return halfDay;
+    public int getMedical() {
+        return medical;
     }
 
-    public void setHalfDay(int halfDay) {
-        this.halfDay = halfDay;
+    public void setMedical(int medical) {
+        this.medical = medical;
     }
 
-    @Override
-    public String toString() {
-        return "SetupMix{" + "empIndex=" + empIndex + ", year=" + year + ", annual=" + annual + ", casual=" + casual + ", halfDay=" + halfDay + ", shortLeave=" + shortLeave + '}';
-    }
     
     
     

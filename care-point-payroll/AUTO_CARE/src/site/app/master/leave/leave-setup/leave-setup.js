@@ -78,15 +78,14 @@
                         "EpfNo": null,
                         "annual": null,
                         "casual": null,
-                        "halfDay": null,
-                        "shortLeave": null
+                        "medical": null
                     };
                 };
 
                 //------------------ validation functions ------------------------------
                 $scope.validateInput = function () {
                     if ($scope.model.leave.year && $scope.model.leave.annual
-                            && $scope.model.leave.casual && $scope.model.leave.halfDay && $scope.model.leave.shortLeave) {
+                            && $scope.model.leave.casual && $scope.model.leave.medical) {
                         return true;
                     } else {
                         return false;
@@ -162,8 +161,7 @@
                     $scope.model.leave.EpfNo = leave[1];
                     $scope.model.leave.annual = leave[3];
                     $scope.model.leave.casual = leave[4];
-                    $scope.model.leave.halfDay = leave[5];
-                    $scope.model.leave.shortLeave = leave[6];
+                    $scope.model.leave.medical = leave[5];
                     $scope.model.leave.empIndex = leave[7];
                     $scope.model.leaveList.splice(index, 1);
                     $scope.ui.focus();

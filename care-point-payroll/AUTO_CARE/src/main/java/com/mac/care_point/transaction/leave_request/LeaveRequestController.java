@@ -50,7 +50,7 @@ public class LeaveRequestController {
     }
     
     @RequestMapping(path = "/employee/{epfNo}",method = RequestMethod.GET)
-    public Employee findEmployeeByEpfNo(@PathVariable String epfNo){
+    public Employee findEmployeeByEpfNo(@PathVariable int epfNo){
         return leaveRequestService.findEmployeeByEpfNo(epfNo);
     }
 

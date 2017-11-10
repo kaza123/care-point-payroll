@@ -37,7 +37,7 @@ public class TLeaveDetails implements Serializable {
 
     @JoinColumn(name = "leave_request", referencedColumnName = "index_no")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private TLeaveRequest TLeaveRequest;
+    private TLeaveRequest leaveRequest;
 
     @Column(name = "date")
     private String date;
@@ -47,6 +47,12 @@ public class TLeaveDetails implements Serializable {
 
     @Column(name = "real_leave")
     private Boolean realLeave;
+   
+    @Column(name = "approve")
+    private Boolean approve;
+   
+    @Column(name = "employee")
+    private int employee;
 
     public TLeaveDetails() {
     }
@@ -58,15 +64,6 @@ public class TLeaveDetails implements Serializable {
     public void setIndexNo(Integer indexNo) {
         this.indexNo = indexNo;
     }
-
-    public TLeaveRequest getTLeaveRequest() {
-        return TLeaveRequest;
-    }
-
-    public void setTLeaveRequest(TLeaveRequest TLeaveRequest) {
-        this.TLeaveRequest = TLeaveRequest;
-    }
-    
 
     public String getLeaveType() {
         return leaveType;
@@ -92,6 +89,31 @@ public class TLeaveDetails implements Serializable {
         this.date = date;
     }
 
+    public Boolean getApprove() {
+        return approve;
+    }
+
+    public void setApprove(Boolean approve) {
+        this.approve = approve;
+    }
+
+    public int getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(int employee) {
+        this.employee = employee;
+    }
+
+    public TLeaveRequest getLeaveRequest() {
+        return leaveRequest;
+    }
+
+    public void setLeaveRequest(TLeaveRequest leaveRequest) {
+        this.leaveRequest = leaveRequest;
+    }
+    
+    
     
     
 

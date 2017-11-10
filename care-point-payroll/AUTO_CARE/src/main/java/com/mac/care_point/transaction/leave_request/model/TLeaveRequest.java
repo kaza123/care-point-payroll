@@ -40,10 +40,12 @@ public class TLeaveRequest implements Serializable {
 
     @Column(name = "leave_type")
     private String leaveType;
+    
+    @Column(name = "leave_category")
+    private String leaveCategory;
 
-    @JoinColumn(name = "`leave`", referencedColumnName = "index_no")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private TLeave leave;
+    @Column(name = "`leave`")
+    private int leave;
 
     public TLeaveRequest() {
     }
@@ -88,18 +90,23 @@ public class TLeaveRequest implements Serializable {
         this.leaveType = leaveType;
     }
 
-    public TLeave getLeave() {
+    public int getLeave() {
         return leave;
     }
 
-    public void setLeave(TLeave leave) {
+    public void setLeave(int leave) {
         this.leave = leave;
     }
 
-    @Override
-    public String toString() {
-        return "TLeaveRequest{" + "indexNo=" + indexNo + ", fromDate=" + fromDate + ", toDate=" + toDate + ", approve=" + approve + ", leaveType=" + leaveType + ", leave=" + leave + '}';
+    public String getLeaveCategory() {
+        return leaveCategory;
     }
+
+    public void setLeaveCategory(String leaveCategory) {
+        this.leaveCategory = leaveCategory;
+    }
+
+    
 
  
 

@@ -44,16 +44,13 @@ public class MLeaveSetup implements Serializable {
     private String year;
     
     @Column(name = "annual")
-    private Integer annual;
+    private int annual;
     
     @Column(name = "casual")
-    private Integer casual;
+    private int casual;
     
-    @Column(name = "half_day")
-    private Integer halfDay;
-    
-    @Column(name = "short_leave")
-    private Integer shortLeave;
+    @Column(name = "medical")
+    private int medical;
 
     public MLeaveSetup() {
     }
@@ -74,6 +71,14 @@ public class MLeaveSetup implements Serializable {
         this.employee = employee;
     }
 
+    public int getBranch() {
+        return branch;
+    }
+
+    public void setBranch(int branch) {
+        this.branch = branch;
+    }
+
     public String getYear() {
         return year;
     }
@@ -82,47 +87,28 @@ public class MLeaveSetup implements Serializable {
         this.year = year;
     }
 
-    public Integer getAnnual() {
+    public int getAnnual() {
         return annual;
     }
 
-    public void setAnnual(Integer annual) {
+    public void setAnnual(int annual) {
         this.annual = annual;
     }
 
-    public Integer getCasual() {
+    public int getCasual() {
         return casual;
     }
 
-    public void setCasual(Integer casual) {
+    public void setCasual(int casual) {
         this.casual = casual;
     }
 
-    public Integer getHalfDay() {
-        return halfDay;
+    public int getMedical() {
+        return medical;
     }
 
-    public void setHalfDay(Integer halfDay) {
-        this.halfDay = halfDay;
+    public void setMedical(int medical) {
+        this.medical = medical;
     }
-
-    public Integer getShortLeave() {
-        return shortLeave;
-    }
-
-    public void setShortLeave(Integer shortLeave) {
-        this.shortLeave = shortLeave;
-    }
-
-    public int getBranch() {
-        return branch;
-    }
-
-    public void setBranch(int branch) {
-        this.branch = branch;
-    }
-    
-    
-  
     
 }

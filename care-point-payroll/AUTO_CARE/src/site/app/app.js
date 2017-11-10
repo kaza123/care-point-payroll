@@ -8,6 +8,8 @@
         "leaveCategoryModule",
         "leaveSetupModule",
         "leaveRequestModule",
+        "leaveApproveModule",
+        "shortLeaveModule",
         "clientModule",
         "vehicleModule",
         "app",
@@ -83,8 +85,12 @@
                             controller: "leaveRequestController"
                         })
                         .when("/transaction/leave-approve", {
-                            templateUrl: "app/service/leave/leave-approve/leave-approve.html"
-//                            controller: "attendanceController"
+                            templateUrl: "app/service/leave/leave-approve/leave-approve.html",
+                            controller: "leaveApproveController"
+                        })
+                        .when("/transaction/short-leave", {
+                            templateUrl: "app/service/leave/short-leave/short-leave.html",
+                            controller: "shortLeaveController"
                         })
 
 

@@ -42,11 +42,9 @@ public class MLeaveCategory implements Serializable{
     @Column(name = "casual")
     private Integer casual;
     
-    @Column(name = "half_day")
-    private Integer halfDay;
+    @Column(name = "medical")
+    private Integer medical;
     
-    @Column(name = "short_leave")
-    private Integer shortLeave;
 
     public MLeaveCategory() {
     }
@@ -91,28 +89,20 @@ public class MLeaveCategory implements Serializable{
         this.casual = casual;
     }
 
-    public Integer getHalfDay() {
-        return halfDay;
-    }
-
-    public void setHalfDay(Integer halfDay) {
-        this.halfDay = halfDay;
-    }
-
-    public Integer getShortLeave() {
-        return shortLeave;
-    }
-
-    public void setShortLeave(Integer shortLeave) {
-        this.shortLeave = shortLeave;
-    }
-
     public int getBranch() {
         return branch;
     }
 
     public void setBranch(int branch) {
         this.branch = branch;
+    }
+
+    public Integer getMedical() {
+        return medical;
+    }
+
+    public void setMedical(Integer medical) {
+        this.medical = medical;
     }
 
     

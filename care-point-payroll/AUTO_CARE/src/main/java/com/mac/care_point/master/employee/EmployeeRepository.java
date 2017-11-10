@@ -26,4 +26,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     @Query(value = "SELECT m_employee.`type` FROM m_employee WHERE m_employee.branch=:branch GROUP BY m_employee.`type`", nativeQuery = true)
     public List<String> allEmpTypesByBranch(@Param("branch")int branch);
 
+    public Employee findByEpfNoAndBranch(int epfNo, Integer branch);
+
 }

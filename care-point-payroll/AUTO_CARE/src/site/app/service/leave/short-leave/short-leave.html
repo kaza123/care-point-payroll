@@ -3,53 +3,27 @@
 
 <div class="index-content-body">
     <div class="col-xs-4 background-dark">
-        <table class="table-rounded control-table">
-            <colgroup>
-                <col style="width: 100%">
-            </colgroup>
-            <tbody>
-                <tr>
-                    <td>
-                        <label class="control-label">Emp EPF No :</label>
-                        <input type="text" id="date" ng-keypress="http.selectEpfNo($event,epfNo)" class="form-control" ng-model="epfNo" ng-disabled="ui.mode !== 'NEW'" />
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="placeholder col-md-12" ng-show="true" style="margin-top: 0px;height: calc(100vh - 153px); padding: 0px 3px 10px 0px;">
+        <div class="placeholder col-md-12" ng-show="true" style="margin-top: 0px;height: calc(100vh - 53px); padding: 10px 10px 10px 10px;">
             <h1>EMPTY HISTORY TO VIEW :(</h1>
         </div>
     </div>
     <div class="col-xs-8 background-light">
         <div class="row">
             <div class="col-xs-4" style="margin-top: 25px;">
+                <label class="control-label">Emp EPF No :</label>
+                <input type="text" id="date" ng-keypress="http.selectEpfNo($event, epfNo)" class="form-control" ng-model="epfNo" ng-disabled="ui.mode !== 'NEW'" />
+            </div>
+            <div class="col-xs-4" style="margin-top: 25px;">
                 <label>Emp Name :</label>
                 <input type="text" id="date" class="form-control" ng-model="employeeName" ng-disabled="true" />
             </div>
-             <div class="col-xs-4" style="margin-top: 25px;">
-                <label>Category :</label>
-                <select name="category" id="category" class="form-control" ng-model="leaveTemp.leaveCategory" ng-disabled="ui.mode !== 'NEW'">
-                    <option value=''></option>
-                    <option value='annual'>Annual</option>
-                    <option value='casual'>Casual</option>
-                    <option value='medical'>Medical</option>
-                </select>
-            </div>
             <div class="col-xs-4" style="margin-top: 25px;">
                 <label>Leave Type :</label>
-                <select ng-change="ui.changeLeaveType(leaveTemp.leaveType)" name="type" id="type" class="form-control" ng-model="leaveTemp.leaveType" ng-disabled="ui.mode !== 'NEW'">
-                    <option value=''></option>
-                    <option value='full_day'>Full Day</option>
-                    <option value='half_day'>Half Day</option>
-                </select>
+                <input type="text" id="date" class="form-control" ng-model="leaveTemp.leaveType" ng-disabled="true" />
             </div>
             <div class="col-xs-3" style="margin-top: 10px;">
-                <label>From Date :</label>
+                <label>Date :</label>
                 <input type="date" id="date" class="form-control" ng-model="leaveTemp.fromDate" ng-disabled="ui.mode !== 'NEW'" />
-            </div>
-            <div class="col-xs-3" style="margin-top: 10px;">
-                <label>To Date :</label>
-                <input type="date" id="date" class="form-control" ng-model="leaveTemp.toDate" ng-disabled="ui.mode !== 'NEW' || ui.leaveMode === 'half_day'" />
             </div>
             <div class="col-xs-5" style="margin-top: 10px;">
                 <label>Reason :</label>
@@ -73,7 +47,7 @@
                     <th>From date</th>
                     <th>To Date</th>
                     <th>Leave Type</th>
-                    <th>Reson</th>
+                    <th>Reason</th>
                     <th>&nbsp;</th>
                 </tr>
             </thead>

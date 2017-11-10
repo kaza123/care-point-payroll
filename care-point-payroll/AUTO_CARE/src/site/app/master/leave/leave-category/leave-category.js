@@ -90,15 +90,14 @@
                         "type": null,
                         "annual": null,
                         "casual": null,
-                        "halfDay": null,
-                        "shortLeave": null
+                        "medical": null
                     };
                 };
 
                 //------------------ validation functions ------------------------------
                 $scope.validateInput = function () {
                     if ($scope.model.leave.year && $scope.model.leave.type && $scope.model.leave.annual
-                            && $scope.model.leave.casual && $scope.model.leave.halfDay && $scope.model.leave.shortLeave) {
+                            && $scope.model.leave.casual && $scope.model.leave.medical) {
                         return true;
                     } else {
                         return false;

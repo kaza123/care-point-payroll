@@ -7,6 +7,8 @@ package com.mac.care_point.transaction.leave_request;
 
 import com.mac.care_point.master.employee.EmployeeRepository;
 import com.mac.care_point.master.employee.model.Employee;
+import com.mac.care_point.master.leave.LeaveSetupRepository;
+import com.mac.care_point.master.leave.model.MLeaveSetup;
 import com.mac.care_point.transaction.leave_request.model.LeaveRequestMix;
 import com.mac.care_point.transaction.leave_request.model.TLeave;
 import com.mac.care_point.transaction.leave_request.model.TLeaveDetails;
@@ -38,9 +40,10 @@ public class LeaveRequestService {
 
     @Autowired
     private LeavesRepository leavesRepository;
-    
+
     @Autowired
     private EmployeeRepository employeeRepository;
+
 
     public List<TLeaveDetails> findAll() {
         return leaveRequestDetailRepository.findAll();
@@ -51,16 +54,17 @@ public class LeaveRequestService {
         //save leave
         TLeave leave = new TLeave();
         leave.setBranch(SecurityUtil.getCurrentUser().getBranch());
-        leave.setEmployee(leaveRequestMix.getEmployee());
+        Employee employee = employeeRepository.findOne(leaveRequestMix.getEmployee());
+        leave.setEmployee(employee);
+        leave.setDate(new Date());
         leave.setReason(leaveRequestMix.getReason());
         leave.setApprove(Boolean.FALSE);
-        leave.setView(null);
         TLeave tleave = leavesRepository.save(leave);
 
         List<TLeaveRequest> leaveRequests = leaveRequestMix.getLeaveRequest();
         for (TLeaveRequest leaveRequest : leaveRequests) {
             //save leave request
-            leaveRequest.setLeave(tleave);
+            leaveRequest.setLeave(tleave.getIndexNo());
             TLeaveRequest saveLeaveRequest = leaveRequestRepository.save(leaveRequest);
 
             //parse date to simple date format
@@ -73,26 +77,33 @@ public class LeaveRequestService {
                 if (!fromDate.equals(toDate)) {
                     //save leave details from date
                     TLeaveDetails leaveDetails = new TLeaveDetails();
+                    leaveDetails.setEmployee(leaveRequestMix.getEmployee());
                     leaveDetails.setDate(sdf.format(fromDate));
                     leaveDetails.setLeaveType(leaveRequest.getLeaveType());
-                    leaveDetails.setTLeaveRequest(saveLeaveRequest);
+                    leaveDetails.setRealLeave(Boolean.FALSE);
+                    leaveDetails.setApprove(Boolean.FALSE);
+                    leaveDetails.setLeaveRequest(saveLeaveRequest);
                     leaveRequestDetailRepository.save(leaveDetails);
                     fromDate.setDate(fromDate.getDate() + 1);
                 }
             }
             //save leave details to date
             TLeaveDetails leaveDetails = new TLeaveDetails();
+            leaveDetails.setEmployee(leaveRequestMix.getEmployee());
             leaveDetails.setDate(sdf.format(toDate));
             leaveDetails.setLeaveType(leaveRequest.getLeaveType());
-            leaveDetails.setTLeaveRequest(saveLeaveRequest);
+            leaveDetails.setRealLeave(Boolean.FALSE);
+            leaveDetails.setApprove(Boolean.FALSE);
+            leaveDetails.setLeaveRequest(saveLeaveRequest);
             leaveRequestDetailRepository.save(leaveDetails);
         }
         return 1;
     }
 
-    public Employee findEmployeeByEpfNo(String epfNo) {
-        return null;
-//        return employeeRepository.findByEpfNoAndBranch(epfNo,SecurityUtil.getCurrentUser().getBranch());
+    public Employee findEmployeeByEpfNo(int epfNo) {
+        return employeeRepository.findByEpfNoAndBranch(epfNo, SecurityUtil.getCurrentUser().getBranch());
     }
+
+   
 
 }

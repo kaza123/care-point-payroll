@@ -6,6 +6,8 @@
 package com.mac.care_point.transaction.leave_request;
 
 import com.mac.care_point.transaction.leave_request.model.TLeaveDetails;
+import com.mac.care_point.transaction.leave_request.model.TLeaveRequest;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,5 +20,7 @@ public interface LeaveRequestDetailRepository extends JpaRepository<TLeaveDetail
 
     @Query(value = "SELECT DATEDIFF(:toDate,:fromDate)",nativeQuery = true)
     public int getDateCount(@Param("toDate")String toDate,@Param("fromDate") String fromDate);
+
+    public List<TLeaveDetails> findByLeaveRequest(TLeaveRequest leaveRequest);
     
 }

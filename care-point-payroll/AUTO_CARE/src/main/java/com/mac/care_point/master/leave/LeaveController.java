@@ -61,5 +61,12 @@ public class LeaveController {
     public int updateEmployeeLeaveSetup(@RequestBody SetupMix setupMix) {
         return leaveService.updateEmployeeLeaveSetup(setupMix);
     }
+    
+    //leave approve funtions
+   
+    @RequestMapping(path = "/employee-leave/{empIndex}/{year}", method = RequestMethod.GET)
+    public MLeaveSetup findEmployeeLeave(@PathVariable int empIndex, @PathVariable String year) {
+        return leaveService.findEmployeeLeave(empIndex, year);    
+    }
 
 }

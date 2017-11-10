@@ -24,17 +24,12 @@
             <input id="brandText" type="text" class="form-control" ng-model="model.leave.casual" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
         </div>
         <div class="col-xs-2" style="margin-top: 25px;">
-            <label>Half Day : </label>
-            <input id="brandText" type="text" class="form-control" ng-model="model.leave.halfDay" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
-        </div>
-        <div class="col-xs-2" style="margin-top: 25px;">
-            <label>Short Leave : </label>
-            <input id="brandText" type="text" class="form-control" ng-model="model.leave.shortLeave" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
+            <label>Medical : </label>
+            <input id="brandText" type="text" class="form-control" ng-model="model.leave.medical" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
         </div>
     </div>
     <div class="col-xs-12 background-light" style="margin-top: 10px">
         <table class="table-rounded">
-            <col style="width: 15%">
             <col style="width: 15%">
             <col style="width: 15%">
             <col style="width: 15%">
@@ -47,16 +42,13 @@
                     <th>Name</th>
                     <th>Annual</th>
                     <th>Casual</th>
-                    <th>Half Day</th>
-                    <th>Short Leave</th>
+                    <th>Medical</th>
                     <th>&nbsp;</th>
                 </tr>
             </thead>
         </table>
         <div class="smart-scroll-y" style="height: calc(100vh - 220px);">
             <table class="table-rounded">
-                <col style="width: 15%">
-                <col style="width: 15%">
                 <col style="width: 15%">
                 <col style="width: 15%">
                 <col style="width: 15%">
@@ -69,7 +61,6 @@
                         <td>{{leave[3]}}</td>
                         <td>{{leave[4]}}</td>
                         <td>{{leave[5]}}</td>
-                        <td>{{leave[6]}}</td>
                         <td class="text-right" style="padding-left: 5px;">
                             <a class="btn btn-primary" ng-click="ui.edit(leave, $index)"><span class="glyphicon glyphicon-edit"></span></a>
                         </td>

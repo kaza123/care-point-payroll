@@ -8,9 +8,21 @@
                 var factory = {};
 
                 //load leave setup
-
                 factory.findByYearLeaveSetupFactory = function (year, callback) {
                     var url = systemConfig.apiUrl + "/api/leave/leave-setup-year/" + year;
+
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+                                callback(data);
+                            });
+                };
+
+                // find employee by epf 
+                factory.findEmployeeByEpfNo = function (epfNo, callback) {
+                    var url = systemConfig.apiUrl + "/api/leave/leave-request/employee/" + epfNo;
 
                     $http.get(url)
                             .success(function (data, status, headers) {
@@ -59,7 +71,7 @@
                 //data models 
                 $scope.model = {};
                 $scope.model.leave = {
-                    employee: 10,
+                    employee: null,
                     branch: null,
                     reason: null,
                     approve: null,
@@ -81,7 +93,8 @@
                     fromDate: null,
                     toDate: null,
                     approve: null,
-                    leaveType: null
+                    leaveType: null,
+                    leaveCategory : null
                 };
                 //ui models
                 $scope.ui = {};
@@ -92,6 +105,7 @@
                 //current ui mode IDEAL, SELECTED, NEW, EDIT
                 $scope.ui.mode = null;
                 $scope.yearList = [];
+                $scope.model.employees = [];
 
                 //------------------ model functions ---------------------------
                 //reset model
@@ -137,16 +151,12 @@
 
 
                 $scope.http.selectEpfNo = function (keyEvent, epfNo) {
-                    if ($scope.model.epfNo) {
-                        if (keyEvent.which === 13)
-                            leaveRequestFactory.findEmployeeByEpfNoFactory(epfNo
-                                    , function (data) {
-                                        console.log(data)
-//                                        $scope.model.leaveList = data;
-                                    });
-                    } else {
-                        Notification.error("please select year");
-                    }
+                    if (keyEvent.which === 13)
+                        leaveRequestFactory.findEmployeeByEpfNo(epfNo
+                                , function (data) {
+                                    $scope.employeeName = data.name;
+                                    $scope.model.leave.employee = data.indexNo;
+                                });
                 };
 
                 //<-----------------ui funtiion--------------------->
