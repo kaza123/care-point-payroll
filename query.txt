@@ -1,0 +1,64 @@
+attendance in time and out time list
+========================================
+
+select
+	m_employee.index_no as em_no,
+   m_employee.name as employee_name,
+   m_employee.epf_no as epf_no,
+   m_employee.`type` as emp_type,
+   (select m_branch.name from m_branch where m_branch.index_no = m_employee.branch )as payroll_branch,
+   (select m_branch.name from m_branch where m_branch.index_no = t_finger_print_mashine.branch )as current_branch,
+   
+   (select ras_attrecord.Clock 
+		from ras_attrecord 
+		where m_employee.index_no=ras_attrecord.DIN 
+		and t_finger_print_mashine.index_no=ras_attrecord.DN
+		and DATE(ras_attrecord.Clock) ='2017-10-20'
+		and t_finger_print_mashine.branch=1 
+		order by ras_attrecord.clock limit 1) as in_time,
+		
+	(select ras_attrecord.type 
+		from ras_attrecord 
+		where m_employee.index_no=ras_attrecord.DIN 
+		and t_finger_print_mashine.index_no=ras_attrecord.DN
+		and DATE(ras_attrecord.Clock) ='2017-10-20'
+		and t_finger_print_mashine.branch=1 
+		order by ras_attrecord.clock limit 1) as in_type,
+		
+	(if((select count(ras_attrecord.ID )
+		from ras_attrecord 
+		where m_employee.index_no=ras_attrecord.DIN 
+		and t_finger_print_mashine.index_no=ras_attrecord.DN
+		and DATE(ras_attrecord.Clock) ='2017-10-20'
+		and t_finger_print_mashine.branch=1 
+		order by ras_attrecord.clock desc)>1,(select ras_attrecord.Clock 
+		from ras_attrecord 
+		where m_employee.index_no=ras_attrecord.DIN 
+		and t_finger_print_mashine.index_no=ras_attrecord.DN
+		and DATE(ras_attrecord.Clock) ='2017-10-20'
+		and t_finger_print_mashine.branch=1 
+		order by ras_attrecord.clock desc limit 1),null)) as out_time,
+		
+		(if((select count(ras_attrecord.ID )
+		from ras_attrecord 
+		where m_employee.index_no=ras_attrecord.DIN 
+		and t_finger_print_mashine.index_no=ras_attrecord.DN
+		and DATE(ras_attrecord.Clock) ='2017-10-20'
+		and t_finger_print_mashine.branch=1 
+		order by ras_attrecord.clock desc)>1,(select ras_attrecord.type 
+		from ras_attrecord 
+		where m_employee.index_no=ras_attrecord.DIN 
+		and t_finger_print_mashine.index_no=ras_attrecord.DN
+		and DATE(ras_attrecord.Clock) ='2017-10-20'
+		and t_finger_print_mashine.branch=1 
+		order by ras_attrecord.clock desc limit 1),null)) as out_type
+		
+FROM 
+ras_attrecord
+   left JOIN m_employee on m_employee.index_no=ras_attrecord.DIN
+   left JOIN t_finger_print_mashine on t_finger_print_mashine.index_no=ras_attrecord.DN
+   where t_finger_print_mashine.branch=1 and DATE(ras_attrecord.Clock) ='2017-10-20'
+   and ras_attrecord.is_in = 1 and ras_attrecord.is_out = 0
+   group by m_employee.index_no
+   
+

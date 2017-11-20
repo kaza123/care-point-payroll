@@ -96,7 +96,7 @@
                 //<-----------------http funtiion------------------->
                 $scope.http.saveLeaveSetup = function () {
                     var detail = $scope.model.leave;
-
+                    console.log(detail)
                     var detailJSON = JSON.stringify(detail);
                     leaveSetupFactory.updateLeaveSetupFactory(
                             detailJSON,
@@ -134,6 +134,7 @@
                 //save function
                 $scope.ui.save = function () {
                     if ($scope.validateInput()) {
+                        console.log("ssssss")
                         $scope.ui.mode = "IDEAL";
                         $scope.http.saveLeaveSetup();
                     } else {
@@ -157,12 +158,13 @@
 
                 //edit funtion
                 $scope.ui.edit = function (leave, index) {
+                    console.log(leave)
                     $scope.model.leave.year = leave[0];
                     $scope.model.leave.EpfNo = leave[1];
                     $scope.model.leave.annual = leave[3];
                     $scope.model.leave.casual = leave[4];
                     $scope.model.leave.medical = leave[5];
-                    $scope.model.leave.empIndex = leave[7];
+                    $scope.model.leave.empIndex = leave[6];
                     $scope.model.leaveList.splice(index, 1);
                     $scope.ui.focus();
                 };

@@ -2,120 +2,235 @@
 </div>
 
 <div class="index-content-body">
-    <div class="col-xs-3 background-dark">
-        <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
-
-            <table class="table-rounded control-table">
-                <colgroup>
-                    <col style="width: 100%">
-                </colgroup>
-                <tbody>
-                    <tr>
-                        <td>
-                            <label class="control-label">Date :</label>
-                            <input type="date" id="date" class="form-control" ng-model="model.date" ng-change='ui.dateChange()' 
-                                   ng-disabled="ui.mode !== 'NEW'" />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table-rounded control-table">
-                <colgroup>
-                    <col style="width: 100%">
-                </colgroup>
-                <tbody>
-                    <tr>
-                        <td>
-                            <label class="control-label">Date Type :</label>
-                            <label class="label" style="background-color: #cccccc" ng-show="model.calenderData.status==='Working_Day'">_</label>
-                            <label class="label" style="background-color: yellow" ng-show="model.calenderData.status==='Poya_Day'">_</label>
-                            <label class="label" style="background-color: wheat" ng-show="model.calenderData.status==='HoliDay'">_</label>
-                            <label class="label" style="background-color: #32cd32" ng-show="model.calenderData.status==='Paid_HoliDay'">_</label>
-                            <label class="label" style="background-color: red" ng-show="model.calenderData.status==='Sunday'">_</label>
-                            <label class="label" style="background-color: orange" ng-show="model.calenderData.status==='Saturday'">_</label>
-                            <input type="text" class="form-control" ng-model="model.calenderData.status"  
-                                   ng-disabled="true" />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    <div class="col-xs-12">
+        <div class="col-xs-12 background-dark" style="padding-bottom: 15px;padding-top: 10px">
+            <div class="col-xs-3">
+                <label class="control-label">Date :</label>
+                <input type="date" id="date" class="form-control" ng-model="model.date" ng-change='ui.dateChange()'/>
+            </div>
+            <div class="col-xs-3">
+                <label class="control-label">Date Type :</label>
+                <label class="label" style="background-color: #cccccc" ng-show="model.calenderData.status === 'Working_Day'">_</label>
+                <label class="label" style="background-color: yellow" ng-show="model.calenderData.status === 'Poya_Day'">_</label>
+                <label class="label" style="background-color: wheat" ng-show="model.calenderData.status === 'HoliDay'">_</label>
+                <label class="label" style="background-color: #32cd32" ng-show="model.calenderData.status === 'Paid_HoliDay'">_</label>
+                <label class="label" style="background-color: red" ng-show="model.calenderData.status === 'Sunday'">_</label>
+                <label class="label" style="background-color: orange" ng-show="model.calenderData.status === 'Saturday'">_</label>
+                <input type="text" class="form-control" ng-model="model.calenderData.status"  
+                       ng-disabled="true" />
+            </div>
         </div>
     </div>
-    <div class="col-xs-9 background-light">
-        <table>
-            <col style="width: 20%">
-            <col style="width: 20%">
-            <col style="width: 20%">
-            <col style="width: 20%">
-            <col style="width: 20%">
-            <col style="width: 5%">
-            <col style="width: 10%">
-            <thead class="background-dark"> 
-                <tr>
+    <uib-tabset>
+        <uib-tab index="2" heading="All ATTENDANCE" select="ui.tabAllAttendance()">
+            <div class="col-xs-12 background-light">
+                <table class="table-rounded">
+                    <col style="width: 10%">
+                    <col style="width: 10%">
+                    <col style="width: 15%">
+                    <col style="width: 10%">
+                    <col style="width: 10%">
+                    <col style="width: 10%">
+                    <col style="width: 10%">
+                    <col style="width: 10%">
+                    <col style="width: 15%">
+                    <thead class="background-dark"> 
+                        <tr>
+                            <th>EID</th>
+                            <th>EPF NO</th>
+                            <th>Employee</th>
+                            <th>Type</th>
+                            <th>In Time</th>
+                            <th>Out Time</th>
+                            <th>In Type</th>
+                            <th>Out Type</th>
+                            <th>Branch</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="smart-scroll-y" style="height: calc(100vh - 220px);">
+                    <table class="table-rounded table-hover">
+                        <col style="width: 10%">
+                        <col style="width: 10%">
+                        <col style="width: 15%">
+                        <col style="width: 10%">
+                        <col style="width: 10%">
+                        <col style="width: 10%">
+                        <col style="width: 10%">
+                        <col style="width: 10%">
+                        <col style="width: 15%">
+                        <tbody>
+                            <tr ng-repeat='data in model.dataList'>
+                                <td>{{data[0]}}</td>
+                                <td>{{data[2]}}</td>
+                                <td>{{data[1]}}</td>
+                                <td>{{data[3]}}</td>
+                                <td>{{ui.getTimeFormat(data[6])}}</td>
+                                <td>{{ui.getTimeFormat(data[8])}}</td>
+                                <td>
+                                    <label class=" label label-default" ng-show="'AUTO' === data[7]">{{data[7]}}</label>
+                                    <label class="label label-primary" ng-show="'MANUAL' === data[7]">{{data[7]}}</label>
+                                </td>
+                                <td>
+                                    <label class=" label label-default" ng-show="'AUTO' === data[9]">{{data[9]}}</label>
+                                    <label ng-show="data[9] === null">----</label>
+                                    <label class="label label-primary" ng-show="'MANUAL' === data[9]">{{data[9]}}</label>
+                                </td>
+                                <td><label class="label label-warning">{{data[4]}}</label></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab index="0" heading="IN CONFIRM" select="ui.tabAttendance(0)">
+            <div class="col-xs-12 background-light">
+                <table class="table-rounded">
+                    <col style="width: 10%">
+                    <col style="width: 10%">
+                    <col style="width: 20%">
+                    <col style="width: 10%">
+                    <col style="width: 10%">
+                    <col style="width: 10%">
+                    <col style="width: 15%">
+                    <col style="width: 15%">
+                    <thead class="background-dark"> 
+                        <tr>
+                            <th>EID</th>
+                            <th>EPF NO</th>
+                            <th>Employee</th>
+                            <th>Type</th>
+                            <th>In Time</th>
+                            <th>Out Time</th>
+                            <th>F.P Type</th>
+                            <th>Branch</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="smart-scroll-y" style="height: calc(100vh - 220px);">
+                    <table class="table-rounded table-hover">
+                        <col style="width: 10%">
+                        <col style="width: 10%">
+                        <col style="width: 20%">
+                        <col style="width: 10%">
+                        <col style="width: 10%">
+                        <col style="width: 10%">
+                        <col style="width: 15%">
+                        <col style="width: 15%">
+                        <tbody>
+                            <tr ng-repeat='data in model.dataList'>
+                                <td>{{data[0]}}</td>
+                                <td>{{data[2]}}</td>
+                                <td>{{data[1]}}</td>
+                                <td>{{data[3]}}</td>
+                                <td>{{ui.getTimeFormat(data[6])}}</td>
+                                <td>- - - </td>
+                                <td>
+                                    <label class=" label label-default" ng-show="'AUTO' === data[7]">{{data[7]}}</label>
+                                    <label class="label label-primary" ng-show="'MANUAL' === data[7]">{{data[7]}}</label>
+                                </td>
+                                <td><label class="label label-warning">{{data[4]}}</label></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab index="1" heading="OUT CONFIRM" select="ui.tabAttendance(1)">
+            <div class="col-xs-12 background-light">
+                <table class="table-rounded">
+                    <col style="width: 10%">
+                    <col style="width: 10%">
+                    <col style="width: 15%">
+                    <col style="width: 10%">
+                    <col style="width: 10%">
+                    <col style="width: 10%">
+                    <col style="width: 10%">
+                    <col style="width: 10%">
+                    <col style="width: 10%">
+                    <col style="width: 5%">
+                    <thead class="background-dark"> 
+                        <tr>
+                            <th>EID</th>
+                            <th>EPF NO</th>
+                            <th>Employee</th>
+                            <th>Type</th>
+                            <th>In Time</th>
+                            <th>Out Time</th>
+                            <th>In Type</th>
+                            <th>Out Type</th>
+                            <th>Branch</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="smart-scroll-y" style="height: calc(100vh - 220px);">
+                    <table class="table-rounded table-hover">
+                        <col style="width: 10%">
+                        <col style="width: 10%">
+                        <col style="width: 15%">
+                        <col style="width: 10%">
+                        <col style="width: 10%">
+                        <col style="width: 10%">
+                        <col style="width: 10%">
+                        <col style="width: 10%">
+                        <col style="width: 10%">
+                        <col style="width: 5%">
+                        <tbody>
+                            <tr ng-repeat='data in model.dataList'>
+                                <td>{{data[0]}}</td>
+                                <td>{{data[2]}}</td>
+                                <td>{{data[1]}}</td>
+                                <td>{{data[3]}}</td>
+                                <td>{{ui.getTimeFormat(data[6])}}</td>
+                                <td>{{ui.getTimeFormat(data[8])}}</td>
+                                <td>
+                                    <label class=" label label-default" ng-show="'AUTO' === data[7]">{{data[7]}}</label>
+                                    <label class="label label-primary" ng-show="'MANUAL' === data[7]">{{data[7]}}</label>
+                                </td>
+                                <td>
+                                    <label class=" label label-default" ng-show="'AUTO' === data[9]">{{data[9]}}</label>
+                                    <label ng-show="data[9] === null">----</label>
+                                    <label class="label label-primary" ng-show="'MANUAL' === data[9]">{{data[9]}}</label>
+                                </td>
+                                <td><label class="label label-warning">{{data[4]}}</label></td>
+                                <td class="text-right">
+                                    <a class="btn btn-primary" ng-click="ui.edit(data)"><span class="glyphicon glyphicon-edit"></span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </uib-tab>
 
-                </tr>
-            </thead>
-        </table>
-        <table class="table-rounded">
-            <col style="width: 10%">
-            <col style="width: 10%">
-            <col style="width: 15%">
-            <col style="width: 12%">
-            <col style="width: 10%">
-            <col style="width: 12%">
-            <col style="width: 10%">
-            <col style="width: 10%">
-            <col style="width: 11%">
-            <thead class="background-dark"> 
-                <tr>
-                    <th>EID</th>
-                    <th>EPF NO</th>
-                    <th>Employee</th>
-                    <th>Type</th>
-                    <th>In Time</th>
-                    <th>Out Time</th>
-                    <th>F.P Type</th>
-                    <th>Status</th>
-                    <th>&nbsp;</th>
-                </tr>
-            </thead>
-        </table>
-        <div class="smart-scroll-y" style="height: calc(100vh - 220px);">
-            <table class="table-rounded table-hover">
-                <col style="width: 10%">
-                <col style="width: 10%">
-                <col style="width: 15%">
-                <col style="width: 12%">
-                <col style="width: 10%">
-                <col style="width: 12%">
-                <col style="width: 10%">
-                <col style="width: 10%">
-                <col style="width: 11%">
-                <tbody>
-                    <tr ng-repeat='data in model.dataList'>
-                        <td>{{data[0]}}</td>
-                        <td>{{data[2]}}</td>
-                        <td>{{data[1]}}</td>
-                        <td>{{data[3]}}</td>
-                        <td>{{data[4]|date:'hh:mm:ss'}}</td>
-                        <td>- - - </td>
-                        <td>
-                            <label class=" label label-default" ng-show="'AUTO'===data[7]">{{data[7]}}</label>
-                            <label class="label label-primary" ng-show="'MANUAL'===data[7]">{{data[7]}}</label>
-                        </td>
-                        <td ng-show='data[5]===data[6]'><label class="label label-success">{{data[5]}}</label></td>
-                        <td ng-show='data[5]!==data[6]'><label class="label label-warning">{{data[5]}}</label></td>
-                        <td class="text-right" style="padding-left: 5px;">
-                            &nbsp;
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+    </uib-tabset>
+
+
 </div>
 
 <div class="fab-container">
-    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
-    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
+    <!--<a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>-->
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IN'" ng-click="ui.inConfirm();"><i class="glyphicon glyphicon-ok"></i></a>
+    <a class="fab fab-lg fab-success" ng-show="ui.mode === 'OUT'" ng-click="ui.outConfirm();"><i class="glyphicon glyphicon-ok"></i></a>
 </div>
+<script type="text/ng-template" id="attendance_popup.html"> 
+    <div style="padding:10px"><a class="btn btn-xs btn-danger pull-right" ng-click="ui.cancelPopUp()"><span class="glyphicon glyphicon-remove"></span></a></div>
+    <div style="padding:50px">
+      <form>
+        <div class="form-group">
+        <label for="emp">Employee</label>
+        <input type="text" ng-model="empName" class="form-control" id="emp">
+        </div>
+        <div class="form-group">
+        <label for="date">Date</label>
+        <input type="text" ng-model="model.fingerPrint.date" class="form-control" id="date">
+        </div>
+        <div class="form-group">
+        <label for="time">Out Time</label>
+        <input type="time" ng-model="model.fingerPrint.time" class="form-control" id="time">
+        </div>
+        <button type="submit" ng-click="ui.updateOutTime()" class="btn btn-default">Save</button>
+      </form>
+    </div>
+</script>

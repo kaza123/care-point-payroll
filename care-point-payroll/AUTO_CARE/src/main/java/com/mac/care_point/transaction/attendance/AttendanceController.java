@@ -33,6 +33,22 @@ public class AttendanceController {
     public List<Object> getAttendanceByDateAndBranch(@PathVariable("branch") Integer branch, @PathVariable("date") String date) {
         return attendanceService.getAttendanceByDateAndBranch(branch, date);
     }
+    
+    @RequestMapping(value = "/in-confirm/{branch}/{date}", method = RequestMethod.GET)
+    public int inConfirm(@PathVariable("branch") Integer branch,@PathVariable("date") String date) {
+        return attendanceService.inConfirm(branch,date);
+    }
+    
+    @RequestMapping(value = "/out-confirm/{branch}/{date}", method = RequestMethod.GET)
+    public int outConfirm(@PathVariable("branch") Integer branch,@PathVariable("date") String date) {
+        return attendanceService.outConfirm(branch,date);
+    }
+   
+    @RequestMapping(value = "/get-attendance-by-date-status/{branch}/{date}/{status}", method = RequestMethod.GET)
+    public List<Object> getAttendanceByDateAndStatusAndBranch(@PathVariable("branch") Integer branch, @PathVariable("date") String date,@PathVariable("status") int status) {
+        return attendanceService.getAttendanceByDateAndStatusAndBranch(branch, date,status);
+    }
+    
     @RequestMapping(value = "/get-calender-data-by-date/{date}", method = RequestMethod.GET)
     public Calander getCalenderDataByDate(@PathVariable("date") String date) {
         return attendanceService.getCalenderDataByDate(date);

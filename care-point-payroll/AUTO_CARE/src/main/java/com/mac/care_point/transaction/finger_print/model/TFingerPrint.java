@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.transaction.attendance.model;
+package com.mac.care_point.transaction.finger_print.model;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,17 +37,29 @@ public class TFingerPrint implements Serializable {
     private Integer din;
     
     @Column(name = "Clock")
-    private String clock; 
+    private String clock;
+    
+    @Column(name = "type")
+    private String type; 
+   
+    @Column(name = "is_in")
+    private Boolean isIn;
+    
+    @Column(name = "is_out")
+    private Boolean isOut; 
     
 
     public TFingerPrint() {
     }
 
-    public TFingerPrint(Integer id, Integer dn, Integer din, String clock) {
+    public TFingerPrint(Integer id, Integer dn, Integer din, String clock, String type, Boolean isIn, Boolean isOut) {
         this.id = id;
         this.dn = dn;
         this.din = din;
         this.clock = clock;
+        this.type = type;
+        this.isIn = isIn;
+        this.isOut = isOut;
     }
 
     public Integer getId() {
@@ -81,6 +94,32 @@ public class TFingerPrint implements Serializable {
         this.clock = clock;
     }
 
-   
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Boolean getIsIn() {
+        return isIn;
+    }
+
+    public void setIsIn(Boolean isIn) {
+        this.isIn = isIn;
+    }
+
+    public Boolean getIsOut() {
+        return isOut;
+    }
+
+    public void setIsOut(Boolean isOut) {
+        this.isOut = isOut;
+    }
+
     
+    
+
+       
 }

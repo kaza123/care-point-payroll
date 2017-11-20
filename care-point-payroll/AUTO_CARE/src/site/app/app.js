@@ -17,7 +17,8 @@
 
         //transaction
         "fingerPrintModule",
-        "attendanceModule"
+        "attendanceModule",
+        "attendanceConfirmModule"
     ]);
 
     //constants
@@ -53,15 +54,23 @@
                             controller: "ReportViewerController"
                         })
 
-                        //registration
+                        //master
+                        //finger-print-manual
+                        .when("/master/finger-print-manual", {
+                            templateUrl: "app/master/finger-print-manual/finger-print-manual.html",
+                            controller: "fingerPrintController"
+                        })
+                        
                         .when("/master/leave-setup", {
                             templateUrl: "app/master/leave/leave-setup/leave-setup.html",
                             controller: "leaveSetupController"
                         })
+                        
                         .when("/master/leave-category", {
                             templateUrl: "app/master/leave/leave-category/leave-category.html",
                             controller: "leaveCategoryController"
                         })
+                        
                         .when("/master/calander", {
                             templateUrl: "app/master/calander/calander.html",
                             controller: "calanderController"
@@ -71,6 +80,7 @@
                             templateUrl: "app/master/account-settings/account-settings.html"
 //                            controller: "reOrderLevelController"
                         })
+                        
                         //transaction
                         .when("/transaction/finger-print-manual", {
                             templateUrl: "app/service/finger-print-manual/finger-print-manual.html",
@@ -79,6 +89,10 @@
                         .when("/transaction/attendance", {
                             templateUrl: "app/service/attendance/attendance.html",
                             controller: "attendanceController"
+                        })
+                        .when("/transaction/attendance-confirm", {
+                            templateUrl: "app/service/attendance-confirm/attendance-confirm.html",
+                            controller: "attendanceConfirmController"
                         })
                         .when("/transaction/leave-request", {
                             templateUrl: "app/service/leave/leave-request/leave-request.html",
