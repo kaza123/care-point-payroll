@@ -57,7 +57,20 @@
                 </div>
             </div>
         </uib-tab>
-        <uib-tab index="2" heading="REGISTER" select="ui.tabAllAttendance()">          
+        <uib-tab index="2" heading="REGISTER" select="ui.tabAllAttendance()">
+            <div class="col-xs-2 background-light" style="margin-top: 10px;">
+                <div class="image-tile-employee" style="background-color:#ffffff;" ng-show="ui.imageShowMode1 === 'NotAvalable'">
+                    <label class="label label-primary image-tile-browse" for="file">
+                        <span class="glyphicon glyphicon-camera"></span>&nbsp;&nbsp;Choose
+                        <input ng-model="imgSrc" style="display: none" type="file" id="file" onchange="angular.element(this).scope().ui.changeFunction(event)" accept="image/gif, image/jpeg, image/png">
+                    </label>    
+                </div>
+                <div class="image-tile-employee" style="background-color: #cccccc;height: 200px;">
+                    <img src="{{imagemodelX[0]}}" id="tableBanner" style="width: 100%;"> 
+                    <button ng-show="ui.imageShowMode1 === 'Avalable'" class="btn btn-danger" style="width: 100px" ng-click="ui.clearImage()">Clear</button>
+                </div>
+            </div>
+
             <div class="col-xs-4 background-dark">
                 <div class="row smart-scroll-y" style="display: flex; flex-flow: column; height: calc(100vh - 51px);">
                     <div class="col-xs-12" style="flex: 0 0 auto;padding-right: 22px;">
@@ -65,6 +78,14 @@
                             <col style="width: 35%"/>
                             <col style="width: 65%"/>
                             <tbody>
+                                <tr>
+                                    <td><label>Epf No:</label></td>
+                                    <td><input class="form-control" id="name" ng-model="model.employeeData.epfNo" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
+                                </tr>
+                                <tr>
+                                    <td><label>Finger Print No:</label></td>
+                                    <td><input class="form-control" id="name" ng-model="model.employeeData.fingerPrintNo" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
+                                </tr>
                                 <tr>
                                     <td><label>Name :</label></td>
                                     <td><input class="form-control" id="name" ng-model="model.employeeData.name" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
@@ -74,9 +95,45 @@
                                     <td><input class="form-control" ng-model="model.employeeData.mobile" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
                                 </tr>
                                 <tr>
+                                    <td><label>Tel No :</label></td>
+                                    <td><input class="form-control" ng-model="model.employeeData.telNo" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                </tr>
+                                <tr>
+                                    <td><label>E-Mail :</label></td>
+                                    <td><input class="form-control" ng-model="model.employeeData.email" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                </tr>
+                                <tr>
+                                    <td><label>NIC :</label></td>
+                                    <td><input class="form-control" ng-model="model.employeeData.nic" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                </tr>
+                                <tr>
+                                    <td><label>Birthday :</label></td>
+                                    <td><input class="form-control" ng-model="birthday" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                </tr>
+                                <tr>
+                                    <td><label>Gender :</label></td>
+                                    <td><input class="form-control" ng-model="gender" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                </tr>
+                                <tr>
+                                    <td><label>Civil Status :</label></td>
+                                    <td><input class="form-control" ng-model="model.employeeData.civilStatus" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                </tr>
+                                <tr>
                                     <td><label>Address 01 :</label></td>
                                     <td><input class="form-control" ng-model="model.employeeData.addressLine1" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
                                 </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-4 background-dark">
+                <div class="row smart-scroll-y" style="display: flex; flex-flow: column; height: calc(100vh - 51px);">
+                    <div class="col-xs-12" style="flex: 0 0 auto;padding-right: 22px;">
+                        <table class="table-rounded control-table">
+                            <col style="width: 35%"/>
+                            <col style="width: 65%"/>
+                            <tbody>
                                 <tr>
                                     <td><label>Address 02 :</label></td>
                                     <td><input class="form-control" ng-model="model.employeeData.addressLine2" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
@@ -86,31 +143,117 @@
                                     <td><input class="form-control" ng-model="model.employeeData.addressLine3" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
                                 </tr>
                                 <tr>
-                                    <td><label>Type :</label></td>
+                                    <td><label>Designation :</label></td>
                                     <td><input class="form-control" ng-model="model.employeeData.type" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
                                 </tr>
                                 <tr>
-                                    <td><label>Rol :</label></td>
-                                    <td><input class="form-control" ng-model="model.employeeData.rol" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                    <td><label>Department :</label></td>
+                                    <td><input class="form-control" ng-model="model.employeeData.department" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
                                 </tr> 
+                                <tr>
+                                    <td><label>Joined Date:</label></td>
+                                    <td><input class="form-control" id="name" ng-model="model.employeeData.joinedDate" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
+                                </tr>
+                                <tr>
+                                    <td><label for="active">Active</label>&nbsp;&nbsp;<input ng-model="model.employeeData.active" type="checkbox" id="active" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><label for="confirm">CONFIRM</label>&nbsp;&nbsp;<input ng-model="model.employeeData.confirm" type="checkbox" id="confirm"  ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
+                                    <td><label for="resigned">RESIGNED</label>&nbsp;&nbsp;<input ng-model="model.employeeData.resigned" type="checkbox" id="resigned"  ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
+                                </tr>
                             </tbody>
                         </table>
-                        <div class="image-tile-employee" style="background-color:#ffffff;" ng-show="ui.imageShowMode1 === 'NotAvalable'">
-                            <label class="image-tile-browse" for="file">
-                                <span class="glyphicon glyphicon-camera"></span>
-                                <input ng-model="imgSrc" style="display: none" type="file" id="file" onchange="angular.element(this).scope().ui.changeFunction(event)" accept="image/gif, image/jpeg, image/png">
-                            </label>    
-                        </div>
-                        <div class="image-tile-employee" ng-show="ui.imageShowMode1 === 'Avalable'" >
-                            <img src="{{imagemodelX[0]}}" id="tableBanner" style="width: 100%; height: 100%"> 
-                        </div>
-                        <button class="btn btn-danger" style="position: absolute;left: 226px;top: 10px; width: 200px" ng-click="ui.clearImage()">Clear Image</button>
-
                     </div>
                 </div>
             </div>
         </uib-tab>
-        
+        <uib-tab index="3" heading="PAYROLL DETAILS" select="ui.tabAllAttendance()">
+            <div class="col-xs-4 background-dark">
+                <div class="row smart-scroll-y" style="display: flex; flex-flow: column; height: calc(100vh - 51px);">
+                    <div class="col-xs-12" style="flex: 0 0 auto;padding-right: 22px;">
+                        <table class="table-rounded control-table">
+                            <col style="width: 40%"/>
+                            <col style="width: 60%"/>
+                            <tbody>
+                                <tr>
+                                    <td><label>Basic Salary :</label></td>
+                                    <td><input class="form-control" id="name" ng-model="model.employeeData.basicSalary" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
+                                </tr>
+                                <tr>
+                                    <td><label>Basic For Epf:</label></td>
+                                    <td><input class="form-control" id="name" ng-model="model.employeeData.basicForEpf" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
+                                </tr>
+                                <tr>
+                                    <td><label>Payroll Type</label></td>
+                                    <td><input class="form-control" id="name" ng-model="model.employeeData.payrollType" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
+                                </tr>
+                                <tr>
+                                    <td><label>Epf Status</label></td>
+                                    <td><input class="form-control" id="name" ng-model="model.employeeData.epfStatus" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
+                                </tr>
+                                <tr>
+                                    <td><label>Epf Grade</label></td>
+                                    <td><input class="form-control" id="name" ng-model="model.employeeData.epfGrade" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
+                                </tr>
+                                <tr>
+                                    <td><label for="epfApplicable">Epf Applicable</label>&nbsp;&nbsp;<input ng-model="model.employeeData.epfApplicable" type="checkbox" id="epfApplicable" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><label for="otApplicable">OT Applicable</label>&nbsp;&nbsp;<input ng-model="model.employeeData.otApplicable" type="checkbox" id="otApplicable" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><label for="morningOt">Morning OT</label>&nbsp;&nbsp;<input ng-model="model.employeeData.morningOt" type="checkbox" id="morningOt" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><label for="allowance">Attendance Allowance</label></td>
+                                    <td><input ng-model="model.employeeData.attendanceAllowance" type="checkbox" id="allowance" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
+                                </tr>
+                                <tr>
+                                    <td><label for="tax">Tax Applicable</label>&nbsp;&nbsp;<input  ng-model="model.employeeData.taxApplicable"  type="checkbox" id="tax" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
+                                    <td></td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab index="4" heading="BANK DETAILS" select="ui.tabAllAttendance()">
+            <div class="col-xs-4 background-dark">
+                <div class="row smart-scroll-y" style="display: flex; flex-flow: column; height: calc(100vh - 51px);">
+                    <div class="col-xs-12" style="flex: 0 0 auto;padding-right: 22px;">
+                        <table class="table-rounded control-table">
+                            <col style="width: 35%"/>
+                            <col style="width: 65%"/>
+                            <tbody>
+                                <tr>
+                                    <td><label>Account No :</label></td>
+                                    <td><input class="form-control" id="name" ng-model="model.employeeData.name" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
+                                </tr>
+                                <tr>
+                                    <td><label>Branch Code :</label></td>
+                                    <td><input class="form-control" ng-model="model.employeeData.mobile" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                </tr>
+                                <tr>
+                                    <td><label>Branch Name :</label></td>
+                                    <td><input class="form-control" ng-model="model.employeeData.mobile" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                </tr>
+                                <tr>
+                                    <td><label>Bank Name :</label></td>
+                                    <td><input class="form-control" ng-model="model.employeeData.mobile" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+
     </uib-tabset> 
 </div>
 <div class="fab-container">
