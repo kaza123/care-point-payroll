@@ -1,0 +1,161 @@
+<div class="index-content-header">
+</div>
+
+<div class="index-content-body">
+    <div class="col-xs-12">
+        <div class="col-xs-12 background-dark" style="padding-bottom: 15px;padding-top: 10px">
+            <!--            <div class="col-xs-3">
+                            <label class="control-label">Branch :</label>
+                            <input type="text" id="branch" class="form-control" ng-model="model.branch" ng-change='ui.select()'/>
+                        </div>-->
+            <div class="col-xs-3">
+                <label class="control-label">Date :</label>
+                <input type="date" id="date" class="form-control" ng-model="model.date" ng-change='ui.dateChange()'/>
+            </div>
+            <div class="col-xs-3">
+                <label class="control-label">Date Type :</label>
+                <label class="label" style="background-color: #cccccc" ng-show="model.calenderData.status === 'Working_Day'">_</label>
+                <label class="label" style="background-color: yellow" ng-show="model.calenderData.status === 'Poya_Day'">_</label>
+                <label class="label" style="background-color: wheat" ng-show="model.calenderData.status === 'HoliDay'">_</label>
+                <label class="label" style="background-color: #32cd32" ng-show="model.calenderData.status === 'Paid_HoliDay'">_</label>
+                <label class="label" style="background-color: red" ng-show="model.calenderData.status === 'Sunday'">_</label>
+                <label class="label" style="background-color: orange" ng-show="model.calenderData.status === 'Saturday'">_</label>
+                <input type="text" class="form-control" ng-model="model.calenderData.status"  
+                       ng-disabled="true" />
+            </div>
+            <div class="col-xs-2">
+                <label class="control-label">Start Time :</label>
+                <input type="text" class="form-control" ng-model="model.startTime" ng-disabled="true">
+            </div>
+            <div class="col-xs-2">
+                <label class="control-label">End Time :</label>
+                <input type="text" class="form-control" ng-model="model.startTime" ng-disabled="true">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 background-light">
+        <table class="table-rounded">
+            <col style="width: 5%">
+            <col style="width: 8%">
+            <col style="width: 15%">
+            <col style="width: 6%">
+            <col style="width: 6%">
+            <col style="width: 6%">
+            <col style="width: 8%">
+            <col style="width: 8%">
+            <col style="width: 8%">
+            <col style="width: 6%">
+            <col style="width: 9%">
+            <col style="width: 8%">
+            <col style="width: 8%">
+            <col style="width: 10%">
+            <thead class="background-dark"> 
+                <tr>
+                    <th>EID</th>
+                    <th>EPF NO</th>
+                    <th>Employee</th>
+                    <th>P/A</th>
+                    <th>Leave</th>
+                    <th>Type</th>
+                    <th>No Pay</th>
+                    <th>In Time</th>
+                    <th>Out Time</th>
+                    <th>OT</th>
+                    <th>D-OT</th>
+                    <th>L-Come</th>
+                    <th>Early Off</th>
+                    <th>Extra Hours</th>
+                </tr>
+            </thead>
+        </table>
+        <div class="smart-scroll-y" style="height: calc(100vh - 220px);" ng-show="ui.loading === false">
+            <table class="table-rounded table-hover">
+                <col style="width: 5%">
+                <col style="width: 8%">
+                <col style="width: 15%">
+                <col style="width: 6%">
+                <col style="width: 6%">
+                <col style="width: 6%">
+                <col style="width: 8%">
+                <col style="width: 8%">
+                <col style="width: 8%">
+                <col style="width: 6%">
+                <col style="width: 9%">
+                <col style="width: 8%">
+                <col style="width: 8%">
+                <col style="width: 10%">
+                <tbody>
+                    <tr ng-repeat='data in model.attendanceList'>
+                        <td>{{data[0]}}</td>
+                        <td>{{data[1]}}</td>
+                        <td>{{data[2]}}</td>
+                        <td>
+                            <!--<label ng-if="data[8] === null">A</label>-->
+                            <label ng-if="data[8] !== null">{{data[8]}}</label>
+                        </td>
+                        <td>
+                            <!--<label ng-if="data[9] === null">0</label>-->
+                            <label ng-if="data[9] !== null">{{data[9]}}</label>
+                        </td>
+                        <td>{{data[18]}}</td>
+                        <td>
+                            <!--<label ng-if="data[10] === null">0</label>-->
+                            <label ng-if="data[10] !== null">{{data[10]}}</label>
+                        </td>
+                        <td>{{data[11]}}</td>
+                        <td>{{data[12]}}</td>
+                        <td>
+                            <!--<label ng-if="data[13] === null">0</label>-->
+                            <label ng-if="data[13] !== null">{{data[13]}}</label>
+                        </td>
+                        <td>
+                            <!--<label ng-if="data[14] === null">0</label>-->
+                            <label ng-if="data[14] !== null">{{data[14]}}</label>
+                        </td>
+                        <td>
+                            <!--<label ng-if="data[15] === null">0</label>-->
+                            <label ng-if="data[15] !== null">{{data[15]}}</label>
+                        </td>
+                        <td>
+                            <!--<label ng-if="data[16] === null">0</label>-->
+                            <label ng-if="data[16] !== null">{{data[16]}}</label>
+                        </td>
+                        <td>
+                            <!--<label ng-if="data[17] === null">0</label>-->
+                            <label ng-if="data[17] !== null">{{data[17]}}</label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="smart-scroll-y" style="height: calc(100vh - 200px);padding-left: 30%" ng-show="ui.loading === true">
+            <img src="/img/loader1.gif" width="550" height="450" alt="loader1"/>
+        </div>
+    </div>
+</div>
+
+<div class="fab-container">
+    <!--<a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>-->
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'SAVE'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
+</div>
+<script type="text/ng-template" id="attendance_popup.html"> 
+    <div style="padding:10px"><a class="btn btn-xs btn-danger pull-right" ng-click="ui.cancelPopUp()"><span class="glyphicon glyphicon-remove"></span></a></div>
+    <div style="padding:50px">
+    <form>
+    <div class="form-group">
+    <label for="emp">Employee</label>
+    <input type="text" ng-model="empName" class="form-control" id="emp">
+    </div>
+    <div class="form-group">
+    <label for="date">Date</label>
+    <input type="text" ng-model="model.fingerPrint.date" class="form-control" id="date">
+    </div>
+    <div class="form-group">
+    <label for="time">Out Time</label>
+    <input type="time" ng-model="model.fingerPrint.time" class="form-control" id="time">
+    </div>
+    <button type="submit" ng-click="ui.updateOutTime()" class="btn btn-default">Save</button>
+    </form>
+    </div>
+</script>

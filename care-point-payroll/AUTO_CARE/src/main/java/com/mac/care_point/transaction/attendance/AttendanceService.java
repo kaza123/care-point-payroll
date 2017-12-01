@@ -7,8 +7,12 @@ package com.mac.care_point.transaction.attendance;
 
 import com.mac.care_point.master.calander.CalanderRepository;
 import com.mac.care_point.master.calander.model.Calander;
+import com.mac.care_point.transaction.attendance.model.TDailyRecord;
 import com.mac.care_point.transaction.finger_print.FingerPrintRepository;
 import com.mac.care_point.transaction.finger_print.model.TFingerPrint;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,15 +28,18 @@ import org.springframework.transaction.annotation.Transactional;
 public class AttendanceService {
 
     @Autowired
-    private AttendanceRepocitory attendanceRepocitory;
+    private AttendanceRepository attendanceRepocitory;
 
     @Autowired
     private CalanderRepository calanderRepository;
 
     @Autowired
     private FingerPrintRepository fingerPrintRepository;
+    
+    @Autowired
+    private DailyRecordRepository dailyRecordRepository;
 
-    public List<Object> getAttendanceByDateAndBranch(Integer branch, String date) {
+    public List<Object[]> getAttendanceByDateAndBranch(Integer branch, String date) {
         return attendanceRepocitory.getAttendanceByDateAndBranch(branch, date);
 
     }
@@ -45,7 +52,7 @@ public class AttendanceService {
         return null;
     }
 
-    List<Object> getAttendanceByDateAndStatusAndBranch(Integer branch, String date, int status) {
+    List<Object[]> getAttendanceByDateAndStatusAndBranch(Integer branch, String date, int status) {
         return attendanceRepocitory.getAttendanceByDateAndStatusBranch(branch, date, status);
     }
 
@@ -61,10 +68,27 @@ public class AttendanceService {
         return status;
     }
 
-    public int outConfirm(Integer branch, String date) {
+    public int outConfirm(Integer branch, String date) throws ParseException {
         int status = 1;
         List<TFingerPrint> fingerPrint = attendanceRepocitory.findRasRecordsByDateAndBranch(branch, date, status);
         
+       List<Object[]> list = attendanceRepocitory.getAttendanceByDateAndBranch(branch, date);
+        for (Object[] object : list) {
+            TDailyRecord dailyRecord=new TDailyRecord();
+            dailyRecord.setBranch(branch);
+             //parse date to simple date format
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//            Date fromDate = sdf.parse(date);
+            dailyRecord.setDate(date);
+            dailyRecord.setEmpEpf(object[2].toString());
+            dailyRecord.setEmpType(object[3].toString());
+            dailyRecord.setEmployee((int)object[0]);
+            dailyRecord.setInTime(object[6].toString());
+            dailyRecord.setOutTime(object[8].toString());
+            dailyRecordRepository.save(dailyRecord);
+        }
+ 
+       
         for (TFingerPrint tFingerPrint : fingerPrint) {
             tFingerPrint.setIsOut(Boolean.TRUE);
             fingerPrintRepository.save(tFingerPrint);

@@ -22,5 +22,7 @@ public interface LeaveRequestDetailRepository extends JpaRepository<TLeaveDetail
     public int getDateCount(@Param("toDate")String toDate,@Param("fromDate") String fromDate);
 
     public List<TLeaveDetails> findByLeaveRequest(TLeaveRequest leaveRequest);
+
+    public TLeaveDetails findByEmployeeAndDateAndRealLeave(int i, String fromDate, boolean b);
     
 }

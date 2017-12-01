@@ -15,9 +15,9 @@ import org.springframework.data.repository.query.Param;
 
 /**
  *
- * @author 'Kasun Chamara'
+* @author Nidura Prageeth
  */
-public interface AttendanceRepocitory extends JpaRepository<TFingerPrint, Integer> {
+public interface AttendanceRepository extends JpaRepository<TFingerPrint, Integer> {
 
 //    @Query(value = "select \n"
 //            + "	m_employee.index_no as em_no,\n"
@@ -94,7 +94,7 @@ public interface AttendanceRepocitory extends JpaRepository<TFingerPrint, Intege
             + "   left JOIN t_finger_print_mashine on t_finger_print_mashine.index_no=ras_attrecord.DN\n"
             + "   where t_finger_print_mashine.branch=:branch and DATE(ras_attrecord.Clock) =:date\n"
             + "   group by m_employee.index_no\n", nativeQuery = true)
-    public List<Object> getAttendanceByDateAndBranch(@Param("branch") Integer branch, @Param("date") String date);
+    public List<Object[]> getAttendanceByDateAndBranch(@Param("branch") Integer branch, @Param("date") String date);
 
     @Query(value = "select\n"
             + "	m_employee.index_no as em_no,\n"
@@ -155,7 +155,7 @@ public interface AttendanceRepocitory extends JpaRepository<TFingerPrint, Intege
             + "   where t_finger_print_mashine.branch=:branch and DATE(ras_attrecord.Clock) =:date\n"
             + "   and ras_attrecord.is_in =:status and ras_attrecord.is_out = 0\n"
             + "   group by m_employee.index_no\n", nativeQuery = true)
-    public List<Object> getAttendanceByDateAndStatusBranch(@Param("branch") Integer branch, @Param("date") String date, @Param("status") int status);
+    public List<Object[]> getAttendanceByDateAndStatusBranch(@Param("branch") Integer branch, @Param("date") String date, @Param("status") int status);
 
     @Query(value = "select ras_attrecord.* \n"
             + "from\n"

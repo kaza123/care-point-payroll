@@ -56,5 +56,7 @@ public interface CalanderRepository extends JpaRepository<Calander, Integer> {
 
     public List<Calander> findByStatusNotIn(String working_Day);
 
+    public Calander findByStatusNotInAndDate(String working_Day, Date date);
+
     
 }

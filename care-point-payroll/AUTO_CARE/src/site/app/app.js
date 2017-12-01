@@ -60,27 +60,28 @@
                             templateUrl: "app/master/finger-print-manual/finger-print-manual.html",
                             controller: "fingerPrintController"
                         })
-                        
+
                         .when("/master/leave-setup", {
                             templateUrl: "app/master/leave/leave-setup/leave-setup.html",
                             controller: "leaveSetupController"
                         })
-                        
+
                         .when("/master/leave-category", {
                             templateUrl: "app/master/leave/leave-category/leave-category.html",
                             controller: "leaveCategoryController"
                         })
-                        
+
                         .when("/master/calander", {
                             templateUrl: "app/master/calander/calander.html",
                             controller: "calanderController"
                         })
-                        //setting
-                        .when("/setting/account-settings", {
-                            templateUrl: "app/master/account-settings/account-settings.html"
-//                            controller: "reOrderLevelController"
+
+                        .when("/master/employee", {
+                            templateUrl: "app/master/employee/employee.html",
+                            controller: "employeeController"
                         })
-                        
+
+
                         //transaction
                         .when("/transaction/finger-print-manual", {
                             templateUrl: "app/service/finger-print-manual/finger-print-manual.html",
