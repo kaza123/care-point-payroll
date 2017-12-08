@@ -3,20 +3,23 @@
     angular.module("attendanceConfirmModule", ['ui.bootstrap']);
     //controller
     angular.module("attendanceConfirmModule")
-            .controller("attendanceConfirmController", function ($scope, attendanceConfirmModel, $filter, $uibModal, $uibModalStack) {
+            .controller("attendanceConfirmController", function ($scope, Notification, attendanceConfirmModel, $filter, $uibModal, $uibModalStack) {
                 $scope.model = new attendanceConfirmModel();
                 $scope.ui = {};
 
                 $scope.ui.dateChange = function () {
-                    $scope.ui.loading = true;
-                    $scope.model.changeDate($scope.model.date)
-                            .then(function (data) {
-                                $scope.ui.loading = false;
-                            });
+                    if ($scope.ui.selectbranch) {
+                        $scope.ui.loading = true;
+                        $scope.model.changeDate($scope.model.date,$scope.ui.selectbranch)
+                                .then(function (data) {
+                                    $scope.ui.loading = false;
+                                });
+                    } else {
+                        Notification.error("Please select the branch");
+                    }
                 };
 
                 $scope.ui.save = function () {
-                    console.log($scope.model.attendanceList)
                     $scope.model.save($scope.model.attendanceList)
                             .then(function (data) {
                                 console.log(data)

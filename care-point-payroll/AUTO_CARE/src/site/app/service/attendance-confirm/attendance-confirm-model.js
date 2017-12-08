@@ -9,14 +9,21 @@
                     data: {},
                     fingerPrint: {},
                     calenderData: {},
-                    currentBranch: {},
                     attendanceList: [],
+                    branch: [],
+                    
 
                     constructor: function () {
                         var that = this;
 
 
                         that.data = attendanceConfirmFactory.newData();
+                        
+                        attendanceConfirmService.loadBranch()
+                                .success(function (data) {
+                                    that.branch = data;
+//                                    console.log(that.Branch)
+                                });
 
                     },
                     clear: function () {
@@ -46,11 +53,11 @@
                  
 
                     
-                    changeDate: function (date) {
+                    changeDate: function (date,branch) {
                         var defer = $q.defer();
                         var that = this;
                         var formatDate = $filter('date')(date, 'yyyy-MM-dd');
-                        attendanceConfirmService.loadEmolyeeAttendnce(date)
+                        attendanceConfirmService.loadEmolyeeAttendnce(date,branch)
                                 .success(function (data) {
                                     that.attendanceList = data;
                                     defer.resolve(data);

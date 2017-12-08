@@ -49,10 +49,10 @@ public class TRecordDetails implements Serializable{
     private String present;
     
     @Column(name = "`leave`")
-    private int leave;
+    private String leave;
     
     @Column(name = "no_pay")
-    private int noPay;
+    private String noPay;
     
     @Column(name = "in_time")
     private String inTime;
@@ -77,10 +77,12 @@ public class TRecordDetails implements Serializable{
     
     @Column(name = "leave_type")
     private String leaveType ;
+    
+    @Column(name = "branch")
+    private int branch;
 
     public TRecordDetails() {
     }
-
 
     public Integer getIndexNo() {
         return indexNo;
@@ -130,19 +132,19 @@ public class TRecordDetails implements Serializable{
         this.present = present;
     }
 
-    public int getLeave() {
+    public String getLeave() {
         return leave;
     }
 
-    public void setLeave(int leave) {
+    public void setLeave(String leave) {
         this.leave = leave;
     }
 
-    public int getNoPay() {
+    public String getNoPay() {
         return noPay;
     }
 
-    public void setNoPay(int noPay) {
+    public void setNoPay(String noPay) {
         this.noPay = noPay;
     }
 
@@ -210,7 +212,17 @@ public class TRecordDetails implements Serializable{
         this.leaveType = leaveType;
     }
 
-  
+    public int getBranch() {
+        return branch;
+    }
+
+    public void setBranch(int branch) {
+        this.branch = branch;
+    }
+
+    
+
+    
 
     
     

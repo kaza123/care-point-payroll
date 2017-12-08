@@ -55,6 +55,7 @@ public class LeaveApproveService {
     //TODO
     @Transactional
     public int approveLeave(int indexNo, int empIndex) {
+        System.out.println("start");
         TLeave leave = leaveApproveRepository.findOne(indexNo);
         leave.setApprove(Boolean.TRUE);
         leaveApproveRepository.save(leave);
@@ -74,28 +75,34 @@ public class LeaveApproveService {
             }
 
             //get date deff
-            int count = leaveRequestDetailRepository.getDateCount(leaveRequest.getToDate(), leaveRequest.getFromDate());
+            if (!leaveRequest.getLeaveCategory().equals(null)) {
+                System.out.println("ssssssssssssssssssssssss");
+                int count = leaveRequestDetailRepository.getDateCount(leaveRequest.getToDate(), leaveRequest.getFromDate());
 
-            MLeaveSetup leaveSetup = leaveSetupRepository.findByYearAndEmployee(year, leave.getEmployee());
-            
-            if (leaveRequest.getLeaveCategory().equals("annual")) {
-                leaveSetup.setAnnual(leaveSetup.getAnnual() - (count + 1));
-            }
-            if (leaveRequest.getLeaveCategory().equals("casual")) {
-                if (count == 0) {
-                    leaveSetup.setCasual(leaveSetup.getCasual() - 1);
-                } else {
-                    leaveSetup.setCasual(leaveSetup.getCasual() - count);
+                MLeaveSetup leaveSetup = leaveSetupRepository.findByYearAndEmployee(year, leave.getEmployee());
+
+                if (leaveRequest.getLeaveCategory().equals("annual")) {
+                    leaveSetup.setAnnual(leaveSetup.getAnnual() - (count + 1));
                 }
-            }
-            if (leaveRequest.getLeaveCategory().equals("medical")) {
-                if (count == 0) {
-                    leaveSetup.setMedical(leaveSetup.getMedical() - 1);
-                } else {
-                    leaveSetup.setMedical(leaveSetup.getMedical() - count);
+                if (leaveRequest.getLeaveCategory().equals("casual")) {
+                    if (count == 0) {
+                        leaveSetup.setCasual(leaveSetup.getCasual() - 1);
+                    } else {
+                        leaveSetup.setCasual(leaveSetup.getCasual() - count);
+                    }
                 }
+                if (leaveRequest.getLeaveCategory().equals("medical")) {
+                    if (count == 0) {
+                        leaveSetup.setMedical(leaveSetup.getMedical() - 1);
+                    } else {
+                        leaveSetup.setMedical(leaveSetup.getMedical() - count);
+                    }
+                }
+
+                leaveSetupRepository.save(leaveSetup);
+            } else {
+                System.out.println("ddddddddddddddddddddddddd");
             }
-            leaveSetupRepository.save(leaveSetup);
 
             List<TLeaveDetails> leaveDetailses = leaveRequestDetailRepository.findByLeaveRequest(leaveRequest);
             for (TLeaveDetails leaveDetail : leaveDetailses) {

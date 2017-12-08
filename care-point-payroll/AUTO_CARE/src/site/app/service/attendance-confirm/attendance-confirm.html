@@ -4,15 +4,17 @@
 <div class="index-content-body">
     <div class="col-xs-12">
         <div class="col-xs-12 background-dark" style="padding-bottom: 15px;padding-top: 10px">
-            <!--            <div class="col-xs-3">
-                            <label class="control-label">Branch :</label>
-                            <input type="text" id="branch" class="form-control" ng-model="model.branch" ng-change='ui.select()'/>
-                        </div>-->
-            <div class="col-xs-3">
+            <div class="col-xs-2">
+                <label class="control-label">Branch :</label>
+                <select id="branch" class="form-control" ng-model="ui.selectbranch">
+                    <option ng-repeat="branch in model.branch" value="{{branch.indexNo}}">{{branch.name}}</option>
+                </select>
+            </div>
+            <div class="col-xs-2">
                 <label class="control-label">Date :</label>
                 <input type="date" id="date" class="form-control" ng-model="model.date" ng-change='ui.dateChange()'/>
             </div>
-            <div class="col-xs-3">
+            <div class="col-xs-2">
                 <label class="control-label">Date Type :</label>
                 <label class="label" style="background-color: #cccccc" ng-show="model.calenderData.status === 'Working_Day'">_</label>
                 <label class="label" style="background-color: yellow" ng-show="model.calenderData.status === 'Poya_Day'">_</label>
@@ -55,7 +57,7 @@
                     <th>EID</th>
                     <th>EPF NO</th>
                     <th>Employee</th>
-                    <th>P/A</th>
+                    <th>Day</th>
                     <th>Leave</th>
                     <th>Type</th>
                     <th>No Pay</th>

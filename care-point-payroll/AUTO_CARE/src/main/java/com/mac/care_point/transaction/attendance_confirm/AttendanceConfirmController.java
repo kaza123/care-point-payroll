@@ -31,11 +31,11 @@ public class AttendanceConfirmController {
     @Autowired
     private AttendanceConfirmService attendanceConfirmService;
 
-    @RequestMapping(path = "/all-attendance/{date}", method = RequestMethod.GET)
-    public List<Object[]> allEmployeeeAttendanceTemp(@PathVariable Date date) {
+    @RequestMapping(path = "/all-attendance/{date}/{branch}", method = RequestMethod.GET)
+    public List<Object[]> allEmployeeeAttendanceTemp(@PathVariable Date date,@PathVariable int branch) {
         List<Object[]> returnList = new ArrayList<>();
         try {
-            returnList = attendanceConfirmService.allEmployeeAttendance(date);
+            returnList = attendanceConfirmService.allEmployeeAttendance(date,branch);
         } catch (ParseException ex) {
             Logger.getLogger(AttendanceConfirmController.class.getName()).log(Level.SEVERE, null, ex);
         }

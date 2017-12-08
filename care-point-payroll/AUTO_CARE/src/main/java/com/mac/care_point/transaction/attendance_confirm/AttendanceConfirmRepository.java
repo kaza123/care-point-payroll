@@ -24,8 +24,9 @@ public interface AttendanceConfirmRepository extends JpaRepository<TRecordDetail
             + "m_employee\n"
             + "left join\n"
             + "t_record_details_temp on t_record_details_temp.employee = m_employee.index_no\n"
+            + "WHERE m_employee.branch = :branch\n"
             + "group by m_employee.index_no", nativeQuery = true)
-    public List<Object[]> allEmployeeeAttendanceTemp();
+    public List<Object[]> allEmployeeeAttendanceTemp(@Param("branch") int branch);
 
     public List<TRecordDetails> findByDate(Date date);
 
@@ -35,8 +36,9 @@ public interface AttendanceConfirmRepository extends JpaRepository<TRecordDetail
             + "left join\n"
             + "t_record_details on t_record_details.employee = m_employee.index_no\n"
             + "where t_record_details.date=:date\n"
+            + "and t_record_details.branch = :branch\n"
             + "group by m_employee.index_no", nativeQuery = true)
-    public List<Object[]> allEmployeeeAttendance(@Param("date") Date date);
+    public List<Object[]> allEmployeeeAttendance(@Param("date") Date date,@Param("branch") int branch);
 
     @Query(value = "SELECT TIMEDIFF(:outTime, :endTime);",nativeQuery = true)
     public String getTimeDiff(@Param("outTime")String outTime,@Param("endTime") String endTime);
