@@ -6,6 +6,8 @@
 package com.mac.care_point.master.employee.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +19,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author kavish manjitha
+ * @author nidura prageeth
  */
 @Entity
 @Table(name = "m_employee")
@@ -76,23 +78,63 @@ public class Employee implements Serializable {
    
     @Column(name = "epf_no")
     private Integer epfNo;
+    
+    @Column(name = "tel_no")
+    private Integer telNo;
+    
+    @Column(name = "email")
+    private String email;
+    
+    @Column(name = "nic")
+    private String nic;
+    
+    @Column(name = "civil_status")
+    private String civilStatus;
+    
+    @Column(name = "joined_date")
+    private Date joinedDate;
+    
+    @Column(name = "active")
+    private Boolean active;
+    
+    @Column(name = "confirm")
+    private Boolean confirm;
+    
+    @Column(name = "resigned")
+    private Boolean resigned;
+    
+    @Column(name = "basic_salary")
+    private BigDecimal basicSalary;
+    
+    @Column(name = "basic_for_epf")
+    private BigDecimal basicForEpf;
+    
+    @Column(name = "payroll_type")
+    private String payrollType;
+    
+    @Column(name = "epf_status")
+    private String epfStatus;
+    
+    @Column(name = "epf_grade")
+    private String epfGrade;
+    
+    @Column(name = "epf_applicable")
+    private Boolean epfApplicable;
+    
+    @Column(name = "ot_applicable")
+    private Boolean OtApplicable;
+    
+    @Column(name = "morning_ot")
+    private Boolean morningOt;
+    
+    @Column(name = "attendance_allowance")
+    private Boolean attendanceAllowance;
+    
+    @Column(name = "tax_applicable")
+    private Boolean taxApplicable;
+    
 
     public Employee() {
-    }
-
-    public Employee(Integer indexNo, String name, String addressLine1, String addressLine2, String addressLine3, String mobile, int branch, String type, String rol, String image, Integer bay, Integer epfNo) {
-        this.indexNo = indexNo;
-        this.name = name;
-        this.addressLine1 = addressLine1;
-        this.addressLine2 = addressLine2;
-        this.addressLine3 = addressLine3;
-        this.mobile = mobile;
-        this.branch = branch;
-        this.type = type;
-        this.rol = rol;
-        this.image = image;
-        this.bay = bay;
-        this.epfNo = epfNo;
     }
 
     public Integer getIndexNo() {
@@ -191,6 +233,153 @@ public class Employee implements Serializable {
         this.epfNo = epfNo;
     }
 
+    public Integer getTelNo() {
+        return telNo;
+    }
+
+    public void setTelNo(Integer telNo) {
+        this.telNo = telNo;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getNic() {
+        return nic;
+    }
+
+    public void setNic(String nic) {
+        this.nic = nic;
+    }
+
+    public String getCivilStatus() {
+        return civilStatus;
+    }
+
+    public void setCivilStatus(String civilStatus) {
+        this.civilStatus = civilStatus;
+    }
+
+    public Date getJoinedDate() {
+        return joinedDate;
+    }
+
+    public void setJoinedDate(Date joinedDate) {
+        this.joinedDate = joinedDate;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public Boolean getConfirm() {
+        return confirm;
+    }
+
+    public void setConfirm(Boolean confirm) {
+        this.confirm = confirm;
+    }
+
+    public Boolean getResigned() {
+        return resigned;
+    }
+
+    public void setResigned(Boolean resigned) {
+        this.resigned = resigned;
+    }
+
+    public BigDecimal getBasicSalary() {
+        return basicSalary;
+    }
+
+    public void setBasicSalary(BigDecimal basicSalary) {
+        this.basicSalary = basicSalary;
+    }
+
+    public BigDecimal getBasicForEpf() {
+        return basicForEpf;
+    }
+
+    public void setBasicForEpf(BigDecimal basicForEpf) {
+        this.basicForEpf = basicForEpf;
+    }
+
+    public String getPayrollType() {
+        return payrollType;
+    }
+
+    public void setPayrollType(String payrollType) {
+        this.payrollType = payrollType;
+    }
+
+    public String getEpfStatus() {
+        return epfStatus;
+    }
+
+    public void setEpfStatus(String epfStatus) {
+        this.epfStatus = epfStatus;
+    }
+
+    public String getEpfGrade() {
+        return epfGrade;
+    }
+
+    public void setEpfGrade(String epfGrade) {
+        this.epfGrade = epfGrade;
+    }
+
+    public Boolean getEpfApplicable() {
+        return epfApplicable;
+    }
+
+    public void setEpfApplicable(Boolean epfApplicable) {
+        this.epfApplicable = epfApplicable;
+    }
+
+    public Boolean getOtApplicable() {
+        return OtApplicable;
+    }
+
+    public void setOtApplicable(Boolean OtApplicable) {
+        this.OtApplicable = OtApplicable;
+    }
+
+    public Boolean getMorningOt() {
+        return morningOt;
+    }
+
+    public void setMorningOt(Boolean morningOt) {
+        this.morningOt = morningOt;
+    }
+
+    public Boolean getAttendanceAllowance() {
+        return attendanceAllowance;
+    }
+
+    public void setAttendanceAllowance(Boolean attendanceAllowance) {
+        this.attendanceAllowance = attendanceAllowance;
+    }
+
+    public Boolean getTaxApplicable() {
+        return taxApplicable;
+    }
+
+    public void setTaxApplicable(Boolean taxApplicable) {
+        this.taxApplicable = taxApplicable;
+    }
+    
+    
+    
+    
    
     
 }

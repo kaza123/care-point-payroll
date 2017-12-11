@@ -11,9 +11,9 @@
                         <table class="table-rounded">
                             <col style="width: 10%">
                             <col style="width: 20%">
-                            <col style="width: 15%">
-                            <col style="width: 15%">
                             <col style="width: 10%">
+                            <col style="width: 15%">
+                            <col style="width: 15%">
                             <col style="width: 10%">
                             <col style="width: 10%">
                             <col style="width: 10%">
@@ -21,30 +21,34 @@
                                 <tr>
                                     <th> <label>#</label> </th>
                                     <th> <label>Name</label></th>
+                                    <th> <label>Epf No</label></th>
                                     <th> <label>Mobile</label></th>
                                     <th> <label>Nic</label></th>
                                     <th> <label>Type</label></th>
                                     <th> <label>Rol</label></th>
-                                    <th> <label>Bay</label></th>
                                     <th>&nbsp;</th>
                                 </tr>
                             </thead>
                         </table>
                         <div class="smart-scroll-y" style="height: calc(100vh - 245px);">
                             <table class="table-rounded">
+                                <col style="width: 10%">
+                                <col style="width: 20%">
+                                <col style="width: 10%">
                                 <col style="width: 15%">
-                                <col style="width: 20%">
-                                <col style="width: 20%">
                                 <col style="width: 15%">
-                                <col style="width: 20%">
+                                <col style="width: 10%">
+                                <col style="width: 10%">
                                 <col style="width: 10%">
                                 <tbody>
                                     <tr ng-repeat="emolyee in model.employeeList| filter:model.search.name | orderBy:'indexNo'">
                                         <td><label class="label label-default">{{emolyee.indexNo|fixedLength:5}}</label></td>
                                         <td>{{emolyee.name}}</td>
+                                        <td>{{emolyee.epfNo}}</td>
                                         <td>{{emolyee.mobile}}</td>
-                                        <td>{{client.nic==null?'- - -':client.nic}}</td>
-                                        <td><label class="label label-primary">{{ui.customerTypeLable(emolyee.customerType)}}</label></td>
+                                        <td>{{emolyee.nic==null?'- - -':employee.nic}}</td>
+                                        <td><label class="label label-primary">{{emolyee.type}}</label></td>
+                                        <td><label class="label label-primary">{{emolyee.rol}}</label></td>
                                         <td class="text-right" style="padding-left: 5px;">
                                             <a class="btn btn-primary" ng-click="ui.edit(emolyee, $index)"><span class="glyphicon glyphicon-edit"></span></a>
                                             <a class="btn btn-danger" ng-click="ui.deleteEmployee(emolyee.indexNo, $index)"><span class="glyphicon glyphicon-trash"></span></a>
@@ -152,10 +156,10 @@
                                 </tr> 
                                 <tr>
                                     <td><label>Joined Date:</label></td>
-                                    <td><input class="form-control" id="name" ng-model="model.employeeData.joinedDate" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
+                                    <td><input class="form-control" type="date" ng-model="model.employeeData.joinedDate" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
                                 </tr>
                                 <tr>
-                                    <td><label for="active">Active</label>&nbsp;&nbsp;<input ng-model="model.employeeData.active" type="checkbox" id="active" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
+                                    <td><label for="active">Active</label>&nbsp;&nbsp;<input ng-model="model.employeeData.active" type="checkbox" id="active"  ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
                                     <td></td>
                                 </tr>
                                 <tr>
@@ -216,7 +220,7 @@
                                     <td><label for="tax">Tax Applicable</label>&nbsp;&nbsp;<input  ng-model="model.employeeData.taxApplicable"  type="checkbox" id="tax" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
                                     <td></td>
                                 </tr>
-                                
+
                             </tbody>
                         </table>
                     </div>

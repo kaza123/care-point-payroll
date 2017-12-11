@@ -18,7 +18,11 @@
         //transaction
         "fingerPrintModule",
         "attendanceModule",
-        "attendanceConfirmModule"
+        "attendanceConfirmModule",
+        "advanceRequestModule",
+        "advanceApproveModule",
+        "loanRequestModule",
+        "loanApproveModule"
     ]);
 
     //constants
@@ -106,6 +110,22 @@
                         .when("/transaction/short-leave", {
                             templateUrl: "app/service/leave/short-leave/short-leave.html",
                             controller: "shortLeaveController"
+                        })
+                        .when("/transaction/loan-request", {
+                            templateUrl: "app/service/loan/loan-request/loan-request.html",
+                            controller: "loanRequestController"
+                        })
+                        .when("/transaction/loan-approve", {
+                            templateUrl: "app/service/loan/loan-approve/loan-approve.html",
+                            controller: "loanApproveController"
+                        })
+                        .when("/transaction/advance-request", {
+                            templateUrl: "app/service/advance/advance-request/advance-request.html",
+                            controller: "advanceRequestController"
+                        })
+                        .when("/transaction/advance-approve", {
+                            templateUrl: "app/service/advance/advance-approve/advance-approve.html",
+                            controller: "advanceApproveController"
                         })
 
 

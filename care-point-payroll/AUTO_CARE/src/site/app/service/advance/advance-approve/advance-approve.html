@@ -1,0 +1,131 @@
+<div class="index-content-header">
+</div>
+
+<div class="index-content-body">
+    <div class="col-xs-3 background-dark">
+        <table class="table-rounded control-table">
+            <colgroup>
+                <col style="width: 100%">
+            </colgroup>
+            <tbody>
+                <tr>
+                    <td>
+                        <label class="control-label">Branch :</label>
+                        <select ng-change="http.selectBranch(model.leave.branch)"class="form-control" ng-model="model.leave.branch">
+                            <option value=''></option>
+                            <option ng-repeat="branch in model.branch" value="{{branch.indexNo}}">{{branch.name}}</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="smart-scroll-y" ng-show="model.leaveList.length" style="margin-top: 0px;height: calc(100vh - 138px)">
+            <table class="table-rounded">
+                <col style="width: 100%">
+                <tbody>
+                    <tr ng-repeat="leave in model.leaveList" ng-click="http.selectleave(leave.indexNo, leave)">
+                        <td><label class="label label-default">Date</label> {{leave.date| date}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label class="label label-default">Employee</label> {{leave.employee.name}} </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="placeholder col-md-12" ng-hide="model.leaveList.length" style="margin-top: 0px;height: calc(100vh - 138px); padding: 0px 3px 10px 0px;">
+            <h1>ADVANCE REQUEST EMPTY:(</h1>
+        </div>
+    </div>
+    <div class="col-xs-6 background-light">
+        <table class="table-rounded" style="margin-top: 10px">
+            <col style="width: 15%">
+            <col style="width: 20%">
+            <col style="width: 25%">
+            <col style="width: 15%">
+            <col style="width: 10%">
+            <thead class="background-dark"> 
+                <tr>
+                    <th>Emp No</th>
+                    <th>Epf No</th>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+        </table>
+        <div class="smart-scroll-y" style="height: calc(100vh - 314px);" ng-show="model.leave.leaveRequest.length">
+            <table class="table-rounded table-hover">
+                <col style="width: 10%">
+                <col style="width: 15%">
+                <col style="width: 15%">
+                <col style="width: 15%">
+                <col style="width: 35%">
+                <col style="width: 10%">
+                <tbody>
+                    <tr ng-repeat="request in model.leave.leaveRequest">
+                        <td><label class="label label-default control-label">{{$index + 1}}</label></td>
+                        <td>{{request.fromDate| date}}</td>
+                        <td>{{request.toDate| date}}</td>
+                        <td>{{request.leaveType}}</td>
+                        <td>{{model.leave.reason}}</td>
+                        <td>
+                            <a class="btn btn-danger" ng-click="ui.edit(category, $index)"><span class="glyphicon glyphicon-remove"></span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="placeholder col-md-12" ng-hide="model.leaveDetailList.length" style="margin-top: 0px;height: calc(100vh - 103px); padding: 0px 0px 10px 0px;">
+            <h1>SELECT ADVANCE REQUEST TO VIEW DETAILS :(</h1>
+        </div>
+    </div>
+    <div class="col-xs-3 background-dark">
+        <div class="col-md-12" style="margin-top: 10px;height: 35px; background-color: #5093e1;color: white">
+            <h4 class="text-center">LOAN HISTORY</h4>
+        </div>
+
+        <div class="placeholder col-md-12" ng-show="true" style="margin-top: 5px;height: calc(100vh - 103px); padding: 0px 0px 10px 0px;">
+            <table class="table-rounded control-table">
+                <colgroup>
+                    <col style="width: 50%">
+                    <col style="width: 50%">
+                </colgroup>
+                <tbody style="text-align: left">
+                    <tr>
+                        <td>
+                            DSAD
+                        </td>
+                        <td>
+                            {{employee.annual}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            ASDASD
+                        </td>
+                        <td>
+                            {{employee.casual}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                           ASDSADD
+                        </td>
+                        <td>
+                            {{employee.medical}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="placeholder col-md-12" ng-hide="true" style="margin-top: 5px;height: calc(100vh - 103px); padding: 0px 0px 10px 0px;">
+            <h1>EMPTY HISTORY TO VIEW :(</h1>
+        </div>
+    </div>
+
+</div>
+<div class="fab-container">
+    <!--<a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>-->
+    <a class="fab fab-lg fab-primary" ng-hide="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'EDIT'" ng-click="ui.update();"><i class="glyphicon glyphicon-ok"></i></a>
+</div>
