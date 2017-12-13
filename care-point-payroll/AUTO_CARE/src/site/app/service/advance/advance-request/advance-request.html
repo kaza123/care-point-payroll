@@ -8,10 +8,10 @@
                 <label>Advance No :</label>
                 <input type="text" id="date" class="form-control" ng-model="model.advanceNo" ng-disabled="true" />
             </div>
-            <div class="col-xs-3" style="margin-top: 10px;">
+<!--            <div class="col-xs-3" style="margin-top: 10px;">
                 <label>Date :</label>
                 <input type="date" id="date" class="form-control" ng-model="model.date" ng-disabled="ui.mode !== 'NEW' || ui.leaveMode === 'half_day'" />
-            </div>
+            </div>-->
             <div class="col-xs-3" style="margin-top: 10px;">
                 <label>Epf No :</label>
                 <input type="text" id="date" class="form-control" ng-model="model.epfNo" ng-disabled="ui.mode !== 'NEW'" />
@@ -19,6 +19,14 @@
             <div class="col-xs-3" style="margin-top: 10px;">
                 <label>Name :</label>
                 <input type="text" id="date" class="form-control" ng-model="model.name" ng-disabled="ui.mode !== 'NEW'" />
+            </div>
+            <div class="col-xs-3" style="margin-top: 10px;">
+                <label>Month :</label>
+                <input type="month" id="date" class="form-control" ng-model="model.month" ng-disabled="ui.mode !== 'NEW'" />
+<!--                <select name="month" class="form-control" ng-model="model.name" ng-disabled="ui.mode !== 'NEW'" >
+                    <option value="current">CURRENT</option>
+                    <option value="previous">PREVIOUS</option>
+                </select>-->
             </div>
             <div class="col-xs-3" style="margin-top: 10px;">
                 <label>Amount :</label>
