@@ -4,33 +4,39 @@
 <div class="index-content-body">
     <div class="col-xs-8 background-light">
         <div class="row">
-            <div class="col-xs-3" style="margin-top: 10px;">
-                <label>Advance No :</label>
-                <input type="text" id="date" class="form-control" ng-model="model.advanceNo" ng-disabled="true" />
-            </div>
-<!--            <div class="col-xs-3" style="margin-top: 10px;">
-                <label>Date :</label>
-                <input type="date" id="date" class="form-control" ng-model="model.date" ng-disabled="ui.mode !== 'NEW' || ui.leaveMode === 'half_day'" />
-            </div>-->
+            <!--            <div class="col-xs-3" style="margin-top: 10px;">
+                            <label>Advance No :</label>
+                            <input type="text" class="form-control" ng-model="model.advance.advanceNo" ng-disabled="true" />
+                        </div>-->
             <div class="col-xs-3" style="margin-top: 10px;">
                 <label>Epf No :</label>
-                <input type="text" id="date" class="form-control" ng-model="model.epfNo" ng-disabled="ui.mode !== 'NEW'" />
+                <input type="text" id="etfNo" class="form-control" ng-model="model.advance.employee.epfNo" ng-disabled="ui.mode !== 'NEW'"
+                       uib-typeahead="employees.epfNo as (employees.epfNo + ' - ' + employees.name) for employees in model.employeeList |filter:{epfNo:$viewValue}|limitTo:5" 
+                       typeahead-input-formatter="ui.employeeEpfLabel(model.advance.employee.epfNo);"
+                       typeahead-editable='false' />
+            </div>
+            <div class="col-xs-3" style="margin-top: 10px;">
+                <label>Employee No :</label>
+                <input type="text" id="etfNo" class="form-control" ng-model="model.advance.employee.indexNo" ng-disabled="ui.mode !== 'NEW'"
+                       uib-typeahead="employees.indexNo as (employees.indexNo + ' - ' + employees.name) for employees in model.employeeList |filter:{indexNo:$viewValue}|limitTo:5" 
+                       typeahead-input-formatter="ui.employeeIndexLabel(model.advance.employee.indexNo);"
+                       typeahead-editable='false' />
             </div>
             <div class="col-xs-3" style="margin-top: 10px;">
                 <label>Name :</label>
-                <input type="text" id="date" class="form-control" ng-model="model.name" ng-disabled="ui.mode !== 'NEW'" />
+                <input type="text" class="form-control" ng-model="model.advance.employee.name" ng-disabled="ui.mode !== 'NEW'" />
             </div>
             <div class="col-xs-3" style="margin-top: 10px;">
                 <label>Month :</label>
-                <input type="month" id="date" class="form-control" ng-model="model.month" ng-disabled="ui.mode !== 'NEW'" />
-<!--                <select name="month" class="form-control" ng-model="model.name" ng-disabled="ui.mode !== 'NEW'" >
-                    <option value="current">CURRENT</option>
-                    <option value="previous">PREVIOUS</option>
-                </select>-->
+                <input type="date" id="month" class="form-control" ng-model="model.advance.month" ng-disabled="ui.mode !== 'NEW'" />
+                <!--                <select name="month" class="form-control" ng-model="model.name" ng-disabled="ui.mode !== 'NEW'" >
+                                    <option value="current">CURRENT</option>
+                                    <option value="previous">PREVIOUS</option>
+                                </select>-->
             </div>
-            <div class="col-xs-3" style="margin-top: 10px;">
+            <div class="col-xs-3" style="margin-top: 10px;" ng-keypress="ui.validateData($event)">
                 <label>Amount :</label>
-                <input type="text" id="date" class="form-control" ng-model="model.amount" ng-disabled="ui.mode !== 'NEW'" />
+                <input type="number" class="form-control text-right" ng-model="model.advance.amount" ng-disabled="ui.mode !== 'NEW'" />
             </div>
             <div class="col-xs-1" style="margin-top: 35px;">
                 <a class="btn btn-sm btn-primary" ng-click="ui.add()"><span class="glyphicon glyphicon-plus"></span></a>
@@ -39,7 +45,11 @@
                 <input style="" type="file" custom-on-change="uploadAfterFile" multiple>
             </div>
             <div class="col-xs-5" style="margin-top: 35px;">
-                <a class="btn btn-sm btn-warning" ng-click="ui.uplaod()"><span class="glyphicon glyphicon-upload">Upload</span></a>
+                <!--                <a class="btn btn-sm btn-warning" ng-click="ui.uplaod()"><span class="glyphicon glyphicon-upload">Upload</span></a>
+                                     <label class="image-tile-browse" for="file">
+                                        <span class="glyphicon glyphicon-paperclip">Choose File</span>
+                                        <input style="display: none" type="file" id="file" onchange="angular.element(this).scope().ui.uplaod(event)" accept="image/gif, image/jpeg, image/png">
+                                    </label>-->
             </div>
         </div>
 
@@ -54,41 +64,55 @@
                     <th>Emp No</th>
                     <th>Epf No</th>
                     <th>Name</th>
-                    <th>Amount</th>
+                    <th class="text-right">Amount</th>
                     <th>&nbsp;</th>
                 </tr>
             </thead>
         </table>
-        <div class="smart-scroll-y" style="height: calc(100vh - 314px);" ng-show="model.advanceRequest.length">
+        <div class="smart-scroll-y" style="height: calc(100vh - 314px);" ng-show="model.advanceRequestList.length">
             <table class="table-rounded table-hover">
-                <col style="width: 10%">
                 <col style="width: 15%">
+                <col style="width: 20%">
+                <col style="width: 30%">
                 <col style="width: 15%">
-                <col style="width: 15%">
-                <col style="width: 35%">
                 <col style="width: 10%">
                 <tbody>
-                    <tr ng-repeat="request in model.advanceRequest">
-                        <td><label class="label label-default control-label">{{$index + 1}}</label></td>
-                        <td>{{request.fromDate| date}}</td>
-                        <td>{{request.toDate| date}}</td>
-                        <td>{{request.leaveType}}</td>
-                        <td>{{model.leave.reason}}</td>
+                    <tr ng-repeat="request in model.advanceRequestList| orderBy:'indexNo'">
+                        <td>{{request.employee.indexNo}}</td>
+                        <td>{{request.employee.epfNo}}</td>
+                        <td>{{request.employee.name}}</td>
+                        <td class="text-right">{{request.amount}}</td>
                         <td>
-                            <a class="btn btn-danger" ng-click="ui.edit(category, $index)"><span class="glyphicon glyphicon-remove"></span></a>
+                            <a class="btn btn-default" ng-click="ui.editRequest($index,request);"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a class="btn btn-danger" ng-click="ui.deleteRequest($index);"><span class="glyphicon glyphicon-trash"></span></a>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div class="placeholder col-md-12" ng-hide="model.advanceRequest.length" style="margin-top: 0px;height: calc(100vh - 314px); padding: 0px 3px 10px 0px;">
+        <div class="placeholder col-md-12" ng-hide="model.advanceRequestList.length" style="margin-top: 0px;height: calc(100vh - 314px); padding: 0px 3px 10px 0px;">
             <h1>ADVANCE REQUEST EMPTY:(</h1>
+        </div>
+        <div class="col-xs-12">
+            <table class="table-rounded">
+                <col style="width: 18%"/>
+                <col style="width: 1%"/>
+                <col style="width: 50%"/>
+                
+                <thead class="background-dark">
+                    <tr>
+                        <th>ADVANCE REQUEST SUMMARY</th>
+                        <th class="text-right">({{model.requestTotal.requestTotal}})</th>
+                        <th class="text-right">{{model.requestTotal.requestAmountTotal | number:2}}</th>
+                    </tr>
+                </thead>
+            </table>
         </div>
     </div>
 
     <div class="col-xs-4 background-dark">
         <div class="col-md-12" style="margin-top: 10px;height: 35px; background-color: #5093e1;color: white">
-            <h4 class="text-center">ADVANCE HISTORY</h4>
+            <h4 class="text-center">EMPLOYEE WORKING DETAILS</h4>
         </div>
 
         <div class="placeholder col-md-12" ng-show="false" style="margin-top: 5px;height: calc(100vh - 103px); padding: 0px 0px 10px 0px;">
@@ -103,7 +127,7 @@
                             DSAD
                         </td>
                         <td>
-                            
+
                         </td>
                     </tr>
                     <tr>
@@ -111,15 +135,15 @@
                             ASDASD
                         </td>
                         <td>
-                           
+
                         </td>
                     </tr>
                     <tr>
                         <td>
-                           ASDSADD
+                            ASDSADD
                         </td>
                         <td>
-                            
+
                         </td>
                     </tr>
                 </tbody>
@@ -133,5 +157,5 @@
 </div>
 <div class="fab-container">
     <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
-    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
+        <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
 </div>
