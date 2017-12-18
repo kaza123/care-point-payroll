@@ -1,23 +1,15 @@
 (function () {
+    //module
     angular.module("advanceApproveModule", ['ui.bootstrap', 'ui-notification']);
 
+    //http factory
     angular.module("advanceApproveModule")
             .factory("advanceApproveFactory", function ($http, systemConfig) {
                 var factory = {};
 
-                factory.findAllUnapproveAdvanceRequest = function (indexNo, callback) {
-                    var url = systemConfig.apiUrl + "/api/care-point/transaction/advance-request/find-all-advance-request-unapprove-by-branch/";
-
-                    $http.get(url + indexNo)
-                            .success(function (data, status, headers) {
-                                callback(data);
-                            })
-                            .error(function (data, status, headers) {
-                                callback(data);
-                            });
-                };
-                factory.findAllUnapproveAdvanceRequestSumm = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/care-point/transaction/advance-request/find-summary";
+                // find employee by epf 
+                factory.findEmployeeByEpfNo = function (epfNo, callback) {
+                    var url = systemConfig.apiUrl + "/api/leave/leave-request/employee/" + epfNo;
 
                     $http.get(url)
                             .success(function (data, status, headers) {
@@ -27,10 +19,12 @@
                                 callback(data);
                             });
                 };
-                factory.approveAdvance = function (approveList, callback, errorCallback) {
-                    var url = systemConfig.apiUrl + "/api/care-point/transaction/advance-request/approve-advance";
 
-                    $http.post(url, approveList)
+                //save
+                factory.saveLeaveRequestFactory = function (leave, callback, errorCallback) {
+                    var url = systemConfig.apiUrl + "/api/leave/leave-request/save-leave";
+
+                    $http.post(url, leave)
                             .success(function (data, status, headers) {
                                 callback(data);
                             })
@@ -40,90 +34,87 @@
                                 }
                             });
                 };
+
+
                 return factory;
             });
 
+
+    //controller
     angular.module("advanceApproveModule")
             .controller("advanceApproveController", function ($scope, $filter, advanceApproveFactory, Notification, $timeout) {
+                //data models 
                 $scope.model = {};
+                
+                //ui models
                 $scope.ui = {};
-                $scope.model.unapproveAdvanceRequestList = [];
-                $scope.model.unapproveAdvanceRequestSum = [];
-                $scope.model.approveList = [];
-                $scope.model.checkboxModel = {};
-                $scope.model.requestTotal = {
-                    requestTotal: 0.0,
-                    requestAmountTotal: 0.0
+
+                //http models
+                $scope.http = {};
+
+
+
+                //------------------ validation functions ------------------------------
+//                $scope.validateInput = function () {
+//                    if ($scope.model.leave.year && $scope.model.leave.annual
+//                            && $scope.model.leave.casual && $scope.model.leave.halfDay && $scope.model.leave.shortLeave) {
+//                        return true;
+//                    } else {
+//                        return false;
+//                    }
+//                };
+
+
+                //<-----------------http funtiion------------------->
+                $scope.http.saveAdvanceRequest = function () {
+                    var detail = $scope.model.leave;
+
+                    var detailJSON = JSON.stringify(detail);
+                    console.log(detailJSON)
+                    
                 };
 
-                $scope.ui.setChexboxValue = function (value) {
-                    angular.forEach($scope.model.unapproveAdvanceRequestList, function (request) {
-                        if (value) {
-                            request.isCheck = true;
-                        } else {
-                            request.isCheck = false;
-                        }
-                    });
+
+                $scope.http.selectEpfNo = function (keyEvent, epfNo) {
+                    if (keyEvent.which === 13)
+                        advanceApproveFactory.findEmployeeByEpfNo(epfNo
+                                , function (data) {
+                                    $scope.employeeName = data.name;
+                                    $scope.model.leave.employee = data.indexNo;
+                                });
                 };
-                $scope.ui.findAllUnapproveAdvanceRequest = function () {
-                    advanceApproveFactory.findAllUnapproveAdvanceRequestSumm(
-                            function (data) {
-                                $scope.model.unapproveAdvanceRequestSum = data;
-                                $scope.ui.refreshAmount();
-                            }, function (error) {
-                        console.log(error);
-                    });
-                };
-                $scope.ui.getSelectedList = function () {
-                    angular.forEach($scope.model.unapproveAdvanceRequestList, function (value) {
-                        if (value.isCheck) {
-                            $scope.model.approveList.push(value);
-                        }
-                    });
-                };
+
+                //<-----------------ui funtiion--------------------->
+                //save function
                 $scope.ui.save = function () {
-                    $scope.ui.getSelectedList();
-                    advanceApproveFactory.approveAdvance($scope.model.approveList,
-                            function (data) {
-                                $scope.model.unapproveAdvanceRequestSum = [];
-                                $scope.model.unapproveAdvanceRequestList = [];
-                                $scope.ui.findAllUnapproveAdvanceRequest();
-                                $scope.ui.setSelectBranch();
-                                Notification.success("Advance Approve success !!!");
-                            }, function (error) {
-                    });
+                    $scope.http.saveAdvanceRequest();
                 };
-                $scope.ui.setSelectBranch = function (indexNo) {
-                    $scope.ui.mode = "IDEAL";
-                    advanceApproveFactory.findAllUnapproveAdvanceRequest(indexNo,
-                            function (data) {
-                                $scope.model.unapproveAdvanceRequestList = data;
-                            }, function () {
-                    });
-                };
-                $scope.ui.refreshAmount = function () {
-                    var requestAmountTotal = 0.0;
-                    angular.forEach($scope.model.unapproveAdvanceRequestSum, function (value) {
-                        requestAmountTotal += parseFloat(value[3]);
-                        return;
-                    });
-                    $scope.model.requestTotal.requestAmountTotal = requestAmountTotal;
-                    $scope.model.requestTotal.requestTotal = $scope.model.unapproveAdvanceRequestSum.length;
-                    return this.requestTotal;
-                };
+
+                //focus
                 $scope.ui.focus = function () {
                     $timeout(function () {
                         document.querySelectorAll("#year")[0].focus();
                     }, 10);
                 };
+
+                //new function
                 $scope.ui.new = function () {
                     $scope.ui.mode = "NEW";
+
                     $scope.ui.focus();
                 };
+
+                $scope.ui.add = function (leaveTemp) {    
+                };
+
+                //edit funtion
+                $scope.ui.edit = function (leave, index) {
+                };
+
+
                 $scope.ui.init = function () {
-                    $scope.ui.mode = "NEW";
-                    $scope.ui.findAllUnapproveAdvanceRequest();
-//                    $scope.ui.refreshAmount();
+                    //set ideal mode
+                    $scope.ui.mode = "IDEAL";
                 };
 
                 $scope.ui.init();
