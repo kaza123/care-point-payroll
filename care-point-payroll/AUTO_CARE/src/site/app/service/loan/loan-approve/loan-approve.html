@@ -3,80 +3,92 @@
 
 <div class="index-content-body">
     <div class="col-xs-3 background-dark">
-        <table class="table-rounded control-table">
-            <colgroup>
-                <col style="width: 100%">
-            </colgroup>
-            <tbody>
-                <tr>
-                    <td>
-                        <label class="control-label">Branch :</label>
-                        <select ng-change="http.selectBranch(model.leave.branch)"class="form-control" ng-model="model.leave.branch">
-                            <option value=''></option>
-                            <option ng-repeat="branch in model.branch" value="{{branch.indexNo}}">{{branch.name}}</option>
-                        </select>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div class="smart-scroll-y" ng-show="model.leaveList.length" style="margin-top: 0px;height: calc(100vh - 138px)">
-            <table class="table-rounded">
-                <col style="width: 100%">
-                <tbody>
-                    <tr ng-repeat="leave in model.leaveList" ng-click="http.selectleave(leave.indexNo, leave)">
-                        <td><label class="label label-default">Date</label> {{leave.date| date}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label class="label label-default">Employee</label> {{leave.employee.name}} </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="col-xs-12" style="margin-top: 10px;height: 35px; background-color: #5093e1;color: white">
+            <h4 class="text-center">PENDING REQUESTS</h4>
         </div>
-        <div class="placeholder col-md-12" ng-hide="model.leaveList.length" style="margin-top: 0px;height: calc(100vh - 138px); padding: 0px 3px 10px 0px;">
+        <div class="col-xs-12">
+            <div class="row">     
+                <div class="smart-scroll-y" ng-show="model.pendingRequestList.length" style="margin-top: 10px;height: calc(100vh - 111px)">
+                    <table class="table-rounded">
+                        <col style="width: 10%">
+                        <col style="width: 30%">
+                        <col style="width: 20%">
+                        <col style="width: 40%">
+                        <tbody>
+                            <tr ng-repeat="loan in model.pendingRequestList" ng-click="http.selectLoanRequest(loan[0], $index)" ng-class="ui.selectedIndex === $index ? 'selected' : ''">
+                                <td>{{loan[0]}}</td>
+                                <td><label class="label label-default">{{loan[1]}}</label></td>
+                                <td><label class="label label-danger">{{loan[2]}}</label></td>
+                                <td class="text-right">RS: {{loan[3]}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="placeholder col-md-12" ng-hide="model.pendingRequestList.length" style="height: calc(100vh - 111px); padding: 0px 0px 10px 0px;">
             <h1>LEAVE REQUEST EMPTY:(</h1>
         </div>
+<!--        <div class="col-xs-12">
+            <div class="row">
+                <table>
+                    <col style="width: 60%;"/>
+                    <col style="width: 40%;"/>
+                    <tbody>
+                        <tr class="text-bold">
+                            <td>SUMMARY</td>
+                            <td class="text-right">{{ui.getRequestTotal() | number:2}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>-->
     </div>
     <div class="col-xs-6 background-light">
         <table class="table-rounded" style="margin-top: 10px">
+            <col style="width: 10%">
             <col style="width: 15%">
             <col style="width: 20%">
-            <col style="width: 25%">
+            <col style="width: 15%">
             <col style="width: 15%">
             <col style="width: 15%">
             <col style="width: 10%">
             <thead class="background-dark"> 
                 <tr>
-                    <th>Epf No</th>
+                    <th>Epf</th>
+                    <th>Name</th>
                     <th>Loan Type</th>
-                    <th>Remark</th>
+                    <th>Ins count</th>
                     <th>Amount</th>
-                    <th>Deduction</th>
-                    <th>&nbsp;</th>
+                    <th>Monthly</th>
+                    <th><input type="checkbox" ng-model="ui.isAllSelect" ng-click="ui.selectAll()"></th>
                 </tr>
             </thead>
         </table>
-        <div class="smart-scroll-y" style="height: calc(100vh - 314px);" ng-show="model.leave.leaveRequest.length">
+        <div class="smart-scroll-y" style="height: calc(100vh - 112px);" ng-show="model.loanRequestDetails.length">
             <table class="table-rounded table-hover">
                 <col style="width: 10%">
                 <col style="width: 15%">
+                <col style="width: 20%">
                 <col style="width: 15%">
                 <col style="width: 15%">
-                <col style="width: 35%">
+                <col style="width: 15%">
                 <col style="width: 10%">
                 <tbody>
-                    <tr ng-repeat="request in model.leave.leaveRequest">
-                        <td><label class="label label-default control-label">{{$index + 1}}</label></td>
-                        <td>{{request.fromDate| date}}</td>
-                        <td>{{request.toDate| date}}</td>
-                        <td>{{request.leaveType}}</td>
-                        <td>{{model.leave.reason}}</td>
-                        <td>
-                            <a class="btn btn-danger" ng-click="ui.edit(category, $index)"><span class="glyphicon glyphicon-remove"></span></a>
-                        </td>
+                    <tr ng-repeat="request in model.loanRequestDetails">
+                        <td>{{request.employee.epfNo}}</td>
+                        <td>{{request.employee.name}}</td>
+                        <td>{{request.loanType.name}}</td>
+                        <td>{{request.installmentCount}}</td>
+                        <td>{{request.amount}}</td>
+                        <td>{{request.monthlyDeduction}}</td>
+                        <td><input type="checkbox" ng-model="request.isCheck"></td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="placeholder col-md-12" ng-hide="model.leaveDetailList.length" style="margin-top: 0px;height: calc(100vh - 103px); padding: 0px 0px 10px 0px;">
+        <div class="placeholder col-md-12" ng-hide="model.loanRequestDetails.length" style="margin-top: 0px;height: calc(100vh - 112px); padding: 0px 0px 10px 0px;">
             <h1>SELECT LEAVE REQUEST TO VIEW DETAILS :(</h1>
         </div>
     </div>
@@ -110,7 +122,7 @@
                     </tr>
                     <tr>
                         <td>
-                           ASDSADD
+                            ASDSADD
                         </td>
                         <td>
                             {{employee.medical}}

@@ -30,8 +30,11 @@
     </div>
     <div class="col-xs-12 background-light" style="margin-top: 10px">
         <table class="table-rounded">
+            <col style="width: 10%">
             <col style="width: 15%">
-            <col style="width: 15%">
+            <col style="width: 10%">
+            <col style="width: 10%">
+            <col style="width: 10%">
             <col style="width: 15%">
             <col style="width: 15%">
             <col style="width: 15%">
@@ -41,15 +44,22 @@
                     <th>EPF No</th>
                     <th>Name</th>
                     <th>Annual</th>
+                    <th>Annual Get</th>
                     <th>Casual</th>
+                    <th>Casual Get</th>
                     <th>Medical</th>
+                    <th>Medical Get</th>
                     <th>&nbsp;</th>
                 </tr>
             </thead>
         </table>
         <div class="smart-scroll-y" style="height: calc(100vh - 220px);">
             <table class="table-rounded">
+                <col style="width: 10%">
                 <col style="width: 15%">
+                <col style="width: 10%">
+                <col style="width: 10%">
+                <col style="width: 10%">
                 <col style="width: 15%">
                 <col style="width: 15%">
                 <col style="width: 15%">
@@ -59,13 +69,15 @@
                         <td>{{leave[1]}}</td>
                         <td>{{leave[2]}}</td>
                         <td>{{leave[3]}}</td>
+                        <td>{{leave[7]}}</td>
                         <td>{{leave[4]}}</td>
+                        <td>{{leave[8]}}</td>
                         <td>{{leave[5]}}</td>
+                        <td>{{leave[9]}}</td>
                         <td class="text-right" style="padding-left: 5px;">
                             <a class="btn btn-primary" ng-click="ui.edit(leave, $index)"><span class="glyphicon glyphicon-edit"></span></a>
                         </td>
                     </tr>
-
                 </tbody>
             </table>
         </div>

@@ -124,5 +124,10 @@ public class EmployeeController {
     public List<Employee> findByType() {
         return employeeService.findByType(employeeType);
     }
+    
+    @RequestMapping(value = "/find-one/{indexNo}", method = RequestMethod.GET)
+    public Employee findByIndex(@PathVariable int indexNo) {
+        return employeeService.findByIndexNo(indexNo);
+    }
 
 }

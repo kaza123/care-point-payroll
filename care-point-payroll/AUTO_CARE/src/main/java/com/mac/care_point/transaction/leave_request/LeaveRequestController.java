@@ -10,6 +10,7 @@ import com.mac.care_point.transaction.leave_request.model.LeaveRequestMix;
 import com.mac.care_point.transaction.leave_request.model.TLeave;
 import com.mac.care_point.transaction.leave_request.model.TLeaveDetails;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,6 +53,18 @@ public class LeaveRequestController {
     @RequestMapping(path = "/employee/{epfNo}",method = RequestMethod.GET)
     public Employee findEmployeeByEpfNo(@PathVariable int epfNo){
         return leaveRequestService.findEmployeeByEpfNo(epfNo);
+    }
+    
+    @RequestMapping(path = "/find-history/{date}/{empIndex}",method = RequestMethod.GET)
+    public Object findLeaveHistory(@PathVariable Date date ,@PathVariable int empIndex){
+        return leaveRequestService.findLeaveHistory(date,empIndex);
+    }
+   
+    @RequestMapping(path = "/find-history-branch/{date}/{empIndex}/{branch}",method = RequestMethod.GET)
+    public Object findLeaveHistoryByBranch(@PathVariable String date ,@PathVariable int empIndex,@PathVariable int branch) throws ParseException{
+        System.out.println(date + "ddddddddddd");
+        System.out.println(empIndex + "sssssssssss");
+        return leaveRequestService.findLeaveHistoryByBranch(date,empIndex,branch);
     }
 
 }

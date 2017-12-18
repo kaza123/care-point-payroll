@@ -21,7 +21,8 @@ public interface LeaveSetupRepository extends JpaRepository<MLeaveSetup, Integer
 
     @Query(value = "SELECT  m_leave_setup.year,m_employee.epf_no, m_employee.name,\n"
             + "m_leave_setup.annual,m_leave_setup.casual,m_leave_setup.medical,\n"
-            + "m_employee.index_no as empIndex\n"
+            + "m_employee.index_no as empIndex,\n"
+            + "m_leave_setup.annual_leave,m_leave_setup.casual_leave,m_leave_setup.medical_leave\n"
             + "FROM\n"
             + "m_leave_setup\n"
             + "INNER JOIN\n"
@@ -31,7 +32,8 @@ public interface LeaveSetupRepository extends JpaRepository<MLeaveSetup, Integer
 
     @Query(value = "SELECT  m_leave_setup.year,m_employee.epf_no, m_employee.name,\n"
             + "m_leave_setup.annual,m_leave_setup.casual,m_leave_setup.medical,\n"
-            + "m_employee.index_no as empIndex\n"
+            + "m_employee.index_no as empIndex,\n"
+            + "m_leave_setup.annual_leave,m_leave_setup.casual_leave,m_leave_setup.medical_leave\n"
             + "FROM\n"
             + "m_leave_setup\n"
             + "INNER JOIN\n"

@@ -59,6 +59,19 @@
                             });
                 };
 
+                // find leave history
+                factory.findLeaveHistory = function (date, empIndex, branch, callback) {
+                    var url = systemConfig.apiUrl + "/api/leave/leave-request/find-history-branch/" + date + "/" + empIndex + "/" + branch;
+
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+                                callback(data);
+                            });
+                };
+
 
                 //save
                 factory.approveLeaveFactory = function (indexNo, empIndex, callback, errorCallback) {
@@ -86,6 +99,8 @@
                 //data models 
                 $scope.model = {};
                 $scope.model.leave = {};
+
+                $scope.model.leaveHistory = {};
 
                 $scope.employee = {};
                 //ui models
@@ -137,29 +152,41 @@
 
 
                 $scope.http.selectBranch = function (branch) {
+                    $scope.selectedBranch = branch;
                     leaveApproveFactory.findAllLeaveByBranch(branch
                             , function (data) {
                                 $scope.model.leaveList = data;
                             });
                 };
 
-                $scope.http.selectleave = function (indexNo, leave) {
+                $scope.http.selectleave = function (indexNo, leave,index) {
+                    $scope.ui.selectedIndex = index;
+                    $scope.leaveDetails = "EMPTY";
                     $scope.leaveIndex = indexNo;
                     $scope.empIndex = leave.employee.indexNo;
                     $scope.reason = leave.reason;
                     var year;
                     leaveApproveFactory.findAllLeaveDetailByleave(indexNo
                             , function (data) {
+                                $scope.leaveDetails = "HAVE";
                                 $scope.model.leaveDetailList = data;
                                 angular.forEach(data, function (value) {
+                                    console.log(value)
                                     if (!year) {
                                         year = value.fromDate;
-                                        return;
+//                                        return;
                                     }
+
+//                                leaveApproveFactory.findEmployeeLeave(leave.employee.indexNo, year, function (data1) {
+//                                    console.log(data)
+//                                    $scope.employee = data1;
+//                                });
                                 });
-                                leaveApproveFactory.findEmployeeLeave(leave.employee.indexNo, year, function (data1) {
-                                    $scope.employee = data1;
-                                });
+                                leaveApproveFactory.findLeaveHistory(year, leave.employee.indexNo, $scope.selectedBranch
+                                        , function (data) {
+                                            console.log(data)
+                                            $scope.model.leaveHistory = data;
+                                        });
                             });
                 };
 
@@ -192,10 +219,13 @@
                     //set ideal mode
                     $scope.ui.mode = "IDEAL";
 
+                    $scope.leaveDetails = "EMPTY";
+
                     //all branch
                     leaveApproveFactory.findAllBranch(function (data) {
                         $scope.model.branch = data;
                     });
+
                 };
 
                 $scope.ui.init();

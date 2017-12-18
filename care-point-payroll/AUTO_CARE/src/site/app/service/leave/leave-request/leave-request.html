@@ -11,22 +11,102 @@
                 <tr>
                     <td>
                         <label class="control-label">Emp EPF No :</label>
-                        <input type="text" id="date" ng-keypress="http.selectEpfNo($event,epfNo)" class="form-control" ng-model="epfNo" ng-disabled="ui.mode !== 'NEW'" />
+                        <input type="text" id="date" ng-keypress="http.selectEpfNo($event, epfNo)" class="form-control" ng-model="epfNo" ng-disabled="ui.mode !== 'NEW'" />
                     </td>
                 </tr>
             </tbody>
         </table>
-        <div class="placeholder col-md-12" ng-show="true" style="margin-top: 0px;height: calc(100vh - 153px); padding: 0px 3px 10px 0px;">
+        <table class="table-rounded control-table" style="margin-top: 10px" ng-show="model.leaveHistory.length">
+            <colgroup>
+                <col style="width: 50%">
+                <col style="width: 25%">
+                <col style="width: 25%">
+            <thead class="background-light"> 
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>All Leaves</th>
+                    <th>Get Leaves</th>
+                </tr>
+            </thead>
+        </table>
+        <div class="smart-scroll-y" style="height: calc(100vh - 265px);" ng-show="model.leaveHistory.length">
+            <table class="table-rounded control-table">
+                <colgroup>
+                    <col style="width: 50%">
+                    <col style="width: 25%">
+                    <col style="width: 25%">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <td>Annual Leaves</td>
+                        <td><label class="label label-success">{{model.leaveHistory[4]}}</label></td>
+                        <td>
+                            <label class="label label-danger" ng-if="model.leaveHistory[8] === null">0</label>
+                            <label class="label label-danger" ng-if="model.leaveHistory[8] !== null">{{model.leaveHistory[8]}}</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Casual Leaves</td>
+                        <td><label class="label label-success">{{model.leaveHistory[5]}}</label></td>
+                        <td>
+                            <label class="label label-danger" ng-if="model.leaveHistory[10] === null">0</label>
+                            <label class="label label-danger" ng-if="model.leaveHistory[10] !== null">{{model.leaveHistory[10]}}</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Medical Leaves</td>
+                        <td><label class="label label-success">{{model.leaveHistory[6]}}</label></td>
+                        <td>
+                            <label class="label label-danger"  ng-if="model.leaveHistory[9] === null">0</label>
+                            <label class="label label-danger"  ng-if="model.leaveHistory[9] !== null">{{model.leaveHistory[10]}}</label>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <div class="row background-light">
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        <h3>HALF DAY COUNT FOR THIS MONTH</h3>
+                    </div>
+                    <div class="col-xs-4">
+                        <h2>
+                            <label class="label label-warning" ng-if="model.leaveHistory[7] === null">0</label>
+                            <label class="label label-warning" ng-if="model.leaveHistory[7] !== null">{{model.leaveHistory[7]}}</label>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="placeholder col-md-12" ng-hide="model.leaveHistory.length" style="margin-top: 0px;height: calc(100vh - 153px); padding: 0px 3px 10px 0px;">
             <h1>EMPTY HISTORY TO VIEW :(</h1>
         </div>
     </div>
     <div class="col-xs-8 background-light">
         <div class="row">
-            <div class="col-xs-4" style="margin-top: 25px;">
+            <div class="col-xs-3" style="margin-top: 10px;">
+                <label>From Date :</label>
+                <input type="date" id="date" class="form-control" ng-change="ui.changeDate(leaveTemp.fromDate)" ng-model="leaveTemp.fromDate" ng-disabled="ui.mode !== 'NEW'" />
+            </div>
+            <div class="col-xs-4" style="margin-top: 10px;">
+                <label>Leave Type :</label>
+                <select ng-change="ui.changeLeaveType(leaveTemp.leaveType)" name="type" id="type" class="form-control" ng-model="leaveTemp.leaveType" ng-disabled="ui.mode !== 'NEW'">
+                    <option value=''></option>
+                    <option value='full_day'>Full Day</option>
+                    <option value='half_day'>Half Day</option>
+                </select>
+            </div>
+
+            <div class="col-xs-3" style="margin-top: 10px;">
                 <label>Emp Name :</label>
                 <input type="text" id="date" class="form-control" ng-model="employeeName" ng-disabled="true" />
             </div>
-             <div class="col-xs-4" style="margin-top: 25px;">
+            <div class="col-xs-3" style="margin-top: 10px;">
+                <label>To Date :</label>
+                <input type="date" id="date" class="form-control" ng-model="leaveTemp.toDate" ng-disabled="ui.mode !== 'NEW' || ui.leaveMode === 'half_day'" />
+            </div>
+            <div class="col-xs-3" style="margin-top: 10px;">
                 <label>Category :</label>
                 <select name="category" id="category" class="form-control" ng-model="leaveTemp.leaveCategory" ng-disabled="ui.mode !== 'NEW'">
                     <option value=''></option>
@@ -35,22 +115,8 @@
                     <option value='medical'>Medical</option>
                 </select>
             </div>
-            <div class="col-xs-4" style="margin-top: 25px;">
-                <label>Leave Type :</label>
-                <select ng-change="ui.changeLeaveType(leaveTemp.leaveType)" name="type" id="type" class="form-control" ng-model="leaveTemp.leaveType" ng-disabled="ui.mode !== 'NEW'">
-                    <option value=''></option>
-                    <option value='full_day'>Full Day</option>
-                    <option value='half_day'>Half Day</option>
-                </select>
-            </div>
-            <div class="col-xs-3" style="margin-top: 10px;">
-                <label>From Date :</label>
-                <input type="date" id="date" class="form-control" ng-model="leaveTemp.fromDate" ng-disabled="ui.mode !== 'NEW'" />
-            </div>
-            <div class="col-xs-3" style="margin-top: 10px;">
-                <label>To Date :</label>
-                <input type="date" id="date" class="form-control" ng-model="leaveTemp.toDate" ng-disabled="ui.mode !== 'NEW' || ui.leaveMode === 'half_day'" />
-            </div>
+
+
             <div class="col-xs-5" style="margin-top: 10px;">
                 <label>Reason :</label>
                 <input type="text" id="date" class="form-control" ng-model="model.leave.reason" ng-disabled="ui.mode !== 'NEW'" />

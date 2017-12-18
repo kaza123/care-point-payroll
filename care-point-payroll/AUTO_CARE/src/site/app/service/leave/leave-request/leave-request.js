@@ -32,6 +32,18 @@
                                 callback(data);
                             });
                 };
+                // find leave history
+                factory.findLeaveHistory = function (date,empIndex, callback) {
+                    var url = systemConfig.apiUrl + "/api/leave/leave-request/find-history/" + date +"/"+empIndex;
+
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+                                callback(data);
+                            });
+                };
 
                 factory.findEmployeeByEpfNoFactory = function (year, epfNo, callback) {
                     var url = systemConfig.apiUrl + "/api/leave/leave-setup-year-epf/" + year + "/" + epfNo;
@@ -70,6 +82,8 @@
             .controller("leaveRequestController", function ($scope, $filter, leaveRequestFactory, Notification, $timeout) {
                 //data models 
                 $scope.model = {};
+                $scope.model.leaveHistory = {};
+                
                 $scope.model.leave = {
                     employee: null,
                     branch: null,
@@ -214,6 +228,14 @@
                     } else {
                         $scope.ui.leaveMode = 'full_day';
                     }
+                };
+                
+                $scope.ui.changeDate = function (date){
+                    leaveRequestFactory.findLeaveHistory(date,$scope.model.leave.employee
+                                , function (data) {
+                                    $scope.model.leaveHistory = data;
+                                    console.log(data)
+                                });     
                 };
 
 

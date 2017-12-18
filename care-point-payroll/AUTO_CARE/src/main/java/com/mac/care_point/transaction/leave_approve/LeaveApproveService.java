@@ -76,26 +76,34 @@ public class LeaveApproveService {
 
             //get date deff
             if (!leaveRequest.getLeaveCategory().equals(null)) {
-                System.out.println("ssssssssssssssssssssssss");
                 int count = leaveRequestDetailRepository.getDateCount(leaveRequest.getToDate(), leaveRequest.getFromDate());
 
                 MLeaveSetup leaveSetup = leaveSetupRepository.findByYearAndEmployee(year, leave.getEmployee());
 
                 if (leaveRequest.getLeaveCategory().equals("annual")) {
-                    leaveSetup.setAnnual(leaveSetup.getAnnual() - (count + 1));
+//                    leaveSetup.setAnnual(leaveSetup.getAnnual() - (count + 1));
+                    if (leaveSetup.getAnnualLeave() == null) {
+                        leaveSetup.setAnnualLeave(count + 1);
+                    } else {
+                        leaveSetup.setAnnualLeave(leaveSetup.getAnnualLeave() + (count + 1));
+                    }
                 }
                 if (leaveRequest.getLeaveCategory().equals("casual")) {
-                    if (count == 0) {
-                        leaveSetup.setCasual(leaveSetup.getCasual() - 1);
+                    if (leaveSetup.getCasualLeave() == null) {
+//                        leaveSetup.setCasual(leaveSetup.getCasual() - 1);
+                        leaveSetup.setCasualLeave(count + 1);
                     } else {
-                        leaveSetup.setCasual(leaveSetup.getCasual() - count);
+//                        leaveSetup.setCasual(leaveSetup.getCasual() - count);
+                          leaveSetup.setCasualLeave(leaveSetup.getCasualLeave() + (count + 1));
                     }
                 }
                 if (leaveRequest.getLeaveCategory().equals("medical")) {
-                    if (count == 0) {
-                        leaveSetup.setMedical(leaveSetup.getMedical() - 1);
+                    if (leaveSetup.getMedicalLeave() == null) {
+//                        leaveSetup.setMedical(leaveSetup.getMedical() - 1);
+                        leaveSetup.setMedicalLeave(count + 1);
                     } else {
-                        leaveSetup.setMedical(leaveSetup.getMedical() - count);
+//                        leaveSetup.setMedical(leaveSetup.getMedical() - count);
+                        leaveSetup.setMedicalLeave(leaveSetup.getMedicalLeave()+ (count + 1));
                     }
                 }
 

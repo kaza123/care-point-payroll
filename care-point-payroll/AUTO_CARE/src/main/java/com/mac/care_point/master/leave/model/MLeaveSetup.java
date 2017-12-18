@@ -51,6 +51,16 @@ public class MLeaveSetup implements Serializable {
     
     @Column(name = "medical")
     private int medical;
+    
+    @Column(name = "annual_leave")
+    private Integer annualLeave;
+   
+    @Column(name = "casual_leave")
+    private Integer casualLeave;
+    
+    @Column(name = "medical_leave")
+    private Integer medicalLeave;
+    
 
     public MLeaveSetup() {
     }
@@ -110,5 +120,32 @@ public class MLeaveSetup implements Serializable {
     public void setMedical(int medical) {
         this.medical = medical;
     }
+
+    public Integer getAnnualLeave() {
+        return annualLeave;
+    }
+
+    public void setAnnualLeave(Integer annualLeave) {
+        this.annualLeave = annualLeave;
+    }
+
+    public Integer getCasualLeave() {
+        return casualLeave;
+    }
+
+    public void setCasualLeave(Integer casualLeave) {
+        this.casualLeave = casualLeave;
+    }
+
+    public Integer getMedicalLeave() {
+        return medicalLeave;
+    }
+
+    public void setMedicalLeave(Integer medicalLeave) {
+        this.medicalLeave = medicalLeave;
+    }
+
+    
+    
     
 }

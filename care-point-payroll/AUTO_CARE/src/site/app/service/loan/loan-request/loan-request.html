@@ -2,55 +2,65 @@
 </div>
 
 <div class="index-content-body">
-    <div class="col-xs-8 background-light">
+    <div class="col-xs-9 background-light">
         <div class="row">
-            <div class="col-xs-3" style="margin-top: 10px;">
+<!--            <div class="col-xs-2" style="margin-top: 10px;">
                 <label>Loan No :</label>
-                <input type="text" id="date" class="form-control" ng-model="employeeName" ng-disabled="true" />
-            </div>
+                <input type="text" id="date" class="form-control" ng-model="model.loan.loanNo" ng-disabled="true" />
+            </div>-->
             <div class="col-xs-3" style="margin-top: 10px;">
-                <label>Date :</label>
-                <input type="date" id="date" class="form-control" ng-model="leaveTemp.toDate" ng-disabled="ui.mode !== 'NEW' || ui.leaveMode === 'half_day'" />
+                <label>Start Date :</label>
+                <input type="date" id="date" class="form-control" ng-model="model.loan.startDate" ng-disabled="ui.mode !== 'NEW' || ui.leaveMode === 'half_day'" />
             </div>
             <div class="col-xs-3" style="margin-top: 10px;">
                 <label>Loan Type :</label>
-                <select ng-change="ui.changeLeaveType(leaveTemp.leaveType)" name="type" id="type" class="form-control" ng-model="leaveTemp.leaveType" ng-disabled="ui.mode !== 'NEW'">
-                    <option value=''></option>
-                    <option value='full_day'>Loan</option>
-                    <option value='half_day'>Festival Advance</option>
-                    <option value='half_day'>Bank Loan</option>
-                    <option value='half_day'>Other Loan</option>
-                </select>
+                <select ng-model="model.loan.loanType" class="form-control" ng-options="loanType.name for loanType in model.loanTypeList" ng-disabled="ui.mode !== 'NEW'" ></select>
+            </div>
+            <div class="col-xs-3" style="margin-top: 10px;">
+                <label>Emp No :</label>
+                <input type="text" id="date" class="form-control" ng-model="model.employee" ng-keypress="http.selectIndexNo($event,model.employee)" ng-disabled="ui.mode !== 'NEW'" />
             </div>
             <div class="col-xs-3" style="margin-top: 10px;">
                 <label>Epf No :</label>
-                <input type="text" id="date" class="form-control" ng-model="leaveTemp.fromDate" ng-disabled="ui.mode !== 'NEW'" />
+                <input type="text" id="date" class="form-control" ng-model="model.loan.epfNo" ng-keypress="http.selectEpfNo($event,model.loan.epfNo)" ng-disabled="ui.mode !== 'NEW'" />
             </div>
             <div class="col-xs-3" style="margin-top: 10px;">
                 <label>Name :</label>
-                <input type="text" id="date" class="form-control" ng-model="leaveTemp.fromDate" ng-disabled="ui.mode !== 'NEW'" />
+                <input type="text" id="date" class="form-control" ng-model="model.empName" ng-disabled="ui.mode !== 'NEW'" />
             </div>
             <div class="col-xs-6" style="margin-top: 10px;">
                 <label>Remark :</label>
-                <input type="text" id="date" class="form-control" ng-model="model.leave.reason" ng-disabled="ui.mode !== 'NEW'" />
+                <input type="text" id="date" class="form-control" ng-model="model.loan.remark" ng-disabled="ui.mode !== 'NEW'" />
             </div>
             <div class="col-xs-3" style="margin-top: 10px;">
                 <label>Amount :</label>
-                <input type="text" id="date" class="form-control" ng-model="model.leave.reason" ng-disabled="ui.mode !== 'NEW'" />
+                <input type="text" id="date" smart-input="decimal" class="form-control" ng-model="model.loan.amount" ng-disabled="ui.mode !== 'NEW'" />
             </div>
-            <div class="col-xs-3" style="margin-top: 10px;">
-                <label>Deduction :</label>
-                <input type="text" id="date" class="form-control" ng-model="model.leave.reason" ng-disabled="ui.mode !== 'NEW'" />
+            <div class="col-xs-2" style="margin-top: 10px;">
+                <label>Installment :</label>
+                <input type="text" id="date" class="form-control" ng-model="model.loan.installmentCount" ng-disabled="ui.mode !== 'NEW'" />
+            </div>
+            <div class="col-xs-2" style="margin-top: 10px;">
+                <label>Interest Rate :</label>
+                <input type="text" id="date" class="form-control" ng-keypress="ui.getMonthlyDeduction($event,model.loan.interestRate)" ng-model="model.loan.interestRate" ng-disabled="ui.mode !== 'NEW'" />
+            </div>
+            <div class="col-xs-2" style="margin-top: 10px;">
+                <label>Mon Deduction :</label>
+                <input type="text" id="date" smart-input="decimal" class="form-control" ng-model="model.loan.monthlyDeduction" ng-disabled="true" />
+            </div>
+            <div class="col-xs-2" style="margin-top: 10px;">
+                <label>Total Amount :</label>
+                <input type="text" id="date" smart-input="decimal" class="form-control" ng-model="model.loan.totaAmount" ng-disabled="true" />
             </div>
             <div class="col-xs-1" style="margin-top: 35px;">
-                <a class="btn btn-sm btn-primary" ng-click="ui.add()"><span class="glyphicon glyphicon-plus"></span></a>
+                <a class="btn btn-sm btn-primary" ng-click="ui.add(model.loan)"><span class="glyphicon glyphicon-plus"></span></a>
             </div>
-            <div class="col-xs-3" style="margin-top: 29px;">
+<!--            <div class="col-xs-3" style="margin-top: 29px;">
                 <input style="" type="file" onchange="angular.element(this).scope().ui.excelExport(event)" multiple>
             </div>
-            <div class="col-xs-5" style="margin-top: 35px;">
+            <div class="col-xs-2" style="margin-top: 35px;">
                 <a class="btn btn-sm btn-warning" ng-click="ui.upload()"><span class="glyphicon glyphicon-upload">Upload</span></a>
-            </div>
+            </div>-->
         </div>
 
         <table class="table-rounded" style="margin-top: 10px">
@@ -83,10 +93,10 @@
                     <tr ng-repeat="request in model.loanRequest">
                         <!--td><label class="label label-default control-label">{{$index + 1}}</label></td>-->
                         <td>{{request.epfNo}}</td>
-                        <td>{{request.loanType}}</td>
+                        <td>{{request.loanType.name}}</td>
                         <td>{{request.remark}}</td>
                         <td>{{request.amount}}</td>
-                        <td>{{request.deduction}}</td>
+                        <td>{{request.monthlyDeduction}}</td>
                         <td>
                             <a class="btn btn-danger" ng-click="ui.edit(category, $index)"><span class="glyphicon glyphicon-remove"></span></a>
                         </td>
@@ -99,7 +109,7 @@
         </div>
     </div>
 
-    <div class="col-xs-4 background-dark">
+    <div class="col-xs-3 background-dark">
         <div class="col-md-12" style="margin-top: 10px;height: 35px; background-color: #5093e1;color: white">
             <h4 class="text-center">LOAN HISTORY</h4>
         </div>

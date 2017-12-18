@@ -14,6 +14,7 @@ import com.mac.care_point.transaction.leave_request.model.TLeave;
 import com.mac.care_point.transaction.leave_request.model.TLeaveDetails;
 import com.mac.care_point.transaction.leave_request.model.TLeaveRequest;
 import com.mac.care_point.zutil.SecurityUtil;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -43,7 +44,6 @@ public class LeaveRequestService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
-
 
     public List<TLeaveDetails> findAll() {
         return leaveRequestDetailRepository.findAll();
@@ -104,6 +104,28 @@ public class LeaveRequestService {
         return employeeRepository.findByEpfNoAndBranch(epfNo, SecurityUtil.getCurrentUser().getBranch());
     }
 
-   
+    public Object findLeaveHistory(Date date, int empIndex) {
+        System.out.println(date + "ddddd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("MM");
+        String year = sdf.format(date);
+        String month = sdf2.format(date);
+        //Date fromDate = sdf.parse(leaveRequest.getFromDate());
+        return leaveRequestRepository.findLeaveHistory(SecurityUtil.getCurrentUser().getBranch(),empIndex,year,month);
+        
+    }
+
+    public Object findLeaveHistoryByBranch(String date, int empIndex, int branch) throws ParseException {
+        System.out.println(date);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd");
+        Format sdf2 = new SimpleDateFormat("MM");
+        String month = sdf2.format(sdf3.parse(date));
+        String year = sdf.format(sdf.parse(date));
+        System.out.println(month);
+        System.out.println(year);
+        //Date fromDate = sdf.parse(leaveRequest.getFromDate());
+        return leaveRequestRepository.findLeaveHistory(branch,empIndex,year,month); 
+    }
 
 }

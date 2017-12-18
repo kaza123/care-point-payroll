@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
  *
  * @author nidura prageeth
  */
-@Entity
+@Entity(name = "com.mac.care_point.master.employee.Employee")
 @Table(name = "m_employee")
 public class Employee implements Serializable {
 
