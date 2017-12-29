@@ -1,0 +1,92 @@
+select emp.index_no, emp.epf_no,emp.name,emp.basic_salary,
+	(select COUNT(t_daily_record.index_no) from t_daily_record 
+	left join m_employee on m_employee.index_no = t_daily_record.employee
+	where MONTH(t_daily_record.date)=10 and YEAR(t_daily_record.date)=2017 and emp.index_no=m_employee.index_no) as working_days,
+	(select ifnull(SUM(m_allowance_deduction_details.value),0.00) from m_allowance_deduction_details
+	left join m_allowance_deduction on m_allowance_deduction_details.allowance_deduction=m_allowance_deduction.index_no
+	left join m_employee on m_allowance_deduction_details.employee=m_employee.index_no
+	where m_allowance_deduction.`type`='deduction' and emp.index_no=m_employee.index_no) as dedution,
+	(select ifnull(SUM(m_allowance_deduction_details.value),0.00) from m_allowance_deduction_details
+	left join m_allowance_deduction on m_allowance_deduction_details.allowance_deduction=m_allowance_deduction.index_no
+	left join m_employee on m_allowance_deduction_details.employee=m_employee.index_no
+	where m_allowance_deduction.`type`='allowance' and emp.index_no=m_employee.index_no) as allowance,
+	(select sum(t_record_details.ot_hours) from t_record_details
+	left join m_employee on m_employee.index_no = t_record_details.employee
+	where MONTH(t_record_details.date)=10 and YEAR(t_record_details.date)=2017 and m_employee.index_no= emp.index_no) as ot_hours,
+	(select sum(t_record_details.extra_hours) from t_record_details
+	left join m_employee on m_employee.index_no = t_record_details.employee
+	where MONTH(t_record_details.date)=10 and YEAR(t_record_details.date)=2017 and m_employee.index_no= emp.index_no) as extra_hours,
+	(select ifnull(sum(t_advance_request.amount),0.00) from t_advance_request
+	left join m_employee on m_employee.index_no=t_advance_request.employee
+	where MONTH(t_advance_request.month)=10 and YEAR(t_advance_request.request_date)=2017 and t_advance_request.approve=1 and m_employee.index_no= emp.index_no) as advance,
+	(select m_epf_rate.rate from m_epf_rate where m_epf_rate.name='epf_company') as epf_rate_company,
+	(select m_epf_rate.rate from m_epf_rate where m_epf_rate.name='epf_employee') as epf_rate_employee,
+	(select m_epf_rate.rate from m_epf_rate where m_epf_rate.name='etf') as etf_rate,
+	TRUNCATE(((select m_employee.basic_salary from m_employee where m_employee.index_no=emp.index_no)/100 * 
+	(select m_epf_rate.rate from m_epf_rate where m_epf_rate.name='epf_employee')),2) as epf_amount,
+	((select sum(t_record_details.ot_hours) from t_record_details
+	left join m_employee on m_employee.index_no = t_record_details.employee
+	where MONTH(t_record_details.date)=10 and YEAR(t_record_details.date)=2017 and m_employee.index_no = emp.index_no)  * 
+	(select m_ot_rate.rate from m_ot_rate where m_ot_rate.name='ot')) as ot_price,
+	((select sum(t_record_details.extra_hours) from t_record_details
+	left join m_employee on m_employee.index_no = t_record_details.employee
+	where MONTH(t_record_details.date)=10 and YEAR(t_record_details.date)=2017 and m_employee.index_no= emp.index_no)  * 
+	(select m_ot_rate.rate from m_ot_rate where m_ot_rate.name='extra')) as extra_price,
+	(emp.basic_salary + ifnull((select SUM(m_allowance_deduction_details.value) from m_allowance_deduction_details
+	left join m_allowance_deduction on m_allowance_deduction_details.allowance_deduction=m_allowance_deduction.index_no
+	left join m_employee on m_allowance_deduction_details.employee=m_employee.index_no
+	where m_allowance_deduction.`type`='allowance' and emp.index_no=m_employee.index_no),0) + 
+	(select sum(t_record_details.ot_hours) from t_record_details
+	left join m_employee on m_employee.index_no = t_record_details.employee
+	where MONTH(t_record_details.date)=10 and YEAR(t_record_details.date)=2017 and m_employee.index_no = emp.index_no)  * 
+	(select m_ot_rate.rate from m_ot_rate where m_ot_rate.name='ot') +
+	(select sum(t_record_details.extra_hours) from t_record_details
+	left join m_employee on m_employee.index_no = t_record_details.employee
+	where MONTH(t_record_details.date)=10 and YEAR(t_record_details.date)=2017 and m_employee.index_no= emp.index_no)  * 
+	(select m_ot_rate.rate from m_ot_rate where m_ot_rate.name='extra')) as gross_pay,
+	(ifnull((select SUM(m_allowance_deduction_details.value) from m_allowance_deduction_details
+	left join m_allowance_deduction on m_allowance_deduction_details.allowance_deduction=m_allowance_deduction.index_no
+	left join m_employee on m_allowance_deduction_details.employee=m_employee.index_no
+	where m_allowance_deduction.`type`='deduction' and emp.index_no=m_employee.index_no),0) +
+	ifnull((select sum(t_advance_request.amount) from t_advance_request
+	left join m_employee on m_employee.index_no=t_advance_request.employee
+	where MONTH(t_advance_request.month)=10 and YEAR(t_advance_request.request_date)=2017 and t_advance_request.approve=1 and m_employee.index_no= emp.index_no),0) +
+	TRUNCATE(((select m_employee.basic_salary from m_employee where m_employee.index_no=emp.index_no)/100 * 
+	(select m_epf_rate.rate from m_epf_rate where m_epf_rate.name='epf_employee')),2)) as total_deduction,
+	((emp.basic_salary + ifnull((select SUM(m_allowance_deduction_details.value) from m_allowance_deduction_details
+	left join m_allowance_deduction on m_allowance_deduction_details.allowance_deduction=m_allowance_deduction.index_no
+	left join m_employee on m_allowance_deduction_details.employee=m_employee.index_no
+	where m_allowance_deduction.`type`='allowance' and emp.index_no=m_employee.index_no),0) + 
+	(select sum(t_record_details.ot_hours) from t_record_details
+	left join m_employee on m_employee.index_no = t_record_details.employee
+	where MONTH(t_record_details.date)=10 and YEAR(t_record_details.date)=2017 and m_employee.index_no = emp.index_no)  * 
+	(select m_ot_rate.rate from m_ot_rate where m_ot_rate.name='ot') +
+	(select sum(t_record_details.extra_hours) from t_record_details
+	left join m_employee on m_employee.index_no = t_record_details.employee
+	where MONTH(t_record_details.date)=10 and YEAR(t_record_details.date)=2017 and m_employee.index_no= emp.index_no)  * 
+	(select m_ot_rate.rate from m_ot_rate where m_ot_rate.name='extra')) - 
+	(ifnull((select SUM(m_allowance_deduction_details.value) from m_allowance_deduction_details
+	left join m_allowance_deduction on m_allowance_deduction_details.allowance_deduction=m_allowance_deduction.index_no
+	left join m_employee on m_allowance_deduction_details.employee=m_employee.index_no
+	where m_allowance_deduction.`type`='deduction' and emp.index_no=m_employee.index_no),0) +
+	ifnull((select sum(t_advance_request.amount) from t_advance_request
+	left join m_employee on m_employee.index_no=t_advance_request.employee
+	where MONTH(t_advance_request.month)=10 and YEAR(t_advance_request.request_date)=2017 and t_advance_request.approve=1 and m_employee.index_no= emp.index_no),0) +
+	TRUNCATE(((select m_employee.basic_salary from m_employee where m_employee.index_no=emp.index_no)/100 * 
+	(select m_epf_rate.rate from m_epf_rate where m_epf_rate.name='epf_employee')),2))) as net_salary
+from 
+m_employee emp
+LEFT JOIN
+m_allowance_deduction_details on m_allowance_deduction_details.employee = emp.index_no
+LEFT JOIN
+m_allowance_deduction on m_allowance_deduction.index_no = m_allowance_deduction.index_no
+LEFT JOIN
+t_daily_record on t_daily_record.employee = emp.index_no
+LEFT JOIN
+t_record_details on t_record_details.employee=emp.index_no
+LEFT JOIN
+t_advance_request on t_advance_request.employee=emp.index_no
+LEFT JOIN
+m_branch on m_branch.index_no=emp.branch
+where m_branch.index_no=1 and emp.active = 1
+group by emp.index_no
