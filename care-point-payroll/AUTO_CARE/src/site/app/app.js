@@ -22,7 +22,9 @@
         "advanceRequestModule",
         "advanceApproveModule",
         "loanRequestModule",
-        "loanApproveModule"
+        "loanApproveModule",
+        "payrollModule",
+        "allowanceDeductionModule"
     ]);
 
     //constants
@@ -84,6 +86,10 @@
                             templateUrl: "app/master/employee/employee.html",
                             controller: "employeeController"
                         })
+                        .when("/master/allowance-deduction", {
+                            templateUrl: "app/master/allowance-deduction/allowance-deduction.html",
+                            controller: "allowanceDeductionController"
+                        })
 
 
                         //transaction
@@ -126,6 +132,10 @@
                         .when("/transaction/advance-approve", {
                             templateUrl: "app/service/advance/advance-approve/advance-approve.html",
                             controller: "advanceApproveController"
+                        })
+                        .when("/transaction/payroll", {
+                            templateUrl: "app/service/payroll/payroll.html",
+                            controller: "payrollController"
                         })
 
 

@@ -68,13 +68,24 @@
             <div class="row background-light">
                 <div class="col-xs-12">
                     <div class="col-xs-8">
-                        <h3>HALF DAY COUNT FOR THIS MONTH</h3>
+                        <h4>HALF DAY COUNT FOR THIS MONTH</h4>
                     </div>
                     <div class="col-xs-4">
-                        <h2>
+                        <h4>
                             <label class="label label-warning" ng-if="model.leaveHistory[7] === null">0</label>
                             <label class="label label-warning" ng-if="model.leaveHistory[7] !== null">{{model.leaveHistory[7]}}</label>
-                        </h2>
+                        </h4>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="col-xs-8">
+                        <h4>SHORT LEAVE COUNT FOR THIS MONTH</h4>
+                    </div>
+                    <div class="col-xs-4">
+                        <h4>
+                            <label class="label label-warning" ng-if="model.leaveHistory[11] === null">0</label>
+                            <label class="label label-warning" ng-if="model.leaveHistory[11] !== null">{{model.leaveHistory[11]}}</label>
+                        </h4>
                     </div>
                 </div>
             </div>

@@ -47,8 +47,8 @@
     <div class="col-xs-6 background-light">
         <table class="table-rounded" style="margin-top: 10px">
             <col style="width: 10%">
-            <col style="width: 15%">
             <col style="width: 20%">
+            <col style="width: 15%">
             <col style="width: 15%">
             <col style="width: 15%">
             <col style="width: 15%">
@@ -68,8 +68,8 @@
         <div class="smart-scroll-y" style="height: calc(100vh - 112px);" ng-show="model.loanRequestDetails.length">
             <table class="table-rounded table-hover">
                 <col style="width: 10%">
-                <col style="width: 15%">
                 <col style="width: 20%">
+                <col style="width: 15%">
                 <col style="width: 15%">
                 <col style="width: 15%">
                 <col style="width: 15%">
@@ -81,7 +81,7 @@
                         <td>{{request.loanType.name}}</td>
                         <td>{{request.installmentCount}}</td>
                         <td>{{request.amount}}</td>
-                        <td>{{request.monthlyDeduction}}</td>
+                        <td>RS.{{request.monthlyDeduction}}</td>
                         <td><input type="checkbox" ng-model="request.isCheck"></td>
                     </tr>
                 </tbody>

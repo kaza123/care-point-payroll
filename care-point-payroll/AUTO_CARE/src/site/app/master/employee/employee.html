@@ -61,7 +61,7 @@
                 </div>
             </div>
         </uib-tab>
-        <uib-tab index="2" heading="REGISTER" select="ui.tabAllAttendance()">
+        <uib-tab index="2" heading="PERSONAL" select="ui.tabAllAttendance()">
             <div class="col-xs-2 background-light" style="margin-top: 10px;">
                 <div class="image-tile-employee" style="background-color:#ffffff;" ng-show="ui.imageShowMode1 === 'NotAvalable'">
                     <label class="label label-primary image-tile-browse" for="file">
@@ -162,10 +162,10 @@
                                     <td><label for="active">Active</label>&nbsp;&nbsp;<input ng-model="model.employeeData.active" type="checkbox" id="active"  ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
                                     <td></td>
                                 </tr>
-                                <tr>
+<!--                                <tr>
                                     <td><label for="confirm">CONFIRM</label>&nbsp;&nbsp;<input ng-model="model.employeeData.confirm" type="checkbox" id="confirm"  ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
                                     <td><label for="resigned">RESIGNED</label>&nbsp;&nbsp;<input ng-model="model.employeeData.resigned" type="checkbox" id="resigned"  ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
-                                </tr>
+                                </tr>-->
                             </tbody>
                         </table>
                     </div>
@@ -208,7 +208,7 @@
                                     <td><label for="otApplicable">OT Applicable</label>&nbsp;&nbsp;<input ng-model="model.employeeData.otApplicable" type="checkbox" id="otApplicable" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
                                     <td></td>
                                 </tr>
-                                <tr>
+<!--                                <tr>
                                     <td><label for="morningOt">Morning OT</label>&nbsp;&nbsp;<input ng-model="model.employeeData.morningOt" type="checkbox" id="morningOt" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
                                     <td></td>
                                 </tr>
@@ -219,7 +219,7 @@
                                 <tr>
                                     <td><label for="tax">Tax Applicable</label>&nbsp;&nbsp;<input  ng-model="model.employeeData.taxApplicable"  type="checkbox" id="tax" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
                                     <td></td>
-                                </tr>
+                                </tr>-->
 
                             </tbody>
                         </table>

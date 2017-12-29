@@ -33,7 +33,7 @@
                     <ul>
 
                         <li> 
-                            <a class="menu-header">HOME</a>
+                            <a class="menu-header">DASH BOARD</a>
                             <ul>
                                 <li><a href="#/account/home" ng-click="toggleHamburger('Home');">HOME</a></li> 
                             </ul>
@@ -42,8 +42,8 @@
                         <li> 
                             <a class="menu-header">TRANSACTION</a>
                             <ul>
-                                <li><a href="#/transaction/attendance" ng-click="toggleHamburger('Attendance');">ATTENDANCE</a></li>    
-                                <li><a href="#/transaction/attendance-confirm" ng-click="toggleHamburger('Attendance Confirm');">ATTENDANCE CONFIRM</a></li>    
+                                <li><a href="#/transaction/attendance" ng-click="toggleHamburger('Attendance');">IN-OUT CONFIRM</a></li>    
+                                <li><a href="#/transaction/attendance-confirm" ng-click="toggleHamburger('Attendance Confirm');">ATTENDANCE FINAL</a></li>    
                                 <li><a href="#/transaction/leave-request" ng-click="toggleHamburger('Leave Request');">LEAVE REQUEST</a></li>    
                                 <li><a href="#/transaction/leave-approve" ng-click="toggleHamburger('Leave Approve');">LEAVE APPROVE</a></li>    
                                 <li><a href="#/transaction/short-leave" ng-click="toggleHamburger('Short Leave');">SHORT LEAVE</a></li>    
@@ -51,6 +51,7 @@
                                 <li><a href="#/transaction/loan-approve" ng-click="toggleHamburger('Loan Approve');">LOAN APPROVE</a></li>    
                                 <li><a href="#/transaction/advance-request" ng-click="toggleHamburger('Advance Reuest');">ADVANCE REQUEST</a></li>    
                                 <li><a href="#/transaction/advance-approve" ng-click="toggleHamburger('Advance Approve');">ADVANCE APPROVE</a></li>    
+                                <li><a href="#/transaction/payroll" ng-click="toggleHamburger('Payroll');">PAYROLL</a></li>    
                             </ul>
                         </li>
                         <li>
@@ -66,7 +67,8 @@
                                 <li><a href="#/master/calander" ng-click="toggleHamburger('Calander');">CALENDER</a></li>    
                                 <li><a href="#/master/leave-setup" ng-click="toggleHamburger('Leave Setup');">LEAVE SETUP</a></li>    
                                 <li><a href="#/master/leave-category" ng-click="toggleHamburger('Leave Category');">LEAVE CATEGORY</a></li>    
-                                <li><a href="#/master/employee" ng-click="toggleHamburger('Employee');">Employee</a></li>    
+                                <li><a href="#/master/employee" ng-click="toggleHamburger('Employee');">EMPLOYEE</a></li>    
+                                <li><a href="#/master/allowance-deduction" ng-click="toggleHamburger('allowance deduction');">ALLOWANCE DEDUCTION</a></li>    
                             </ul>
                         </li>
                         <li> 
@@ -161,6 +163,9 @@
         <!--js dependencies-->
         <!-- inject:js -->
         <!-- endinject -->
+
+
+
         <script type="text/javascript">
                     document.addEventListener("DOMContentLoaded", function (event) {
                         setTimeout(function () {
@@ -172,7 +177,28 @@
                         }, 1000);
                     });
         </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.10.8/xlsx.full.min.js">
+
+        <script type="text/javascript">
+//                    $ = jQuery();
+                    $(function () {
+                        console.log("ssssssssss")
+//                        $(".scrollx").scroll(function () {
+//                            $(".scroll")
+//                                    .scrollTop($(".scrollx").scrollTop());
+//                        });
+
+                        $(".scroll").scroll(function () {
+                            $(".scrollx")
+                                    .scrollTop($(".scroll").scrollTop());
+                        });
+
+                    });
+
         </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.10.8/xlsx.full.min.js"></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
     </body>
 </html>
